@@ -1,11 +1,10 @@
 package com.ssafy.easyback.study.controller;
 
+import com.ssafy.easyback.study.model.WordDto;
 import com.ssafy.easyback.study.model.service.StudyService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/study")
@@ -16,13 +15,16 @@ public class StudyController {
     this.studyService = studyService;
   }
 
-  @GetMapping
-  public String hello(){
-    return "성현님 다됐어용!@@@@!미쳤다 미쳤어 라이브리로드!!!";
-  }
-
   @GetMapping("test")
   public ResponseEntity<List<String>> test() throws Exception {
     return ResponseEntity.ok(studyService.getList());
+  }
+
+  @GetMapping("word/{userId}")
+  public ResponseEntity<List<WordDto>> getList(@PathVariable long userId, @RequestParam(value="level", defaultValue="1") int level) throws Exception {
+    WordDto wordDto = new WordDto();
+    wordDto.setUserId(userId);
+    wordDto.setLevel(level);
+    return ResponseEntity.ok(studyService.getWordList(wordDto));
   }
 }

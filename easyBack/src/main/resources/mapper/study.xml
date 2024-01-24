@@ -7,4 +7,9 @@
     select user_name
     from test
   </select>
+
+  <select id="getWordList" parameterType="wordDto" resultType="wordDto">
+    select *
+    from words
+  </select>
 </mapper>

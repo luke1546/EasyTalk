@@ -1,5 +1,6 @@
 package com.ssafy.easyback.study.model.service;
 
+import com.ssafy.easyback.study.model.WordDto;
 import com.ssafy.easyback.study.model.mapper.StudyMapper;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -16,4 +17,11 @@ public class StudyServiceImpl implements StudyService{
   public List<String> getList() throws Exception {
     return studyMapper.getList();
   }
+
+  @Override
+  public List<WordDto> getWordList(WordDto wordDto) throws Exception {
+    return studyMapper.getWordList(wordDto);
+  }
+
+
 }
