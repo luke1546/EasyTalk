@@ -1,4 +1,4 @@
-package com.ssafy.easyBack;
+package com.ssafy.easyback;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

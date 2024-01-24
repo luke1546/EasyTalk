@@ -1,4 +1,4 @@
-package com.ssafy.easyBack;
+package com.ssafy.easyback;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
