@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @PropertySource("classpath:/application.properties")
 @MapperScan(basePackages = { "com.ssafy.easyback.*.model.mapper" })
 public class DataBaseConfiguration {
-	
+
 	final ApplicationContext applicationContext;
 
 	public DataBaseConfiguration(ApplicationContext applicationContext) {
