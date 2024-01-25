@@ -42,4 +42,9 @@
                   where word = #{word}),".wav")
     where word = #{word}
   </update>
+    <select id="checkWord" resultType="int" parameterType="String">
+        select count(*)
+        from words
+        where word=#{word}
+    </select>
 </mapper>

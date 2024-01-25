@@ -15,4 +15,6 @@ public interface StudyMapper {
   void insertMeaning(WordMeaningDto wordMeaningDto) throws Exception;
 
   void updateUri(String word) throws Exception;
+
+  int checkWord(String word);
 }

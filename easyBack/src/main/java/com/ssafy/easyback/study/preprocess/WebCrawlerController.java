@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/insertword")
+@RequestMapping("")
 public class WebCrawlerController {
   private final WebCrawlerService webCrawlerService;
-  @GetMapping
+  @GetMapping("insertword")
   public ResponseEntity<String> insert() throws Exception{
     webCrawlerService.insert();
     return ResponseEntity.ok("200");
