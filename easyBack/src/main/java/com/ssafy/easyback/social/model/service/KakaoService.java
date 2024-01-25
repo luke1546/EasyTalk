@@ -1,21 +1,23 @@
 package com.ssafy.easyback.social.model.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.easyback.exhandler.UnauthorizedException;
 import com.ssafy.easyback.social.KakaoConstants;
 import com.ssafy.easyback.social.model.dto.KakaoToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
 public class KakaoService {
+
 
   /**
    * 초기 로그인시 토큰을 발급받습니다.
@@ -51,19 +53,19 @@ public class KakaoService {
    * @param accessToken
    * @return KakaoToken
    */
-  public KakaoToken validateAccessToken(String accessToken) {
+  public Mono<KakaoToken> validateAccessToken(String accessToken) {
     WebClient webClient = WebClient.builder()
         .baseUrl(KakaoConstants.KAPI_URL)
         .build();
 
-    KakaoToken kakaoToken = webClient.get()
-        .uri(KakaoConstants.VALIDATE_URI)
-        .header("Authorization", "Bearer " + accessToken)
-        .retrieve()
-        .bodyToMono(KakaoToken.class)
-        .block();
-    log.info("vaildate={}", kakaoToken);
-    return kakaoToken;
+    return webClient.get()
+            .uri(KakaoConstants.VALIDATE_URI)
+            .header("Authorization", "Bearer " + accessToken)
+            .retrieve()
+            .onStatus(httpStatus -> httpStatus == HttpStatus.UNAUTHORIZED, clientResponse ->
+                    Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED.toString(), "인증실패!"))
+            )
+            .bodyToMono(KakaoToken.class);
   }
 
   /**
@@ -73,7 +75,7 @@ public class KakaoService {
    * @return userId
    */
   public Long getUserId(String accessToken) {
-    return this.validateAccessToken(accessToken).getId();
+    return this.validateAccessToken(accessToken).block().getId();
   }
 
   /**

@@ -41,5 +41,7 @@ public class UserController {
     userService.registerUserInfo(userDto);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
+
+
 }
 

@@ -1,16 +1,16 @@
 package com.ssafy.easyback.social.controller;
 
+import com.ssafy.easyback.exhandler.ErrorResult;
 import com.ssafy.easyback.social.KakaoConstants;
+import com.ssafy.easyback.social.model.dto.KakaoToken;
 import com.ssafy.easyback.social.model.service.KakaoService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,7 +43,7 @@ public class KakaoAuthController {
   public String login(@RequestParam("code") String code, HttpSession session) {
     session.setAttribute("access_token", kakaoService.getKakaoToken(code).getAccess_token());
 
-    kakaoService.validateAccessToken((String) session.getAttribute("access_token"));
+    KakaoToken kakaoToken = kakaoService.validateAccessToken((String) session.getAttribute("access_token")).block();
     log.info("access_token={}", (String) session.getAttribute("access_token"));
     return "redirect:/user/registration-check";
   }
@@ -57,7 +57,8 @@ public class KakaoAuthController {
   @GetMapping("/mypage")
   public String renderMyPage(Model model, HttpSession session) {
     model.addAttribute("access_token", session.getAttribute("access_token"));
-    kakaoService.validateAccessToken((String) session.getAttribute("access_token"));
+    kakaoService.validateAccessToken((String) session.getAttribute("access_token")).block();
     return "mypage";
   }
+  
 }
