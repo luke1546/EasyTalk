@@ -1,6 +1,6 @@
 package com.ssafy.easyback.study.controller;
 
-import com.ssafy.easyback.study.model.WordDto;
+import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.service.StudyService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class StudyController {
   }
 
   @GetMapping("word/{userId}")
-  public ResponseEntity<List<WordDto>> getList(@PathVariable long userId, @RequestParam(value="level", defaultValue="1") int level) throws Exception {
+  public ResponseEntity<List<WordDto>> getList(@PathVariable("userId") long userId, @RequestParam(value="level", defaultValue="1") int level) throws Exception {
     WordDto wordDto = new WordDto();
     wordDto.setUserId(userId);
     wordDto.setLevel(level);

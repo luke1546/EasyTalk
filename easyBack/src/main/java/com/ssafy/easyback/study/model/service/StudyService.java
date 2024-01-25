@@ -1,7 +1,7 @@
 package com.ssafy.easyback.study.model.service;
 
 
-import com.ssafy.easyback.study.model.WordDto;
+import com.ssafy.easyback.study.model.dto.WordDto;
 
 import java.util.List;
 

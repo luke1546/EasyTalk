@@ -1,6 +1,6 @@
 package com.ssafy.easyback.study.model.service;
 
-import com.ssafy.easyback.study.model.WordDto;
+import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.mapper.StudyMapper;
 import java.util.List;
 import org.springframework.stereotype.Service;
