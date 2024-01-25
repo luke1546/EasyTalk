@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.user.model.mapper.UserMapper">
+  <select id="selectUserInfobyId" resultType="com.ssafy.easyback.user.model.dto.UserDto">
+    SELECT userId,
+           nickname,
+           profileImageUri,
+           exp,
+           info,
+           phone
+    FROM users
+    WHERE userId = #{userId}
+  </select>
+
+  <insert id="insertUserInfo" parameterType="com.ssafy.easyback.user.model.dto.UserDto">
+    INSERT INTO `users`
+      (userId, nickname, profileImageUri, exp, info, phone)
+    VALUES (#{userId}, #{nickname}, #{profileImageUri}, #{exp}, #{info}, #{phone})
+  </insert>
+</mapper>

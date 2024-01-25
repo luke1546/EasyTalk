@@ -17,52 +17,85 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 public class KakaoService {
 
-    public KakaoToken getKakaoToken(String code) {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", "authorization_code");
-        params.add("client_id", KakaoConstants.API_KEY);
-        params.add("redirect_uri", KakaoConstants.LOGIN_REDIRECT_URL);
-        params.add("code", code);
+  /**
+   * 초기 로그인시 토큰을 발급받습니다.
+   *
+   * @param code
+   * @return KakaoToken
+   */
+  public KakaoToken getKakaoToken(String code) {
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    params.add("grant_type", "authorization_code");
+    params.add("client_id", KakaoConstants.API_KEY);
+    params.add("redirect_uri", KakaoConstants.LOGIN_REDIRECT_URL);
+    params.add("code", code);
 
-        String responseBody = WebClient.builder()
-                .baseUrl(KakaoConstants.KAUTH_URL)
-                .build()
-                .post()
-                .uri(KakaoConstants.TOKEN_URI)
-                .header(HttpHeaders.CONTENT_TYPE,
-                        MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .body(BodyInserters.fromFormData(params))
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+    KakaoToken kakaoToken = WebClient.builder()
+        .baseUrl(KakaoConstants.KAUTH_URL)
+        .build()
+        .post()
+        .uri(KakaoConstants.TOKEN_URI)
+        .header(HttpHeaders.CONTENT_TYPE,
+            MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        .body(BodyInserters.fromFormData(params))
+        .retrieve()
+        .bodyToMono(KakaoToken.class)
+        .block();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        KakaoToken kakaoToken = null;
+    return kakaoToken;
+  }
 
-        try {
-            kakaoToken = objectMapper.readValue(responseBody, KakaoToken.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        log.info("token={}",kakaoToken);
-        return kakaoToken;
-    }
+  /**
+   * token에대한 정보를 가져옵니다.
+   *
+   * @param accessToken
+   * @return KakaoToken
+   */
+  public KakaoToken validateAccessToken(String accessToken) {
+    WebClient webClient = WebClient.builder()
+        .baseUrl(KakaoConstants.KAPI_URL)
+        .build();
 
-    public String logout(String accessToken) {
-        log.info(accessToken);
-        WebClient webClient = WebClient.builder()
-                .baseUrl(KakaoConstants.KAPI_URL)
-                .build();
+    KakaoToken kakaoToken = webClient.get()
+        .uri(KakaoConstants.VALIDATE_URI)
+        .header("Authorization", "Bearer " + accessToken)
+        .retrieve()
+        .bodyToMono(KakaoToken.class)
+        .block();
+    log.info("vaildate={}", kakaoToken);
+    return kakaoToken;
+  }
 
-        String response = webClient.post()
-                .uri(KakaoConstants.LOGOUT_URI)
-                .header("Authorization", "Bearer " + accessToken)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+  /**
+   * 로그인한 유저의 고유Id를 가져옵니다.
+   *
+   * @param accessToken
+   * @return userId
+   */
+  public Long getUserId(String accessToken) {
+    return this.validateAccessToken(accessToken).getId();
+  }
 
-        log.info(response);
-        return response;
+  /**
+   * 토큰을 만료시킵니다.
+   *
+   * @param accessToken
+   * @return
+   */
+  public String logout(String accessToken) {
+    log.info(accessToken);
+    WebClient webClient = WebClient.builder()
+        .baseUrl(KakaoConstants.KAPI_URL)
+        .build();
 
-    }
+    String response = webClient.post()
+        .uri(KakaoConstants.LOGOUT_URI)
+        .header("Authorization", "Bearer " + accessToken)
+        .retrieve()
+        .bodyToMono(String.class)
+        .block();
+
+    return response;
+
+  }
 }

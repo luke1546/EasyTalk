@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    form {
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea, button {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<p th:text="${access_token}"></p>
+<a href="http://localhost:80/mypage">myPage</a>
+
+<form action="http://localhost/user/register" method="post" enctype="multipart/form-data">
+  <label for="nickname">닉네임:</label>
+  <input type="text" id="nickname" name="nickname" placeholder="닉네임을 입력하세요">
+
+  <label for="profileImage">프로필 이미지:</label>
+  <input type="file" id="profileImage" name="profileImage">
+
+  <label for="exp">경험:</label>
+  <input type="number" id="exp" name="exp" placeholder="경험치를 입력하세요">
+
+  <label for="info">정보:</label>
+  <textarea id="info" name="info" placeholder="추가 정보를 입력하세요"></textarea>
+
+  <label for="phone">전화번호:</label>
+  <input type="tel" id="phone" name="phone" placeholder="전화번호를 입력하세요">
+
+  <button type="submit">등록</button>
+</form>
+</body>
+</
