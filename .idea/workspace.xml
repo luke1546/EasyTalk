@@ -13,9 +13,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2bOyfgn2RrjI9RqFqEh3yWwmoH8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -25,9 +25,11 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "develop-BE",
+    "git-widget-placeholder": "feature-studyWord",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/SSAFY/workspaces/2semester/S10P12B307/easyBack"
+    "last_opened_file_path": "C:/SSAFY/workspaces/2semester/S10P12B307/easyBack",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -38,7 +40,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1706100524393</updated>
+      <workItem from="1706258864543" duration="1000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
