@@ -4,11 +4,12 @@ import lombok.Getter;
 
 @Getter
 public class UnauthorizedException extends RuntimeException {
-    private String code;
 
-    public UnauthorizedException(String code, String message) {
-        super(message);
-        this.code = code;
-    }
+  private String code;
+
+  public UnauthorizedException(String code, String message) {
+    super(message);
+    this.code = code;
+  }
 
 }

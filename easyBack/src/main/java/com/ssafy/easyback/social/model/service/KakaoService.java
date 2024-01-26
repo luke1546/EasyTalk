@@ -32,7 +32,7 @@ public class KakaoService {
     params.add("redirect_uri", KakaoConstants.LOGIN_REDIRECT_URL);
     params.add("code", code);
 
-    KakaoToken kakaoToken = WebClient.builder()
+    return WebClient.builder()
         .baseUrl(KakaoConstants.KAUTH_URL)
         .build()
         .post()
@@ -44,7 +44,6 @@ public class KakaoService {
         .bodyToMono(KakaoToken.class)
         .block();
 
-    return kakaoToken;
   }
 
   /**
@@ -59,13 +58,13 @@ public class KakaoService {
         .build();
 
     return webClient.get()
-            .uri(KakaoConstants.VALIDATE_URI)
-            .header("Authorization", "Bearer " + accessToken)
-            .retrieve()
-            .onStatus(httpStatus -> httpStatus == HttpStatus.UNAUTHORIZED, clientResponse ->
-                    Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED.toString(), "인증실패!"))
-            )
-            .bodyToMono(KakaoToken.class);
+        .uri(KakaoConstants.VALIDATE_URI)
+        .header("Authorization", "Bearer " + accessToken)
+        .retrieve()
+        .onStatus(httpStatus -> httpStatus == HttpStatus.UNAUTHORIZED, clientResponse ->
+            Mono.error(new UnauthorizedException(HttpStatus.UNAUTHORIZED.toString(), "인증실패!"))
+        )
+        .bodyToMono(KakaoToken.class);
   }
 
   /**
@@ -85,7 +84,7 @@ public class KakaoService {
    * @return
    */
   public String logout(String accessToken) {
-    log.info(accessToken);
+    log.info("accessToken= {}", accessToken);
     WebClient webClient = WebClient.builder()
         .baseUrl(KakaoConstants.KAPI_URL)
         .build();

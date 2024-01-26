@@ -14,11 +14,18 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
   final KakaoService kakaoService;
+
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
     HttpSession session = request.getSession();
-//    request.setAttribute("userId", session.getAttribute("access_token"));
+    
+    String access_token = (String) request.getSession().getAttribute("access_token");
+    Long userId = kakaoService.validateAccessToken(access_token).block().getId();
+
+    if ((Long) session.getAttribute("userId") != userId) {
+      return false;
+    }
 
     return true;
   }

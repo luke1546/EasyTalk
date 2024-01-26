@@ -1,6 +1,7 @@
 package com.ssafy.easyback.social.controller;
 
 import com.ssafy.easyback.exhandler.ErrorResult;
+import com.ssafy.easyback.exhandler.UnauthorizedException;
 import com.ssafy.easyback.social.KakaoConstants;
 import com.ssafy.easyback.social.model.dto.KakaoToken;
 import com.ssafy.easyback.social.model.service.KakaoService;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,15 +46,23 @@ public class KakaoAuthController {
   public String login(@RequestParam("code") String code, HttpSession session) {
     session.setAttribute("access_token", kakaoService.getKakaoToken(code).getAccess_token());
 
-    KakaoToken kakaoToken = kakaoService.validateAccessToken((String) session.getAttribute("access_token")).block();
-    log.info("access_token={}", (String) session.getAttribute("access_token"));
+    KakaoToken kakaoToken = kakaoService.validateAccessToken(
+        (String) session.getAttribute("access_token")).block();
+    
+    log.info("access_token={}", session.getAttribute("access_token"));
+    log.info("userId={}", kakaoToken.getId());
+    session.setAttribute("userId", kakaoToken.getId());
+
     return "redirect:/user/registration-check";
   }
 
   @ResponseBody
   @GetMapping("logout")
   public String logout(HttpSession session) {
-    return kakaoService.logout((String) session.getAttribute("access_token"));
+    kakaoService.logout((String) session.getAttribute("access_token"));
+    session.invalidate();
+
+    return "로그아웃 완료";
   }
 
   @GetMapping("/mypage")
@@ -60,5 +71,5 @@ public class KakaoAuthController {
     kakaoService.validateAccessToken((String) session.getAttribute("access_token")).block();
     return "mypage";
   }
-  
+
 }

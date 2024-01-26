@@ -1,6 +1,7 @@
 package com.ssafy.easyback.user.controller;
 
 import com.ssafy.easyback.social.model.service.KakaoService;
+import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.UserDto;
 import com.ssafy.easyback.user.model.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,7 @@ public class UserController {
 
   @GetMapping("/registration-check")
   public ResponseEntity<HttpStatus> checkRegisteredUser(HttpSession session) {
-    long userId = kakaoService.getUserId((String) session.getAttribute("access_token"));
+    long userId = (Long) session.getAttribute("userId");
 
     HttpStatus httpStatus = userService.checkRegisteredUser(userId);
 
@@ -35,11 +37,18 @@ public class UserController {
   @PostMapping("/register")
   public ResponseEntity<HttpStatus> registerUserInfo(@ModelAttribute("userDto") UserDto userDto,
       HttpSession session) {
-    Long userId = kakaoService.getUserId((String) session.getAttribute("access_token"));
+    Long userId = (Long) session.getAttribute("userId");
     userDto.setUserId(userId);
 
     userService.registerUserInfo(userDto);
     return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @GetMapping("/attendance/{userId}")
+  public ResponseEntity<Object> getAttendanceInfo(@PathVariable("userId") Long userId) {
+    UserAttendance userAttendance = userService.getAttendance(userId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(userAttendance);
   }
 
 

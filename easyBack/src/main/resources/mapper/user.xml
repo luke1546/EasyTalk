@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.easyback.user.model.mapper.UserMapper">
-  <select id="selectUserInfobyId" resultType="com.ssafy.easyback.user.model.dto.UserDto">
+  <select id="selectUserbyId" resultType="com.ssafy.easyback.user.model.dto.UserDto">
     SELECT userId,
            nickname,
            profileImageUri,
@@ -19,4 +19,15 @@
       (userId, nickname, profileImageUri, exp, info, phone)
     VALUES (#{userId}, #{nickname}, #{profileImageUri}, #{exp}, #{info}, #{phone})
   </insert>
+
+  <select id="selectAttendanceById" parameterType="java.lang.Long"
+    resultType="java.lang.Integer">
+    SELECT DAYOFWEEK(attendanceDate)
+    FROM attendances
+    WHERE userId = #{userId}
+      AND YEARWEEK(attendanceDate
+            , 1) = YEARWEEK(CURDATE()
+            , 1)
+    order by DAYOFWEEK(attendanceDate)
+  </select>
 </mapper>

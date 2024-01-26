@@ -1,7 +1,9 @@
 package com.ssafy.easyback.user.model.service;
 
+import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.UserDto;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto getUserInfo(Long userId) {
-    return userMapper.selectUserInfobyId(userId);
+    return userMapper.selectUserbyId(userId);
   }
 
   /**
@@ -46,6 +48,14 @@ public class UserServiceImpl implements UserService {
       myFileSerer.save("/user/profile/image{userDto.getUserID}.jpg");
     */
     userMapper.insertUserInfo(userDto);
+  }
+
+  @Override
+  public UserAttendance getAttendance(Long userId) {
+    UserDto userDto = this.getUserInfo(userId);
+    List<Integer> attendanceList = userMapper.selectAttendanceById(userId);
+//    int attendanceList = userMapper.selectAttendanceById(userId);
+    return new UserAttendance(userDto, attendanceList);
   }
 
 }
