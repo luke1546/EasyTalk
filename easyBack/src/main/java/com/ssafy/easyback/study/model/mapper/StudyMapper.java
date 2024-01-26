@@ -1,5 +1,6 @@
 package com.ssafy.easyback.study.model.mapper;
 
+import com.ssafy.easyback.study.model.dto.OptionDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
 import java.util.List;
 
@@ -8,13 +9,16 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface StudyMapper {
-  List<String> getList() throws Exception;
-  List<WordDto> getWordList(WordDto wordDto) throws Exception;
+  List<WordDto> getWordsList(WordDto wordDto) throws Exception;
   void insertWord(WordDto wordDto) throws Exception;
 
   void insertMeaning(WordMeaningDto wordMeaningDto) throws Exception;
 
   void updateUri(String word) throws Exception;
 
-  int checkWord(String word);
+  int checkWord(String word) throws Exception;
+
+  void addToMyWordBook(WordDto wordDto) throws Exception;
+
+  void getMyWordBookList(WordDto wordDto) throws Exception;
 }

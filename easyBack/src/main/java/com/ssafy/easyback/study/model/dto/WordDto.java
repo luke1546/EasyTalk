@@ -16,8 +16,9 @@ public class WordDto {
     private int wordId;
     private String word;
     private String pronunciation;
-    int level;
+    private int level;
     int type;
     String wordAudioUri;
     WordMeaningDto[] wordMeaningDto;
+    private OptionDto optionDto;
 }
