@@ -5,11 +5,14 @@ import com.ssafy.easyback.user.model.dto.UserDto;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   public final UserMapper userMapper;
@@ -54,8 +57,23 @@ public class UserServiceImpl implements UserService {
   public UserAttendance getAttendance(Long userId) {
     UserDto userDto = this.getUserInfo(userId);
     List<Integer> attendanceList = userMapper.selectAttendanceById(userId);
-//    int attendanceList = userMapper.selectAttendanceById(userId);
+
     return new UserAttendance(userDto, attendanceList);
   }
 
+  @Override
+  public void setAttendance(Long userId) {
+    final int ALREADY_CHECKED = 1;
+    if (userMapper.selectTodayAttendance(userId) == ALREADY_CHECKED) {
+      return;
+    }
+
+    userMapper.insertTodayAttendance(userId);
+  }
+
+  @Transactional
+  public void registerUserAndSetAttendance(UserDto userDto, Long userId) {
+    registerUserInfo(userDto);
+    setAttendance(userId);
+  }
 }

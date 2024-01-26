@@ -29,7 +29,11 @@ public class UserController {
   public ResponseEntity<HttpStatus> checkRegisteredUser(HttpSession session) {
     long userId = (Long) session.getAttribute("userId");
 
+    // 회원 등록된 사용자인지 확인
     HttpStatus httpStatus = userService.checkRegisteredUser(userId);
+    if (httpStatus == HttpStatus.OK) {
+      userService.setAttendance(userId); // 등록된 사용자이면 출석체크
+    }
 
     return ResponseEntity.status(httpStatus).build();
   }
@@ -40,7 +44,7 @@ public class UserController {
     Long userId = (Long) session.getAttribute("userId");
     userDto.setUserId(userId);
 
-    userService.registerUserInfo(userDto);
+    userService.registerUserAndSetAttendance(userDto, userId);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 

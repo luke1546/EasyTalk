@@ -10,5 +10,8 @@ public interface UserMapper {
   void insertUserInfo(UserDto userDto);
 
   List<Integer> selectAttendanceById(Long userId);
-//  Integer selectAttendanceById(Long userId);
+
+  int selectTodayAttendance(Long userId);
+
+  void insertTodayAttendance(Long userID);
 }

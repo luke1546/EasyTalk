@@ -30,4 +30,17 @@
             , 1)
     order by DAYOFWEEK(attendanceDate)
   </select>
+
+  <select id="selectTodayAttendance" parameterType="java.lang.Long"
+    resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM attendances
+    WHERE userID = #{userId}
+      AND attendanceDate = CURDATE();
+  </select>
+
+  <insert id="insertTodayAttendance" parameterType="java.lang.Long">
+    INSERT INTO attendances (userId, attendanceDate)
+    VALUES (#{userId}, CURDATE());
+  </insert>
 </mapper>
