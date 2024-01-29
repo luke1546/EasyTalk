@@ -11,10 +11,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class OptionDto {
-  private String order;
-  private String sort;
-  private String filter;
-  private int start;
-  private int end;
+public class TestDto {
+  private int questionId;
+  private int wordId;
+  String word;
+  String answer;
+  String wrong1;
+  String wrong2;
+  String wordAudioUri;
+  boolean isSaved;
 }

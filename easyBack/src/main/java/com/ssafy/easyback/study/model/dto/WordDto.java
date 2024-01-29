@@ -1,5 +1,6 @@
 package com.ssafy.easyback.study.model.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,9 @@ public class WordDto {
     private String word;
     private String pronunciation;
     private int level;
-    int type;
+    private String type;
     String wordAudioUri;
-    WordMeaningDto[] wordMeaningDto;
+    List<WordMeaningDto> wordMeaningDto;
     private OptionDto optionDto;
+    private boolean isSaved;
 }

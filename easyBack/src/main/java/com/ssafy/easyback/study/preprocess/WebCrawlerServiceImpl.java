@@ -2,7 +2,7 @@ package com.ssafy.easyback.study.preprocess;
 
 import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
-import com.ssafy.easyback.study.model.mapper.StudyMapper;
+import com.ssafy.easyback.study.model.mapper.WordMapper;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class WebCrawlerServiceImpl implements WebCrawlerService{
-  private final StudyMapper studyMapper;
+  private final WordMapper wordMapper;
   String pronunciation = " ";
   ArrayList<String> partOfSpeech = new ArrayList<>();
   ArrayList<String> meaning = new ArrayList<>();
@@ -129,17 +129,17 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
     wordDto.setLevel(level);
     wordDto.setPronunciation(pronunciation);
     wordDto.setWordAudioUri(wordAudioUri);
-    if(studyMapper.checkWord(word) == 0)  {
-      studyMapper.insertWord(wordDto);
+    if(wordMapper.checkWord(word) == 0)  {
+      wordMapper.insertWord(wordDto);
       for(int i=0; i<mCount; i++){
         wordMeaningDto[i] = new WordMeaningDto();
         wordMeaningDto[i].setWord(word);
         wordMeaningDto[i].setMeaning(meaning.get(i));
         if(partOfSpeech.size()<=i)  wordMeaningDto[i].setPartOfSpeech("");
         else wordMeaningDto[i].setPartOfSpeech(partOfSpeech.get(i));
-        studyMapper.insertMeaning(wordMeaningDto[i]);
+        wordMapper.insertMeaning(wordMeaningDto[i]);
       }
-      studyMapper.updateUri(word);
+      wordMapper.updateUri(word);
       System.out.println(word + "와 " + mCount + "개의 뜻이 DB에 입력되었습니다.");
     }else   System.out.println(word + "는 이미 DB에 존재하는 단어입니다.");
   }

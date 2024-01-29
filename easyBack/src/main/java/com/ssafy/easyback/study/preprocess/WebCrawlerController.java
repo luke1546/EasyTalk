@@ -2,7 +2,7 @@ package com.ssafy.easyback.study.preprocess;
 
 import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
-import com.ssafy.easyback.study.model.mapper.StudyMapper;
+import com.ssafy.easyback.study.model.mapper.WordMapper;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
