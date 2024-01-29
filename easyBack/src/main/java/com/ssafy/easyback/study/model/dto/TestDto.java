@@ -15,7 +15,7 @@ public class TestDto {
   private int questionId;
   private int wordId;
   String word;
-  String answer;
+  String meaning;
   String wrong1;
   String wrong2;
   String wordAudioUri;

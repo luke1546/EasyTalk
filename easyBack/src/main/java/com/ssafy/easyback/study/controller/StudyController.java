@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,5 +79,15 @@ public class StudyController {
     param.put("testType", testType);
     param.put("level", 1);
     return ResponseEntity.ok(studyService.getWordTest(param));
+  }
+
+  @PutMapping("word/test")
+  public ResponseEntity<String> insertAnswerList(@RequestBody Map<String, Object> param) throws Exception {
+    studyService.insertAnswerList(param);
+    return ResponseEntity.ok("ok");
+  }
+  @PutMapping("test")
+  public Integer test(@RequestBody Map<String, Integer> testId) {
+    return testId.get("testId");
   }
 }

@@ -18,4 +18,6 @@ public interface StudyService {
   WordDto getWord(WordDto wordDto) throws  Exception;
 
   List<TestDto> getWordTest(Map<String, Object> param) throws Exception;
+
+    void insertAnswerList(Map<String, Object> param) throws Exception;
 }

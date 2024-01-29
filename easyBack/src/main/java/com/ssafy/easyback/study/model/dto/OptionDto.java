@@ -12,9 +12,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class OptionDto {
-  private String order;
-  private String sort;
+  private String order; // 정렬
+  private String sort;  // 정렬
   private String filter;
-  private int start;
-  private int end;
+  private int start;  //page 관련
+  private int end;    //page 관련
 }

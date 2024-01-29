@@ -1,10 +1,13 @@
 package com.ssafy.easyback.study.model.service;
 
+import com.google.gson.Gson;
 import com.ssafy.easyback.study.model.dto.OptionDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
 import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
 import com.ssafy.easyback.study.model.mapper.WordMapper;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,16 +65,28 @@ public class StudyServiceImpl implements StudyService{
 
     for(int i=0; i<answer.size(); i++) {    // 20개 정답, 뜻, 오답보기2개 만들어서 db에 넣기
       int wordId = answer.get(i);
-      List<WordMeaningDto> meaning = wordMapper.getMeaning(wordId);  // 정답 뜻 가져오기
-      List<String> wrong = wordMapper.createWrong(wordId); // 오답보기 2개 생성하기
+      List<WordMeaningDto> meaning = wordMapper.getMeaning(wordId);  // 뜻 가져오기
+      List<Map<String, String>> wrong = wordMapper.createWrong(wordId); // 오답보기 2개 생성하기
       param.put("wordId",wordId);                         //정답 wordId
-      param.put("answer",meaning.get(0).getMeaning());    // 정답 보기 세팅
+      param.put("meaning",meaning.get(0).getMeaning());    // 정답 보기 세팅
       if (wrong.size() == 2) {
-        param.put("wrong1", wrong.get(0));    // 오답 보기1 세팅
-        param.put("wrong2", wrong.get(1));    // 오답 보기2 세팅
+        if(param.get("testType").equals("meaning")) {
+          param.put("wrong1", wrong.get(0).get("meaning"));    // 오답 보기1 세팅
+          param.put("wrong2", wrong.get(1).get("meaning"));    // 오답 보기2 세팅
+        }else{
+          param.put("wrong1", wrong.get(0).get("word"));    // 오답 보기1 세팅
+          param.put("wrong2", wrong.get(1).get("word"));    // 오답 보기2 세팅
+        }
       }
       wordMapper.insertWordTests(param);   //db에 넣기
     }
     return wordMapper.getWordTest(testId);  // 테스트 정보들 모두 가져오기
+  }
+
+  @Override
+  public void insertAnswerList(Map<String, Object> param) throws Exception {
+    List<HashMap<String,Object>> answers = (List<HashMap<String, Object>>) param.get("answers");
+    for(HashMap<String,Object> answer : answers) wordMapper.insertAnswer(answer);
+    wordMapper.gradingWordTest(param.get("testId"));
   }
 }

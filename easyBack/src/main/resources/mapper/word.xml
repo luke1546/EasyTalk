@@ -43,8 +43,8 @@
   </insert>
 
   <insert id="insertWordTests" parameterType="map">                    -- 문제 20개 생성해서 DB입력
-    insert into word_tests(testId, wordId, wrong1, wrong2, answer)
-    values(#{testId}, #{wordId}, #{wrong1}, #{wrong2}, #{answer})
+    insert into word_tests(testId, wordId, wrong1, wrong2, meaning)
+    values(#{testId}, #{wordId}, #{wrong1}, #{wrong2}, #{meaning})
   </insert>
 
   <select id="getTestId" parameterType="Long" resultType="Integer">    -- 유저가 방금 생성한 testId 가져오기
@@ -52,24 +52,26 @@
     from tests
     where userId = #{userId}
     order by testId desc
-    limit 1;
+    limit 1
   </select>
 
 
   <select id="getWordTest" parameterType="int" resultType="TestDto">
-    select questionId, w.wordId, word, answer, wrong1, wrong2, w.wordAudioUri
-    from word_tests t
-        join words w
-        on t.wordId = w.wordId
-    where testId = #{testId};
+      select questionId, w.wordId, word, meaning, wrong1, wrong2, w.wordAudioUri
+      from word_tests t
+      join words w
+      on t.wordId = w.wordId
+      where testId = #{testId}
   </select>
 
-  <select id="createWrong" parameterType="int" resultType="String">
-    select meaning
-    from words_meaning
-    where wordId != #{wordId}
-    order by rand()
-      limit 2
+  <select id="createWrong" parameterType="int" resultType="map">
+      select word, meaning
+      from words_meaning m
+      join words w
+      on m.wordId = w.wordId
+      where w.wordId != #{wordId}
+      order by rand()
+      limit 2;
   </select>
 
   <select id="createAnswer" parameterType="map" resultType="Integer">
@@ -79,6 +81,29 @@
     order by rand()
     limit 20
   </select>
+
+    <update id="insertAnswer" parameterType="map">
+        update word_tests
+        set input = #{input}
+        where questionId = #{questionId}
+    </update>
+
+    <update id="gradingWordTest" parameterType="int">
+        update tests
+            set score = (
+                select count(*)*5
+                from word_tests t
+                join words w
+                on t.wordId = w.wordId
+                where questionId = any(
+                    select questionId
+                    from word_tests
+                    where testId = #{testId}
+                )
+            and (input = word or input = meaning)
+        )
+        where testId = #{testId}
+    </update>
 
   <insert id="addToMyWordBook" parameterType="wordDto">
     insert into word_books(userId, wordId, wordDate)
@@ -119,9 +144,6 @@
         from words
         where word=#{word}
     </select>
-<!--    <select id="getMeaning" -->
-<!--      select *-->
-<!--      from words_meaning-->
-<!--      where wordid = #{wordId}-->
+
 
 </mapper>
