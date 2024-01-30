@@ -28,3 +28,5 @@ Textbox.propTypes = {
 Textbox.defaultProps = {
   context2: null,
 };
+
+export default Textbox
