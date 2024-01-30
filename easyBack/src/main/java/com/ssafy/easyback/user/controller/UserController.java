@@ -44,6 +44,7 @@ public class UserController {
     Long userId = (Long) session.getAttribute("userId");
     userDto.setUserId(userId);
 
+
     userService.registerUserAndSetAttendance(userDto, userId);
     return ResponseEntity.status(HttpStatus.OK).build();
   }

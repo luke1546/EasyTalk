@@ -45,7 +45,6 @@ public class KakaoAuthController {
   @GetMapping("/login/oauth/kakao")
   public String login(@RequestParam("code") String code, HttpSession session) {
     session.setAttribute("access_token", kakaoService.getKakaoToken(code).getAccess_token());
-
     KakaoToken kakaoToken = kakaoService.validateAccessToken(
         (String) session.getAttribute("access_token")).block();
     
