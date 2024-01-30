@@ -6,12 +6,14 @@ import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
 import com.ssafy.easyback.group.model.dto.GroupInfoDto;
 import com.ssafy.easyback.group.model.mapper.GroupMapper;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -32,12 +34,13 @@ public class GroupServiceImpl implements GroupService {
 
   /**
    * 그룹 가입하기
+   * 채팅방에도 정보설정
    * @param params
    * @return
    */
   @Override
   public HttpStatus joinGroupMember(Map<String, Object> params) {
-    
+
     // 입력된 패스워드 일치확인
     if (!groupMapper.selectGroupPassword((int) params.get("groupId"))
         .equals((String) params.get("password"))) {
@@ -56,14 +59,39 @@ public class GroupServiceImpl implements GroupService {
 
   /**
    * 그룹 개설하기
+   * 그룹 개설이후 초기데이터 생성
+   *    * groups 그룹 테이블
+   *    * group_relationships 유저가 속한 그룹 관리테이블
+   *    * rooms 채팅방 테이블
+   *    * user_rooms 유저가 속한 채팅방 관리테이블
+   *    * 4개 테이블 모두 초기생성
    * @param createGroupDto
    * @return
    */
+
+  @Transactional
   @Override
   public HttpStatus createGroup(CreateGroupDto createGroupDto) {
-    int resultStatus = groupMapper.insertGroup(createGroupDto);
 
-    return resultStatus == SqlResultStatus.SUCCESS ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+    // 그룹 만들기
+    groupMapper.insertGroup(createGroupDto);
+    log.info("groupId={}", createGroupDto.getGroupId());
+
+    // 유저와그룹간 관계 생성
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("userId", createGroupDto.getUserId());
+    params.put("groupId", createGroupDto.getGroupId());
+    params.put("role", GroupConst.ROLE_GROUP_MASTER);
+    groupMapper.insertGroupRelationship(params);
+
+    // 채팅방 만들기
+    params.put("roomName", createGroupDto.getGroupName());
+    params.put("notice", "아직 공지가 없습니다");
+    groupMapper.insertRoom(params);
+    
+    // 유저와 채팅방간 관리생성
+    groupMapper.insertUserRoom(params);
+    return HttpStatus.OK;
   }
 
 

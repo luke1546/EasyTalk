@@ -3,20 +3,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.easyback.group.model.mapper.GroupMapper">
-  <select id="selectGroupList" parameterType="map" resultType="com.ssafy.easyback.group.model.dto.GetGroupDto">
+  <select id="selectGroupList" parameterType="map"
+    resultType="com.ssafy.easyback.group.model.dto.GetGroupDto">
     SELECT G.groupId,
-           G.groupName,
-           count(*) as currentCount,
-           G.limitCount,
-           U.nickname as leader,
-           G.description,
-           G.targetCycle,
-           G.targetTime,
-           G.groupDate
+    G.groupName,
+    count(*) as currentCount,
+    G.limitCount,
+    U.nickname as leader,
+    G.description,
+    G.targetCycle,
+    G.targetTime,
+    G.groupDate
     FROM groups AS G
-           LEFT JOIN group_relationships GR ON G.groupId = GR.groupId
-           LEFT JOIN rooms R ON G.groupId = R.groupId
-           LEFT JOIN users U ON R.userId = U.userId
+    LEFT JOIN group_relationships GR ON G.groupId = GR.groupId
+    LEFT JOIN rooms R ON G.groupId = R.groupId
+    LEFT JOIN users U ON R.userId = U.userId
     <where>
       <choose>
         <when test="keyword == null">
@@ -45,50 +46,29 @@
     WHERE groupId = #{groupId}
   </select>
 
-  <insert id="insertGroup" parameterType="com.ssafy.easyback.group.model.dto.CreateGroupDto">
+  <insert id="insertGroup" parameterType="com.ssafy.easyback.group.model.dto.CreateGroupDto"
+    useGeneratedKeys="true" keyProperty="groupId">
     INSERT INTO `groups`
     (password, groupName, limitCount, description, targetCycle, targetTime)
     VALUES (#{password}, #{groupName}, #{limitCount}, #{description}, #{targetCycle}, #{targetTime})
   </insert>
 
-<!--  <select id="selectUserbyId" resultType="com.ssafy.easyback.user.model.dto.UserDto">
-    SELECT userId,
-           nickname,
-           profileImageUri,
-           exp,
-           info,
-           phone
-    FROM users
-    WHERE userId = #{userId}
-  </select>
-
-  <insert id="insertUserInfo" parameterType="com.ssafy.easyback.user.model.dto.UserDto">
-    INSERT INTO `users`
-      (userId, nickname, profileImageUri, exp, info, phone)
-    VALUES (#{userId}, #{nickname}, #{profileImageUri}, #{exp}, #{info}, #{phone})
+  <insert id="insertGroupRelationship" parameterType="map">
+    INSERT INTO `group_relationships`
+      (userId, groupId, role)
+    VALUES (#{userId}, #{groupId}, #{role})
   </insert>
 
-  <select id="selectAttendanceById" parameterType="java.lang.Long"
-    resultType="java.lang.Integer">
-    SELECT DAYOFWEEK(attendanceDate)
-    FROM attendances
-    WHERE userId = #{userId}
-      AND YEARWEEK(attendanceDate
-            , 1) = YEARWEEK(CURDATE()
-            , 1)
-    order by DAYOFWEEK(attendanceDate)
-  </select>
+  <insert id="insertRoom" parameterType="map" useGeneratedKeys="true" keyProperty="roomId">
+    INSERT INTO `rooms`
+      (roomName, userId, notice, groupId)
+    VALUES (#{roomName}, #{userId}, #{notice}, #{groupId})
+  </insert>
 
-  <select id="selectTodayAttendance" parameterType="java.lang.Long"
-    resultType="java.lang.Integer">
-    SELECT COUNT(*)
-    FROM attendances
-    WHERE userID = #{userId}
-      AND attendanceDate = CURDATE();
-  </select>
+  <insert id="insertUserRoom" parameterType="map">
+    INSERT INTO `user_rooms`
+      (userId, roomId)
+    VALUES (#{userId}, #{roomId})
+  </insert>
 
-  <insert id="insertTodayAttendance" parameterType="java.lang.Long">
-    INSERT INTO attendances (userId, attendanceDate)
-    VALUES (#{userId}, CURDATE());
-  </insert>-->
 </mapper>

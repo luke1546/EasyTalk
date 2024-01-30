@@ -1,5 +1,6 @@
 package com.ssafy.easyback.group.model.dto;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,12 @@ import lombok.Setter;
 @Setter
 public class CreateGroupDto {
 
-  @Size(min=6, max=6, message = "길이를 맞춰줘")
+  Long userId;
+  int groupId;
+  @Size(min=6, max=6, message = "bad Request")
   String password;
+
+  @NotNull
   String groupName;
   int limitCount;
   String description;

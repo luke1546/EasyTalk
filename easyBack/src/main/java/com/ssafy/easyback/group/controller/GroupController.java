@@ -1,5 +1,6 @@
 package com.ssafy.easyback.group.controller;
 
+import com.ssafy.easyback.exhandler.ErrorResult;
 import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
 import com.ssafy.easyback.group.model.dto.GroupInfoDto;
@@ -34,8 +35,8 @@ public class GroupController {
   final GroupService groupService;
 
   /**
-   * 그룹리스트 조회
-   * 내가 가입한 그룹리스 / 입력한 키워드로 검색한 그룹 리스트
+   * 그룹리스트 조회 내가 가입한 그룹리스 / 입력한 키워드로 검색한 그룹 리스트
+   *
    * @param keyword
    * @param session
    * @return
@@ -55,6 +56,11 @@ public class GroupController {
 
   /**
    * 그룹 개설
+   *    * groups 그룹 테이블
+   *    * group_relationships 유저가 속한 그룹 관리테이블
+   *    * rooms 채팅방 테이블
+   *    * user_rooms 유저가 속한 채팅방 관리테이블
+   *    * 4개 테이블 모두 초기생성
    * @param createGroupDto
    * @param bindingResult
    * @param session
@@ -62,22 +68,26 @@ public class GroupController {
    */
   @PostMapping
   public ResponseEntity<Object> createGroup(@Validated @ModelAttribute("CreateGroupDto")
-      CreateGroupDto createGroupDto, BindingResult bindingResult, HttpSession session) {
-
+  CreateGroupDto createGroupDto, BindingResult bindingResult, HttpSession session) {
+    
+    // 사용자 입력값 검증
     if (bindingResult.hasErrors()) {
-      List<String> errorMessages = bindingResult.getAllErrors()
-          .stream()
-          .map(ObjectError::getDefaultMessage)
-          .collect(Collectors.toList());
-      return ResponseEntity.badRequest().body(errorMessages);
+      HttpStatus resultStatus = HttpStatus.BAD_REQUEST;
+      ErrorResult errorResult = new ErrorResult(resultStatus.toString(),
+          resultStatus.getReasonPhrase());
+
+      return ResponseEntity.status(resultStatus).body(errorResult);
     }
 
+    createGroupDto.setUserId((Long) session.getAttribute("userId"));
     HttpStatus resultStatus = groupService.createGroup(createGroupDto);
 
     return ResponseEntity.status(resultStatus).build();
   }
+
   /**
    * 그룹 가입 신청로직
+   *
    * @param groupId
    * @param password
    * @param session

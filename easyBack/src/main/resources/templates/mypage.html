@@ -48,4 +48,24 @@
 
   <button type="submit">등록</button>
 </form>
+
+<hr><hr><hr>
+<h1>그룹 개설</h1>
+<form action="http://localhost/group" method="post">
+  <label for="password">Password:</label><br>
+  <input type="text" id="password" name="password" value="ddf2f1" required minlength="6"><br>
+  <label for="groupName">Group Name:</label><br>
+  <input type="text" id="groupName" name="groupName" value="CS스터디" required><br>
+  <label for="limitCount">Limit Count:</label><br>
+  <input type="number" id="limitCount" name="limitCount" value="20" required><br>
+  <label for="description">Description:</label><br>
+  <input type="text" id="description" name="description" value="0 char 0 char" required><br>
+  <label for="targetCycle">Target Cycle:</label><br>
+  <input type="text" id="targetCycle" name="targetCycle" value="하루" required><br>
+  <label for="targetTime">Target Time:</label><br>
+  <input type="number" id="targetTime" name="targetTime" value="60" required><br>
+  <input type="submit" value="Submit">
+</form>
+
+
 </body>
