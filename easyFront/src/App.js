@@ -30,7 +30,6 @@ const App = () => {
           <Route path="/my" element={<MyHomePage />} />
         </Routes>
         <Footer />
-        <Button />
       </div>
     </BrowserRouter>
   );
