@@ -128,7 +128,7 @@ public class StudyServiceImpl implements StudyService{
   }
 
   @Override
-  public AccuracyDto getAccuracy(Map<String, Object> param) throws Exception {
+  public AccuracyDto getAccuracy(Map<String, Object> param) throws Exception {    //정확성 측정(clova)
     String clientId = "0wj7mepfab";             // Application Client ID";
     String clientSecret = "n7s3dQlngQtgJSpjMfKpe3kyEirZSuC4bVVPzqeD";     // Application Client Secret";
     String FilePath = (String) param.get("url");
@@ -187,13 +187,37 @@ public class StudyServiceImpl implements StudyService{
     return accuracyDto;
   }
 
-  private int calculateScore(String recognize, String originalText) {
-    int score = 0;
-    process(recognize,originalText);  // 특수문자 제거, 소문자 변환
-    return score;
-  }
+  private int calculateScore(String recognize, String originalText) {   //LCS BJ_9251
+    StringBuilder sb = new StringBuilder();
+    originalText = originalText.replaceAll("[^가-힣a-zA-Z0-9\\s]", "");
+    originalText = originalText.replace(" ", "");
+    recognize = recognize.replace(" ", "");
+    System.out.println("원문 : " + originalText);
+    System.out.println("인식된 문장 : " + recognize);
+    int R = originalText.length();
+    int C = recognize.length();
+    int[][] dp = new int[R+1][C+1];
 
-  private void process(String recognize, String originalText) {
+    for(int i=1; i<=R; i++) for(int j=1; j<=C; j++){
+      if(recognize.charAt(j-1) == originalText.charAt(i-1))    dp[i][j] = dp[i-1][j-1]+1;
+      else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);;
+    }
+    System.out.println("전체 글자 수 : " + R);
+    System.out.println("전체 글자 수 : " + dp[R][C]);
+    System.out.println("점수 : " + (int)(dp[R][C]/(float)R*100));
 
+    int i=R, j=C;
+    while(i > 0 && j>0){
+      if(recognize.charAt(j-1) == originalText.charAt(i-1)){
+        sb.append(recognize.charAt(j-1));
+        j--;
+        i--;
+      }else{
+        if(dp[i-1][j] > dp[i][j-1]) i--;
+        else j--;
+      }
+    }
+    System.out.println("일치하는 부분 : " + sb.reverse().toString());
+    return (int)(dp[R][C]/(float)R*100);
   }
 }

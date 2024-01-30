@@ -33,15 +33,16 @@ const AudioRecorder = () => {
           setRecording(false);
           setTimeout(() => {
               sendDataToServer();
-          }, 2000);
+          }, 500);
     }, 3000);
 });
 };
     
     const sendDataToServer = async () => {
         const url = 'http://localhost/study/sentence/test'; // 실제 백엔드 API URL로 변경해주세요.
-        const data = {
-            url: 'C:\\Users\\SSAFY\\Downloads\\recording.wav',
+      const data = {
+          
+            url: 'C:\\Users\\이호성\\Downloads\\recording' +  + '.wav',
             sentence: "do you wanna build a snowman?",
         };
     
