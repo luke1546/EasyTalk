@@ -1,5 +1,6 @@
 package com.ssafy.easyback.study.model.mapper;
 
+import com.ssafy.easyback.study.model.dto.SentenceDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
 
@@ -17,7 +18,7 @@ public interface WordMapper {
 
   void insertMeaning(WordMeaningDto wordMeaningDto) throws Exception;
 
-  void updateUri(String word) throws Exception;
+  void updateUri() throws Exception;
 
   int checkWord(String word) throws Exception;
 

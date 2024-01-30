@@ -2,6 +2,7 @@ package com.ssafy.easyback.study.preprocess;
 
 import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
+import com.ssafy.easyback.study.model.mapper.SentenceMapper;
 import com.ssafy.easyback.study.model.mapper.WordMapper;
 
 import java.awt.*;
@@ -12,10 +13,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WebCrawlerServiceImpl implements WebCrawlerService{
   private final WordMapper wordMapper;
+  private final SentenceMapper sentenceMapper;
   String pronunciation = " ";
   ArrayList<String> partOfSpeech = new ArrayList<>();
   ArrayList<String> meaning = new ArrayList<>();
@@ -34,7 +36,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
   ArrayList<String> wordBook = new ArrayList<>();
   String ChromeDriverUri = "C:\\SSAFY\\workplaces\\chromedriver.exe";
   @Override
-  public void insert() throws Exception {
+  public void insertWord() throws Exception {
       int count = 1;
     for(int level=1; level<7; level++) {
       String filePath =
@@ -139,7 +141,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
         else wordMeaningDto[i].setPartOfSpeech(partOfSpeech.get(i));
         wordMapper.insertMeaning(wordMeaningDto[i]);
       }
-      wordMapper.updateUri(word);
+      wordMapper.updateUri();
       System.out.println(word + "와 " + mCount + "개의 뜻이 DB에 입력되었습니다.");
     }else   System.out.println(word + "는 이미 DB에 존재하는 단어입니다.");
   }
@@ -164,5 +166,30 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
     we.click();
     copyAndPaste(textToCopy);
     Thread.sleep(500);
+  }
+
+  @Override
+  public void insertSentence() throws Exception {
+    int count = 1;
+      String filePath =
+          "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\sentence1000.txt";
+//     BufferedReader를 사용하여 파일 읽기
+      try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String meaning;
+        // 파일의 끝에 도달할 때까지 한 줄씩 읽어 출력합니다.
+        while ((meaning = br.readLine()) != null) {
+          String sentence = br.readLine();
+          meaning = meaning.split(" ",2)[1];
+          HashMap<String, Object> param = new HashMap<>();
+          param.put("sentence", sentence);
+          param.put("meaning", meaning);
+          insertSentenceDB(param);
+        }
+      } catch (IOException e) {}
+  }
+
+  private void insertSentenceDB(HashMap<String, Object> param) throws Exception {
+    sentenceMapper.insertSentence(param);
+    sentenceMapper.updateUri();
   }
 }

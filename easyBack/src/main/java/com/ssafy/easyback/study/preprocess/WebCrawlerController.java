@@ -21,8 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebCrawlerController {
   private final WebCrawlerService webCrawlerService;
   @GetMapping("insertword")
-  public ResponseEntity<String> insert() throws Exception{
-    webCrawlerService.insert();
+  public ResponseEntity<String> insertWord() throws Exception{
+    webCrawlerService.insertWord();
+    return ResponseEntity.ok("200");
+  }
+
+  @GetMapping("insertsentence")
+  public ResponseEntity<String> insertSentence() throws Exception{
+    webCrawlerService.insertSentence();
     return ResponseEntity.ok("200");
   }
 }
