@@ -109,9 +109,15 @@ public class GroupController {
   }
 
   @GetMapping("/{groupId}/attendance")
-  public ResponseEntity<Object> getAttendanceInfos(@PathVariable("groupId") int groupId) {
+  public ResponseEntity<Object> readAttendanceInfos(@PathVariable("groupId") int groupId) {
 
     return ResponseEntity.status(HttpStatus.OK)
         .body(groupService.findGroupMemberAttendances(groupId));
+  }
+
+  @GetMapping("/{groupId}/description")
+  public ResponseEntity<Object> readGroupDescription(@PathVariable("groupId") int groupId) {
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(groupService.findGroupDescription(groupId));
   }
 }

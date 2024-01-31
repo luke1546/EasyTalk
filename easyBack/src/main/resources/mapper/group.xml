@@ -78,6 +78,10 @@
     WHERE g.groupId = #{groupId}
   </select>
 
-
+  <select id="selectGroupDescription" parameterType="int" resultType="com.ssafy.easyback.group.model.dto.DescriptionDto">
+    SELECT description
+    FROM `groups`
+    WHERE groupId = #{groupId};
+  </select>
 
 </mapper>

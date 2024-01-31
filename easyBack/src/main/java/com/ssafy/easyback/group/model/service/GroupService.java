@@ -1,6 +1,7 @@
 package com.ssafy.easyback.group.model.service;
 
 import com.ssafy.easyback.group.model.dto.CreateGroupDto;
+import com.ssafy.easyback.group.model.dto.DescriptionDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
 import java.util.List;
@@ -16,4 +17,6 @@ public interface GroupService {
   HttpStatus createGroup(CreateGroupDto createGroupDto);
 
   List<UserAttendance> findGroupMemberAttendances(int groupId);
+
+  DescriptionDto findGroupDescription(int groupId);
 }

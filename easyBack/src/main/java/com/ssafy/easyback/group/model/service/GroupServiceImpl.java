@@ -3,6 +3,7 @@ package com.ssafy.easyback.group.model.service;
 import com.ssafy.easyback.consts.SqlResultStatus;
 import com.ssafy.easyback.group.model.GroupConst;
 import com.ssafy.easyback.group.model.dto.CreateGroupDto;
+import com.ssafy.easyback.group.model.dto.DescriptionDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
 import com.ssafy.easyback.group.model.mapper.GroupMapper;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
@@ -108,5 +109,10 @@ public class GroupServiceImpl implements GroupService {
     }
 
     return userAttendanceList;
+  }
+
+  public DescriptionDto findGroupDescription(int groupId) {
+    log.info("aa{}=", groupMapper.selectGroupDescription(groupId).getDescription());
+    return groupMapper.selectGroupDescription(groupId);
   }
 }
