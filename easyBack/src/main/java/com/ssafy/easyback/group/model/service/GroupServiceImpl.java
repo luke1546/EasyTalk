@@ -4,14 +4,12 @@ import com.ssafy.easyback.consts.SqlResultStatus;
 import com.ssafy.easyback.group.model.GroupConst;
 import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
-import com.ssafy.easyback.group.model.dto.GroupInfoDto;
 import com.ssafy.easyback.group.model.mapper.GroupMapper;
+import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
-import com.ssafy.easyback.user.model.dto.UserDto;
+import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
-import com.ssafy.easyback.user.model.service.UserService;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,10 +97,10 @@ public class GroupServiceImpl implements GroupService {
   }
 
   public List<UserAttendance> findGroupMemberAttendances(int groupId) {
-    List<UserDto> userDtoList = groupMapper.findGroupMemberInfo(groupId);
+    List<ResponseUserDto> userDtoList = groupMapper.findGroupMemberInfo(groupId);
 
-    List<UserAttendance>  userAttendanceList = new ArrayList<>();
-    for (UserDto userDto : userDtoList) {
+    List<UserAttendance> userAttendanceList = new ArrayList<>();
+    for (ResponseUserDto userDto : userDtoList) {
       List<Integer> attendanceList = userMapper.selectAttendanceById(
           userDto.getUserId());
 

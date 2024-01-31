@@ -12,6 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserAttendance {
 
-  UserDto userDto;
+  ResponseUserDto userDto;
   List<Integer> attendanceList;
 }

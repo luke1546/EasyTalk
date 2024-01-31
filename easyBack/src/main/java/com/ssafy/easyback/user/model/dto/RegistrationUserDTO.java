@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class UserDto {
+public class RegistrationUserDTO {
 
   Long userId;
   String nickname;

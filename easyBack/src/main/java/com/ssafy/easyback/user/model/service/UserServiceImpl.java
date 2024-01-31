@@ -1,7 +1,8 @@
 package com.ssafy.easyback.user.model.service;
 
+import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
-import com.ssafy.easyback.user.model.dto.UserDto;
+import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserService {
   public final UserMapper userMapper;
 
   @Override
-  public UserDto getUserInfo(Long userId) {
+  public ResponseUserDto getUserInfo(Long userId) {
     return userMapper.selectUserbyId(userId);
   }
 
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
    */
   @Override
   public HttpStatus checkRegisteredUser(long userId) {
-    UserDto userDto = this.getUserInfo(userId);
+    ResponseUserDto userDto = this.getUserInfo(userId);
 
     if (userDto == null) {
       return HttpStatus.UNAUTHORIZED;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
    * @param userDto
    */
   @Override
-  public void registerUserInfo(UserDto userDto) {
+  public void registerUserInfo(RegistrationUserDTO userDto) {
     /*
       파일서버에 저장하는 로직
       myFileSerer.save("/user/profile/image{userDto.getUserID}.jpg");
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserAttendance getAttendance(Long userId) {
-    UserDto userDto = this.getUserInfo(userId);
+    ResponseUserDto userDto = this.getUserInfo(userId);
     List<Integer> attendanceList = userMapper.selectAttendanceById(userId);
 
     return new UserAttendance(userDto, attendanceList);
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Transactional
-  public void registerUserAndSetAttendance(UserDto userDto, Long userId) {
+  public void registerUserAndSetAttendance(RegistrationUserDTO userDto, Long userId) {
     registerUserInfo(userDto);
     setAttendance(userId);
   }

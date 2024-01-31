@@ -2,7 +2,7 @@ package com.ssafy.easyback.user.controller;
 
 import com.ssafy.easyback.social.model.service.KakaoService;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
-import com.ssafy.easyback.user.model.dto.UserDto;
+import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<HttpStatus> registerUserInfo(@ModelAttribute("userDto") UserDto userDto,
+  public ResponseEntity<HttpStatus> registerUserInfo(@ModelAttribute("userDto") RegistrationUserDTO userDto,
       HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     userDto.setUserId(userId);
