@@ -3,6 +3,8 @@ package com.ssafy.easyback.group.model.mapper;
 import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
 import com.ssafy.easyback.group.model.dto.GroupInfoDto;
+import com.ssafy.easyback.user.model.dto.UserAttendance;
+import com.ssafy.easyback.user.model.dto.UserDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,4 +18,5 @@ public interface GroupMapper {
   int insertGroupRelationship(HashMap<String, Object> params);
   int insertRoom(HashMap<String, Object> params);
   int insertUserRoom(HashMap<String, Object> params);
+  List<UserDto> findGroupMemberInfo(int groupId);
 }

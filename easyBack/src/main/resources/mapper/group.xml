@@ -71,4 +71,13 @@
     VALUES (#{userId}, #{roomId})
   </insert>
 
+  <select id="findGroupMemberInfo" resultType="com.ssafy.easyback.user.model.dto.UserDto">
+    SELECT u.userId, u.nickname, u.profileImageUri
+    FROM users u
+           JOIN group_relationships g ON u.userId = g.userId
+    WHERE g.groupId = #{groupId}
+  </select>
+
+
+
 </mapper>

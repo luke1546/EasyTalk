@@ -14,5 +14,4 @@ public class UserAttendance {
 
   UserDto userDto;
   List<Integer> attendanceList;
-//  int attendanceList;
 }

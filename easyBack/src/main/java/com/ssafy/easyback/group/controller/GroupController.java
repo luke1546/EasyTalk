@@ -55,12 +55,9 @@ public class GroupController {
   }
 
   /**
-   * 그룹 개설
-   *    * groups 그룹 테이블
-   *    * group_relationships 유저가 속한 그룹 관리테이블
-   *    * rooms 채팅방 테이블
-   *    * user_rooms 유저가 속한 채팅방 관리테이블
-   *    * 4개 테이블 모두 초기생성
+   * 그룹 개설 * groups 그룹 테이블 * group_relationships 유저가 속한 그룹 관리테이블 * rooms 채팅방 테이블 * user_rooms 유저가 속한
+   * 채팅방 관리테이블 * 4개 테이블 모두 초기생성
+   *
    * @param createGroupDto
    * @param bindingResult
    * @param session
@@ -69,7 +66,7 @@ public class GroupController {
   @PostMapping
   public ResponseEntity<Object> createGroup(@Validated @ModelAttribute("CreateGroupDto")
   CreateGroupDto createGroupDto, BindingResult bindingResult, HttpSession session) {
-    
+
     // 사용자 입력값 검증
     if (bindingResult.hasErrors()) {
       HttpStatus resultStatus = HttpStatus.BAD_REQUEST;
@@ -109,5 +106,12 @@ public class GroupController {
     HttpStatus resultStatus = groupService.joinGroupMember(params);
 
     return ResponseEntity.status(resultStatus).build();
+  }
+
+  @GetMapping("/{groupId}/attendance")
+  public ResponseEntity<Object> getAttendanceInfos(@PathVariable("groupId") int groupId) {
+
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(groupService.findGroupMemberAttendances(groupId));
   }
 }

@@ -2,15 +2,19 @@ package com.ssafy.easyback.group.model.service;
 
 import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
-import com.ssafy.easyback.group.model.dto.GroupInfoDto;
+import com.ssafy.easyback.user.model.dto.UserAttendance;
+import com.ssafy.easyback.user.model.dto.UserDto;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 
 public interface GroupService {
+
   List<GetGroupDto> findGroupList(Map<String, Object> params);
 
   HttpStatus joinGroupMember(Map<String, Object> params);
 
   HttpStatus createGroup(CreateGroupDto createGroupDto);
+
+  List<UserAttendance> findGroupMemberAttendances(int groupId);
 }

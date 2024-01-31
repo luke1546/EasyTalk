@@ -6,6 +6,12 @@ import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
 import com.ssafy.easyback.group.model.dto.GroupInfoDto;
 import com.ssafy.easyback.group.model.mapper.GroupMapper;
+import com.ssafy.easyback.user.model.dto.UserAttendance;
+import com.ssafy.easyback.user.model.dto.UserDto;
+import com.ssafy.easyback.user.model.mapper.UserMapper;
+import com.ssafy.easyback.user.model.service.UserService;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class GroupServiceImpl implements GroupService {
 
   final GroupMapper groupMapper;
+  final UserMapper userMapper;
 
   /**
    * 파라매터에따라
+   *
    * @param params
    * @return
    */
@@ -33,8 +41,8 @@ public class GroupServiceImpl implements GroupService {
   }
 
   /**
-   * 그룹 가입하기
-   * 채팅방에도 정보설정
+   * 그룹 가입하기 채팅방에도 정보설정
+   *
    * @param params
    * @return
    */
@@ -51,20 +59,16 @@ public class GroupServiceImpl implements GroupService {
     if ((String) params.get("role") == null) {
       params.put("role", GroupConst.ROLE_GROUP_MEMBER);
     }
-    
+
     // 결과에 맞는 응답값 반환
     int resultStatus = groupMapper.insertGroupMember(params);
     return resultStatus == SqlResultStatus.SUCCESS ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
   }
 
   /**
-   * 그룹 개설하기
-   * 그룹 개설이후 초기데이터 생성
-   *    * groups 그룹 테이블
-   *    * group_relationships 유저가 속한 그룹 관리테이블
-   *    * rooms 채팅방 테이블
-   *    * user_rooms 유저가 속한 채팅방 관리테이블
-   *    * 4개 테이블 모두 초기생성
+   * 그룹 개설하기 그룹 개설이후 초기데이터 생성 * groups 그룹 테이블 * group_relationships 유저가 속한 그룹 관리테이블 * rooms 채팅방 테이블
+   * * user_rooms 유저가 속한 채팅방 관리테이블 * 4개 테이블 모두 초기생성
+   *
    * @param createGroupDto
    * @return
    */
@@ -88,11 +92,23 @@ public class GroupServiceImpl implements GroupService {
     params.put("roomName", createGroupDto.getGroupName());
     params.put("notice", "아직 공지가 없습니다");
     groupMapper.insertRoom(params);
-    
+
     // 유저와 채팅방간 관리생성
     groupMapper.insertUserRoom(params);
     return HttpStatus.OK;
   }
 
+  public List<UserAttendance> findGroupMemberAttendances(int groupId) {
+    List<UserDto> userDtoList = groupMapper.findGroupMemberInfo(groupId);
 
+    List<UserAttendance>  userAttendanceList = new ArrayList<>();
+    for (UserDto userDto : userDtoList) {
+      List<Integer> attendanceList = userMapper.selectAttendanceById(
+          userDto.getUserId());
+
+      userAttendanceList.add(new UserAttendance(userDto, attendanceList));
+    }
+
+    return userAttendanceList;
+  }
 }
