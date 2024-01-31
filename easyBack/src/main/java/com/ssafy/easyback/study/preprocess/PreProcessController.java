@@ -1,15 +1,6 @@
 package com.ssafy.easyback.study.preprocess;
 
-import com.ssafy.easyback.study.model.dto.WordDto;
-import com.ssafy.easyback.study.model.dto.WordMeaningDto;
-import com.ssafy.easyback.study.model.mapper.WordMapper;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,18 +8,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("")
-public class WebCrawlerController {
-  private final WebCrawlerService webCrawlerService;
+@RequestMapping("preprocess")
+public class PreProcessController {
+  private final PreProcessService preProcessService;
   @GetMapping("insertword")
   public ResponseEntity<String> insertWord() throws Exception{
-    webCrawlerService.insertWord();
+    preProcessService.insertWord();
     return ResponseEntity.ok("200");
   }
 
-  @GetMapping("insertsentence")
+  @GetMapping("insertsentence")   // 메모장에 저장된 음악정보 넣기
   public ResponseEntity<String> insertSentence() throws Exception{
-    webCrawlerService.insertSentence();
+    preProcessService.insertSentence();
+    return ResponseEntity.ok("200");
+  }
+
+  @GetMapping("insertmusic")  //메모장에 저장된 가사 넣기
+  public ResponseEntity<String> insertMusic() throws Exception{
+    preProcessService.insertMusic();
     return ResponseEntity.ok("200");
   }
 }

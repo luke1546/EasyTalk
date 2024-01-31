@@ -6,6 +6,7 @@ import com.ssafy.easyback.study.model.dto.SentenceDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
 import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.service.StudyService;
+import com.ssafy.easyback.study.stt.SpeechToText;
 import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +22,14 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class StudyController {
   private final StudyService studyService;
+  private final SpeechToText speechToText;
   private final int PAGE_SIZE = 20;
   @GetMapping("word") //단어 리스트 불러오기
   public ResponseEntity<List<WordDto>> getWordsList(
-      @RequestParam(value="level", defaultValue="1") int level,
       @RequestParam(value="filter", defaultValue = "list") String filter,
       @RequestParam(value="order", defaultValue = "wordId") String order,
       @RequestParam(value="sort", defaultValue = "asc") String sort,
+      @RequestParam(value="level", defaultValue="1") int level,
       @RequestParam(value="page", defaultValue = "1") int page,
       HttpSession session
       ) throws Exception {
@@ -136,6 +138,6 @@ public class StudyController {
 
   @PostMapping("sentence/test")
   public ResponseEntity<AccuracyDto> convertSpeechToText(@RequestBody Map<String, Object> param)  throws Exception {
-    return ResponseEntity.ok(studyService.getAccuracy(param));
+    return ResponseEntity.ok(speechToText.getAccuracy(param));
   }
 }

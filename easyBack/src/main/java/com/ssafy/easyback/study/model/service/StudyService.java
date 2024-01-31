@@ -29,6 +29,4 @@ public interface StudyService {
   void addToMySentenceBook(SentenceDto sentenceDto) throws Exception;
 
   SentenceDto getSentence(HashMap<String, Object> param) throws Exception;
-
-  AccuracyDto getAccuracy(Map<String, Object> param) throws Exception;
 }

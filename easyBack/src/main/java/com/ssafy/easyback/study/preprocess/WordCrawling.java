@@ -15,8 +15,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class practice {
-    private final static String FILEPATH = "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\wordBook";
+public class WordCrawling {
+    private final static String FILEPATH = "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\src\\main\\resources\\study\\word\\wordBook";
     private final static String DICTIONARY_URL = "https://learn.dict.naver.com/wordbook/enkodict/#/my/cards?wbId=ed53763c2c61427f9255762290b620b2&qt=0&st=0&name=%E3%85%87&tab=list";
     private final static String LOGIN_URL = "https://nid.naver.com/nidlogin.login?mode=form&url=https://www.naver.com/";
     static WebDriver driver = new ChromeDriver();

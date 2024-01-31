@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class WebCrawlerServiceImpl implements WebCrawlerService{
+public class PreProcessServiceImpl implements PreProcessService {
   private final WordMapper wordMapper;
   private final SentenceMapper sentenceMapper;
   String pronunciation = " ";
@@ -40,7 +40,8 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
       int count = 1;
     for(int level=1; level<7; level++) {
       String filePath =
-          "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\wordBook" + level + ".txt";
+          "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\src\\main\\resources\\study\\word\\wordBook"
+              + level + ".txt";
 //     BufferedReader를 사용하여 파일 읽기
       try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
         String line;
@@ -170,9 +171,11 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
 
   @Override
   public void insertSentence() throws Exception {
+    // 메모장 양식
+    // 홀수 줄에는 뜻, 짝수 줄에는 문장(영어)로 구성
     int count = 1;
       String filePath =
-          "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\sentence1000.txt";
+          "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\src\\main\\resources\\study\\sentence\\sentence1000.txt";
 //     BufferedReader를 사용하여 파일 읽기
       try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         String meaning;
@@ -184,8 +187,35 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
           param.put("sentence", sentence);
           param.put("meaning", meaning);
           insertSentenceDB(param);
+          count++;
+          if (count % 100 == 0)  System.out.println(count);
         }
       } catch (IOException e) {}
+  }
+
+  @Override
+  public void insertMusic() throws Exception {
+    // 메모장 양식
+    // 첫줄에는 노래 제목
+    // 둘째 줄에는 아티스트 이름/한글이름 => beatles/비틀즈
+    // 셋째 줄부터 가사
+    String fileName = "beatles";
+    String filePath =
+        "C:\\Users\\SSAFY\\Desktop\\project\\S10P12B307\\easyBack\\src\\main\\resources\\study\\music\\"+fileName+".txt";
+//     BufferedReader를 사용하여 파일 읽기
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+      HashMap<String, Object> param = new HashMap<>();
+      String title, artist, lyrics;
+      // 파일의 끝에 도달할 때까지 한 줄씩 읽어 출력합니다.
+      if((title = br.readLine()) != null) param.put("title", title);
+      if((artist = br.readLine()) != null) param.put("artist", artist);
+      while ((lyrics = br.readLine()) != null) {
+        if(!lyrics.isEmpty()) {
+          param.put("lyrics", lyrics);
+          insertSentenceDB(param);
+        }
+      }
+    } catch (IOException e) {}
   }
 
   private void insertSentenceDB(HashMap<String, Object> param) throws Exception {
