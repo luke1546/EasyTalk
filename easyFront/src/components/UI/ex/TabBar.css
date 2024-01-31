@@ -1,0 +1,23 @@
+/* TabBar.css */
+
+.molecule-tab-bar {
+  display: flex;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  position: relative;
+}
+
+.atom-tab {
+  padding: 10px;
+  margin: 5px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.atom-tab.active {
+  transform: translateY(-3px);
+  background-color: #007bff; /* 활성화된 탭 배경색 */
+  color: #fff; /* 활성화된 탭 글자색 */
+}
