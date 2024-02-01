@@ -7,6 +7,7 @@ const config = {
     "@storybook/preset-create-react-app",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
+    "@storybook/addon-mdx-gfm"
   ],
   framework: {
     name: "@storybook/react-webpack5",

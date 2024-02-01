@@ -1,6 +1,5 @@
 import * as React from "react";
 
-
 const Input = (props) => {
   if (props.name === "searchInput") {
     return (
@@ -12,20 +11,21 @@ const Input = (props) => {
 
   if (props.name === "singleInput") {
     return (
-      <div className="singleInput">
+      <span className="singleInput">
         <input id="singleInput" type="text" {...props} />
-      </div>
+      </span>
     );
   }
 
   if (props.name === "doubleInput") {
+    const { placeholder1, placeholder2, restProps } = props;
     return (
       <div className="doubleInput">
-        <input id="doubleInput" type="text" {...props} />
-        <input id="doubleInput" type="text" {...props} />
+        <input id="doubleInput" type="text" placeholder={placeholder1} {...restProps} />
+        <input id="doubleInput" type="text" placeholder={placeholder2} {...restProps} />
       </div>
     );
   }
-}
+};
 
 export default Input;
