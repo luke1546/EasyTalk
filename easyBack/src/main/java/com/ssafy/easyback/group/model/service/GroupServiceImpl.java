@@ -5,10 +5,10 @@ import com.ssafy.easyback.group.model.GroupConst;
 import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.DescriptionDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
+import com.ssafy.easyback.group.model.dto.IsLeaderDto;
 import com.ssafy.easyback.group.model.mapper.GroupMapper;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
-import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,4 +115,17 @@ public class GroupServiceImpl implements GroupService {
     log.info("aa{}=", groupMapper.selectGroupDescription(groupId).getDescription());
     return groupMapper.selectGroupDescription(groupId);
   }
+
+  @Override
+    public IsLeaderDto checkIsGroupLeader(int groupId, Long userId) {
+    Map<String, Object> params = new HashMap<>();
+    params.put("groupId", groupId);
+    params.put("userId", userId);
+
+    IsLeaderDto isLeaderDto = groupMapper.selectIsGroupLeader(params);
+
+    return groupMapper.selectIsGroupLeader(params);
+
+  }
+
 }

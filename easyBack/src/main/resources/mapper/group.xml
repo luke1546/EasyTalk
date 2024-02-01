@@ -84,4 +84,10 @@
     WHERE groupId = #{groupId};
   </select>
 
+  <select id="selectIsGroupLeader" parameterType="map" resultType="com.ssafy.easyback.group.model.dto.IsLeaderDto">
+    SELECT IF(userId = #{userId}, 1, 0) AS isLeader, IF(userId = #{userId}, 1, 0) AS isTrue
+    FROM `rooms`
+    WHERE groupId = #{groupId};
+  </select>
+
 </mapper>

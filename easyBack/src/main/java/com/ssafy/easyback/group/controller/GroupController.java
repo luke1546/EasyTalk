@@ -67,6 +67,8 @@ public class GroupController {
   public ResponseEntity<Object> createGroup(@Validated @ModelAttribute("CreateGroupDto")
   CreateGroupDto createGroupDto, BindingResult bindingResult, HttpSession session) {
 
+    log.info("createGroupDto={}", createGroupDto.getGroupName());
+
     // 사용자 입력값 검증
     if (bindingResult.hasErrors()) {
       HttpStatus resultStatus = HttpStatus.BAD_REQUEST;
@@ -119,5 +121,14 @@ public class GroupController {
   public ResponseEntity<Object> readGroupDescription(@PathVariable("groupId") int groupId) {
     return ResponseEntity.status(HttpStatus.OK)
         .body(groupService.findGroupDescription(groupId));
+  }
+
+  @GetMapping("/{groupId}/leader")
+  public ResponseEntity<Object> readIsGroupLeader(@PathVariable("groupId") int groupId,
+      HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(groupService.checkIsGroupLeader(groupId, userId));
   }
 }
