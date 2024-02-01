@@ -61,7 +61,11 @@ const AudioRecorder = () => {
           <br></br>
         <img src="https://play-lh.googleusercontent.com/tGPoLyKm57lHnCZJaSwOf8koy0N7tdsTcMFnC4XPbGLIduNc8F3Izw6jTsrLX7uElTI=w240-h480-rw">      
           </img>
-            </button>
+        </button>
+        <div>1. <img src="https://img.youtube.com/vi/YwC0m0XaD2E/0.jpg" alt="" /></div>
+        <div>2. <img src="https://img.youtube.com/vi/YwC0m0XaD2E/default.jpg" alt="" /></div>
+        <div>3. <img src="https://img.youtube.com/vi/YwC0m0XaD2E/mqdefault.jpg" alt="" /></div>
+        <div>4. <img src="https://img.youtube.com/vi/YwC0m0XaD2E/maxresdefault.jpg" alt="" /></div>
         </body>
   );
 };
