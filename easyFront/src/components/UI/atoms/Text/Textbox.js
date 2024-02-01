@@ -1,21 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 export const Textbox = ({ section, context1, context2, ...props }) => {
   return (
-    <div
-      className={'${section}-textbox'}
-      {...props}
-    >
-      {section === 'doubleText' ? (
-  <>
-    <div>{context1}</div>
-    <div>{context2}</div>
-  </>
-) : (
-  <div>{context1}</div>
-)}
-    </div>
+    <span className={"${section}-textbox"} {...props}>
+      {section === "doubleText" ? (
+        <>
+          <span>{context1}</span>
+          <span>{context2}</span>
+        </>
+      ) : (
+        <span>{context1}</span>
+      )}
+    </span>
   );
 };
 
@@ -29,4 +27,4 @@ Textbox.defaultProps = {
   context2: null,
 };
 
-export default Textbox
+export default Textbox;

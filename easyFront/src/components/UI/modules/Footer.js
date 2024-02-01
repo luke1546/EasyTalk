@@ -1,26 +1,24 @@
 import { Link } from "react-router-dom";
+import Button from "../atoms/Button/Button";
+import styled from "styled-components";
 
 const Footer = () => {
   return (
     <div className="Footer">
       <Link to="/study">
-        <button>학습</button>
+        <Button name="basicBtn" text="학습" />
       </Link>{" "}
-      |
       <Link to="/group">
-        <button>그룹</button>
+        <Button name="basicBtn" text="그룹" />
       </Link>{" "}
-      |
       <Link to="/home">
-        <button>홈</button>
+        <Button name="homeBtn" />
       </Link>{" "}
-      |
       <Link to="/place">
-        <button>광장</button>
+        <Button name="basicBtn" text="광장" />
       </Link>{" "}
-      |
       <Link to="/my">
-        <button>마이</button>
+        <Button name="basicBtn" text="마이" />
       </Link>
     </div>
   );

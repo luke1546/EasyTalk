@@ -17,21 +17,27 @@ import { BsMusicNoteList } from "react-icons/bs";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { MdOutlineDownloading } from "react-icons/md";
 import { MdOutlineFileDownloadDone } from "react-icons/md";
+import styled from "styled-components";
 
-const submitBtn = ({ text }) => {
-  return (
-    <>
-      <button>{text}</button>
-    </>
-  );
+const StyledSubmitBtn = styled.button`
+  // background: #8382ff;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  background: ${({ color }) => color || "#8382ff"}};
+`;
+
+const StyledNoneBtn = styled.button`
+  background: transparent;
+  border: none;
+`;
+
+const submitBtn = ({ text, color }) => {
+  return <StyledSubmitBtn color={color}>{text}</StyledSubmitBtn>;
 };
 
 const basicBtn = ({ text }) => {
-  return (
-    <>
-      <button>{text}</button>
-    </>
-  );
+  return <StyledNoneBtn>{text}</StyledNoneBtn>;
 };
 
 const attendBtn = ({ text }) => {
@@ -72,9 +78,9 @@ const components = {
   attendBtn: attendBtn,
 };
 
-const Button = ({ name, ...props }) => {
+const Button = ({ name, color, size, ...props }) => {
   const Component = components[name];
-  return Component ? <Component {...props} /> : null;
+  return Component ? <Component color={color} size={size} {...props} /> : null;
 };
 
 export default Button;
