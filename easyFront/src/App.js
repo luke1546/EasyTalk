@@ -12,6 +12,13 @@ import GroupHomePage from "./components/pages/Group/GroupHomePage";
 import PlaceHomePage from "./components/pages/Place/PlaceHomePage";
 import MyHomePage from "./components/pages/My/MyHomePage";
 import Button from "./components/UI/atoms/Button/Button";
+import DoubluBtn from "./components/UI/modules/DoubleBtn";
+import TripleBtn from "./components/UI/modules/TripleBtn";
+import InputBar from "./components/UI/modules/InputBar";
+import ChatBox from "./components/UI/modules/ChatBox";
+import YourComponent from "./components/UI/modules/YourComponent";
+
+
 
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
@@ -31,6 +38,11 @@ const App = () => {
         </Routes>
         <Footer />
         <Button />
+        <DoubluBtn variant="savelisten" />
+        <TripleBtn />
+        <InputBar variant="chatinputbar" />
+        <ChatBox />
+        {/* <YourComponent /> */}
       </div>
     </BrowserRouter>
   );

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export const Textbox = ({ section, context1, context2, ...props }) => {
   return (
     <div
-      className={'${section}-textbox'}
+      className={`${section}-textbox`}
       {...props}
     >
       {section === 'doubleText' ? (
@@ -23,10 +23,6 @@ Textbox.propTypes = {
   section: PropTypes.string.isRequired,
   context1: PropTypes.string.isRequired,
   context2: PropTypes.string.isRequired,
-};
-
-Textbox.defaultProps = {
-  context2: null,
 };
 
 export default Textbox
