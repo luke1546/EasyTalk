@@ -1,0 +1,31 @@
+/* WordBox.css */
+
+.word-box {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  .divider {
+    width: 1px;
+    height: 100%;
+    background-color: #ddd;
+    margin: 0 10px;
+  }
+
+  .buttons {
+    margin-left: auto;
+
+    button {
+      margin-right: 5px;
+    }
+  }
+}

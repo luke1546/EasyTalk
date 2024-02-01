@@ -1,0 +1,30 @@
+/* SNSInputBox.css */
+
+.sns-input-box {
+  /* 기본 스타일 */
+}
+
+.sns-input-box textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.sns-input-box.post label {
+  cursor: pointer;
+}
+
+.sns-input-box.post input[type="file"] {
+  display: none;
+}
+
+.sns-input-box.post img.image-preview {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+/* 댓글 입력 상태에 대한 스타일 (원하는 스타일 추가) */
+.sns-input-box.comment {
+  /* 댓글 전용 스타일 추가 */
+}
