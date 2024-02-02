@@ -11,6 +11,8 @@ import GroupHomePage from "./components/pages/Group/GroupHomePage";
 import PlaceHomePage from "./components/pages/Place/PlaceHomePage";
 import MyHomePage from "./components/pages/My/MyHomePage";
 
+import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
+
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
 
@@ -27,6 +29,7 @@ const App = () => {
             <Route path="/group" element={<GroupHomePage />} />
             <Route path="/place" element={<PlaceHomePage />} />
             <Route path="/my" element={<MyHomePage />} />
+            <Route path={`/study/:index`} element={<MusicDetailPage />} />
           </Routes>
         </div>
         <Footer className="Footer" />

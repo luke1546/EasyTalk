@@ -2,8 +2,13 @@ import { Link } from "react-router-dom/dist";
 import Button from "../../UI/atoms/Button/Button";
 import Textbox from "../../UI/atoms/Text/Textbox";
 import Profile from "../../UI/modules/Profile";
+import ExpBar from "../../UI/modules/ExpBar";
 
 const HomePage = () => {
+  const exp = 3055;
+  const needExp = 100 - (exp % 100);
+  const lv = Math.floor(exp / 100 + 1);
+
   return (
     <>
       <div>
@@ -22,9 +27,9 @@ const HomePage = () => {
       <div>문장박스1</div>
       <hr />
       <Textbox section="singleText" context1="경험치" />
-      <div>경험치 바 들어가야할 곳</div>
+      <ExpBar exp={exp} />
       <Textbox section="singleText" context1="서민지님 대단해요 !" />
-      <Profile direction="left" text1="95 경험치 더 받으면" text2="2레벨이 돼요." />
+      <Profile direction="left" text1={`${needExp} 경험치 더 받으면`} text2={`${lv}레벨이 돼요.`} />
       <Link to="/study">
         <Button name="submitBtn" text="학습 이어서하고 경험치 받기" />
       </Link>
