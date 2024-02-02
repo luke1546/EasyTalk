@@ -1,36 +1,56 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import Button from "../atoms/Button/Button";
 
-const TripleBtn = ({ name, text }) => {
+
+const StyledContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+
+
+function TripleBtn() {
   const handleButtonClick = (buttonInfo) => {
-    // 버튼 클릭 시 실행되어야 할 로직을 작성
     console.log(`Button ${buttonInfo.name} clicked. Text: ${buttonInfo.text}`);
   };
+  
+  // bookMarkText와 isBookMarked를 상태로 관리
+  const [bookMarkText, setBookMarkText] = useState("저장하기");
+  const [isBookMarked, setIsBookMarked] = useState(true);
+  const [shareText] = useState("공유하기");
+  const [micText] = useState("시험보기");
 
-  let bookMarkBtn;
+  useEffect(() => {
+    if (isBookMarked) {
+      setBookMarkText("제거하기");
+    } else {
+      setBookMarkText("저장하기");
+    }
+  }, [isBookMarked]);
 
-  // 실제 저장 여부를 판단할 로직 작성
-  const isBookMarked = true;
-
-  // 저장이 되었으면 FBookmark, 저장이 안되었으면 bookmark 출력
-  bookMarkBtn = isBookMarked ? (
-    <Button name="fBookMarkBtn" text="제거하기" onClick={() => handleButtonClick({ name: 'fBookMarkBtn', text: '제거하기' })} />
+  // isBookMarked 상태에 따라 다른 버튼을 렌더링
+  const bookMarkBtn = isBookMarked ? (
+    <Button name="fBookMarkBtn" text={bookMarkText} onClick={() => { handleButtonClick({ name: 'fBookMarkBtn', text: bookMarkText }); setIsBookMarked(!isBookMarked); }} />
   ) : (
-    <Button name="bookMarkBtn" text="저장하기" onClick={() => handleButtonClick({ name: 'bookMarkBtn', text: '저장하기' })} />
+    <Button name="bookMarkBtn" text={bookMarkText} onClick={() => { handleButtonClick({ name: 'bookMarkBtn', text: bookMarkText }); setIsBookMarked(!isBookMarked); }} />
   );
 
   return (
     <div>
       <div>
         {bookMarkBtn}
-        <Button name="shareBtn" text="공유하기" onClick={() => handleButtonClick({ name: 'shareBtn', text: '공유하기' })} />
-        <Button name="micCircleBtn" text="시험보기" onClick={() => handleButtonClick({ name: 'micCircleBtn', text: '시험보기' })} />
+        <Button name="shareBtn" text={shareText} onClick={() => handleButtonClick({ name: 'shareBtn', text: shareText })} />
+        <Button name="micCircleBtn" text={micText} onClick={() => handleButtonClick({ name: 'micCircleBtn', text: micText })} />
       </div>
-      <div>
-        {/* text.props 해서 출력해보기 */}
-      </div>
+      <StyledContainer>
+        <p>{bookMarkText}</p>
+        <p>{shareText}</p>
+        <p>{micText}</p>
+      </StyledContainer>
     </div>
   );
-};
+}
 
 export default TripleBtn;
