@@ -4,6 +4,7 @@ import com.ssafy.easyback.group.model.dto.CreateGroupDto;
 import com.ssafy.easyback.group.model.dto.DescriptionDto;
 import com.ssafy.easyback.group.model.dto.GetGroupDto;
 import com.ssafy.easyback.group.model.dto.IsLeaderDto;
+import com.ssafy.easyback.group.model.dto.MessageDto;
 import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import java.util.HashMap;
@@ -31,4 +32,6 @@ public interface GroupMapper {
   DescriptionDto selectGroupDescription(int groupId);
 
   IsLeaderDto selectIsGroupLeader(Map<String, Object> params);
+
+  void insertMessage(MessageDto messageDto);
 }
