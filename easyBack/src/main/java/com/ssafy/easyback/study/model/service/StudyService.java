@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface StudyService {
     List<WordDto> getWordsList(WordDto wordDto) throws Exception;
@@ -38,5 +39,7 @@ public interface StudyService {
 
   List<LyricsDto> getMusicTest(HashMap<String, Object> param) throws Exception;
 
-  void submitMusicTest(Map<String, Object> param) throws Exception;
+  void submitMusicTest(Map<String, Object> param, MultipartFile audioFile) throws Exception;
+
+  void addToMyMusicBook(HashMap<String,Object> param) throws Exception;
 }

@@ -5,9 +5,16 @@
 <mapper namespace="com.ssafy.easyback.study.model.mapper.MusicMapper">
 
   <select id="getMusicList" parameterType="musicDto" resultType="musicDto">
-    select *
-    from musics
-    where title like concat("%",#{keyword},"%")
+    select m.musicId, m.artistId, videoId, title, musicTime, hit, musicImageUri
+    from musics m
+    <if test="optionDto.filter == 'myList'">
+      join music_books b on m.musicId = b.musicId
+      where userId = #{userId}
+    </if>
+    <if test="optionDto.filter != 'myList'">
+      where 1=1
+    </if>
+    and title like concat("%",#{keyword},"%")
     order by ${optionDto.order} ${optionDto.sort}
     limit ${optionDto.start},${optionDto.end}
   </select>
@@ -18,7 +25,7 @@
     where musicId = #{musicId}
   </select>
 
-  <select id="getMusicInfo" parameterType="int" resultType="map">
+  <select id="getMusicInfo" parameterType="int" resultType="musicDto">
     select artistId, title
     from musics
     where musicId=#{musicId}
@@ -29,4 +36,26 @@
     values(#{testId}, #{musicId}, #{artistId})
   </insert>
 
+  <select id="getMusicId" parameterType="int" resultType="int">
+    select musicId
+    from tests
+    where testId = #{testId}
+  </select>
+
+  <update id="submitMusicTest" parameterType="map">
+    update tests
+    set score = #{score}
+    where testId = #{testId}
+  </update>
+
+  <update id="submitMusicTest2" parameterType="map">
+    update music_tests
+    set input = #{recognize}
+    where testId = #{testId}
+  </update>
+
+  <insert id="addToMyMusicBook" parameterType="map">
+    insert into music_books(musicId, userId, artistId)
+    values(#{musicId},#{userId},#{artistId})
+  </insert>
 </mapper>

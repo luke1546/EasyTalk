@@ -125,7 +125,7 @@ public class StudyController {
     return ResponseEntity.ok(studyService.getSentencesList(sentenceDto));
   }
 
-  @PostMapping("sentence") //내 단어장에 단어 자장하기
+  @PostMapping("sentence") //문장 자장하기
   public ResponseEntity<String> addToMySentenceBook(@RequestBody SentenceDto sentenceDto ,HttpSession session) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
     userId = Long.parseLong("3301009684");  //session 설정되면 지우기!!
@@ -150,12 +150,13 @@ public class StudyController {
     return ResponseEntity.ok(speechToText.getAccuracy(audioFile, sentence));
   }
 //don't cry snowman not in front of me
-  @GetMapping("music")
+  @GetMapping("music")    // 음악 리스트 가져오기
   public ResponseEntity<List<MusicDto>> getMusicList(
       @RequestParam(value="order", defaultValue = "hit") String order,
       @RequestParam(value="sort", defaultValue = "asc") String sort,
       @RequestParam(value="page", defaultValue = "1") int page,
       @RequestParam(value="keyword", defaultValue = "") String keyword,
+      @RequestParam(value="filter", defaultValue = "list") String filter,
       HttpSession session
   ) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
@@ -169,17 +170,18 @@ public class StudyController {
     optionDto.setSort(sort);
     optionDto.setStart(start);
     optionDto.setEnd(end);
+    optionDto.setFilter(filter);
     musicDto.setUserId(userId);
     musicDto.setOptionDto(optionDto);
     return ResponseEntity.ok(studyService.getMusicList(musicDto));
   }
 
-  @GetMapping("music/detail")
+  @GetMapping("music/detail")   // 음악 가사 정보 가져오기
   public ResponseEntity<List<LyricsDto>> getMusicDetail(@RequestParam("target") int musicId) throws Exception{
     return ResponseEntity.ok(studyService.getMusicDetail(musicId));
   }
 
-  @GetMapping("music/test")
+  @GetMapping("music/test")   // 음악 시험 시작하기 (노래 전체 따라부르기 시험)
   public ResponseEntity<List<LyricsDto>> getMusicTest(@RequestParam("target") int musicId, HttpSession session) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
@@ -189,12 +191,24 @@ public class StudyController {
     return ResponseEntity.ok(studyService.getMusicTest(param));
   }
 
-  @PutMapping("music/test")
-  public ResponseEntity<String> submitMusicTest(@RequestBody Map<String, Object> param, HttpSession session) throws Exception{
+  @PutMapping("music/test")     // 음악 사용자 audio data multipart/form-data 형태로 받기
+  public ResponseEntity<String> submitMusicTest(@RequestParam("audio") MultipartFile audioFile, @RequestParam("target") int testId, HttpSession session) throws Exception{
+    HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
     userId = Long.parseLong("3301009684");    //지우기
     param.put("userId", userId);
-    studyService.submitMusicTest(param);
+    param.put("testId", testId);
+    studyService.submitMusicTest(param, audioFile);
     return ResponseEntity.ok("200");
+  }
+
+  @PostMapping("music") // 음악 자장하기
+  public ResponseEntity<String> addToMyMusicBook(@RequestBody HashMap<String,Object> param, HttpSession session) throws Exception {
+    Long userId = (Long) session.getAttribute("userId");
+    userId = Long.parseLong("3301009684");  //session 설정되면 지우기!!
+
+    param.put("userId",userId);
+    studyService.addToMyMusicBook(param);
+    return ResponseEntity.ok("ok");
   }
 }

@@ -1,20 +1,18 @@
 package com.ssafy.easyback.study.model.service;
 
-import com.ssafy.easyback.study.model.dto.LyricsDto;
-import com.ssafy.easyback.study.model.dto.MusicDto;
-import com.ssafy.easyback.study.model.dto.SentenceDto;
-import com.ssafy.easyback.study.model.dto.TestDto;
-import com.ssafy.easyback.study.model.dto.WordDto;
-import com.ssafy.easyback.study.model.dto.WordMeaningDto;
+import com.ssafy.easyback.study.model.dto.*;
 import com.ssafy.easyback.study.model.mapper.MusicMapper;
 import com.ssafy.easyback.study.model.mapper.SentenceMapper;
 import com.ssafy.easyback.study.model.mapper.WordMapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.easyback.study.stt.SpeechToText;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +21,7 @@ public class StudyServiceImpl implements StudyService{
   private final WordMapper wordMapper;
   private final SentenceMapper sentenceMapper;
   private final MusicMapper musicMapper;
+  private final SpeechToText speechToText;
   @Override
   public List<WordDto> getWordsList(WordDto wordDto) throws Exception {
     List<Integer> myList = wordMapper.getMyWordsList(wordDto.getUserId());
@@ -136,8 +135,8 @@ public class StudyServiceImpl implements StudyService{
     int musicId = (int) param.get("musicId");
     Long userId = (Long) param.get("userId");
 
-    param = musicMapper.getMusicInfo(musicId);  // 음악 정보 받아오기
-    param.put("testTitle", param.get("title")); // 음악 제목 셋팅
+    MusicDto musicDto = musicMapper.getMusicInfo(musicId);  // 음악 정보 받아오기
+    param.put("testTitle", musicDto.getTitle()); // 음악 제목 셋팅
     wordMapper.insertTests(param);
 
     int testId = wordMapper.getTestId(userId); // 테스트ID 받아오기
@@ -149,7 +148,26 @@ public class StudyServiceImpl implements StudyService{
   }
 
   @Override
-  public void submitMusicTest(Map<String, Object> param) throws Exception {
-
+  public void submitMusicTest(Map<String, Object> param, MultipartFile audioFile) throws Exception {
+    int testId = (int) param.get("testId");
+    int musicId = musicMapper.getMusicId(testId);
+    List<LyricsDto> lyricList = musicMapper.getMusicDetail(musicId);
+    StringBuilder sb = new StringBuilder();
+    for(LyricsDto lyric : lyricList)  sb.append(lyric.getLyric());
+    AccuracyDto accuracyDto = speechToText.getAccuracy(audioFile, sb.toString());
+    param.put("score", accuracyDto.getScore());
+    param.put("recognize", accuracyDto.getRecognize());
+    musicMapper.submitMusicTest(param);
+    musicMapper.submitMusicTest2(param);
   }
+
+  @Override
+  public void addToMyMusicBook(HashMap<String,Object> param) throws Exception {
+    MusicDto musicDto2 = musicMapper.getMusicInfo((Integer) param.get("musicId"));
+    System.out.println(musicDto2);
+    param.put("artistId",(musicDto2.getArtistId()));
+    musicMapper.addToMyMusicBook(param);
+  }
+
+
 }
