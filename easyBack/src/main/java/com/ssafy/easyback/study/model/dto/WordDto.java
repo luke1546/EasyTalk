@@ -23,4 +23,5 @@ public class WordDto {
     List<WordMeaningDto> wordMeaningDto;
     private OptionDto optionDto;
     private boolean isSaved;
+    private int musicId;
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.study.model.mapper.MusicMapper">
+
+  <select id="getMusicList" parameterType="musicDto" resultType="musicDto">
+    select *
+    from musics
+    where title like concat("%",#{keyword},"%")
+    order by ${optionDto.order} ${optionDto.sort}
+    limit ${optionDto.start},${optionDto.end}
+  </select>
+
+  <select id="getMusicDetail" parameterType="int" resultType="lyricsDto">
+    select *
+    from lyrics
+    where musicId = #{musicId}
+  </select>
+
+  <select id="getMusicInfo" parameterType="int" resultType="map">
+    select artistId, title
+    from musics
+    where musicId=#{musicId}
+  </select>
+
+  <insert id="insertMusicTest" parameterType="map">
+    insert into music_tests(testId, musicId, artistId)
+    values(#{testId}, #{musicId}, #{artistId})
+  </insert>
+
+</mapper>

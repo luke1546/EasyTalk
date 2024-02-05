@@ -2,6 +2,8 @@ package com.ssafy.easyback.study.model.service;
 
 
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
+import com.ssafy.easyback.study.model.dto.LyricsDto;
+import com.ssafy.easyback.study.model.dto.MusicDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
 import com.ssafy.easyback.study.model.dto.SentenceDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
@@ -29,4 +31,12 @@ public interface StudyService {
   void addToMySentenceBook(SentenceDto sentenceDto) throws Exception;
 
   SentenceDto getSentence(HashMap<String, Object> param) throws Exception;
+
+  List<MusicDto> getMusicList(MusicDto musicDto) throws Exception;
+
+  List<LyricsDto> getMusicDetail(int musicId) throws Exception;
+
+  List<LyricsDto> getMusicTest(HashMap<String, Object> param) throws Exception;
+
+  void submitMusicTest(Map<String, Object> param) throws Exception;
 }

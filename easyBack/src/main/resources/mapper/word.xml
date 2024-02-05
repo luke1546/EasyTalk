@@ -11,8 +11,13 @@
         </if>
         <if test="optionDto.filter == 'myList'">
             join word_books b
-                on w.wordId = b.wordId
+            on w.wordId = b.wordId
             where userId = #{userId}
+        </if>
+        <if test="optionDto.filter == 'music'">
+            join word_musics m
+            on w.wordId = m.wordId
+            where musicId = #{musicId}
         </if>
     order by ${optionDto.order} ${optionDto.sort}
     limit ${optionDto.start},${optionDto.end}
@@ -38,8 +43,8 @@
   </select>
 
   <insert id="insertTests" parameterType="map">                    -- 테스트 하나 생성
-    insert into tests(userId, testTitle, testType)
-    values(#{userId}, "단어시험", #{testType})
+    insert into tests(userId, testTitle, testType, musicId)
+    values(#{userId}, #{testTitle}, #{testType}, #{musicId})
   </insert>
 
   <insert id="insertWordTests" parameterType="map">                    -- 문제 20개 생성해서 DB입력
@@ -75,9 +80,21 @@
   </select>
 
   <select id="createAnswer" parameterType="map" resultType="Integer">
-    select wordId
-    from words
-    where level=#{level}
+    select w.wordId
+    from words w
+    <if test="filter == 'list'">
+      where level = #{level}
+    </if>
+    <if test="filter == 'myList'">
+      join word_books b
+      on w.wordId = b.wordId
+      where userId = #{userId}
+    </if>
+    <if test="filter == 'music'">
+      join word_musics m
+      on w.wordId = m.wordId
+      where musicId = #{musicId}
+    </if>
     order by rand()
     limit 20
   </select>
@@ -130,11 +147,6 @@
           )
   </insert>
 
-  <update id="updateUri" parameterType="String">
-    update words
-    set wordAudioUri= concat("/study/word/audio/",LAST_INSERT_ID(),".wav")
-    where wordId = LAST_INSERT_ID()
-  </update>
     <select id="checkWord" resultType="int" parameterType="String">
         select count(*)
         from words
