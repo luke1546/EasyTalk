@@ -3,10 +3,16 @@ package com.ssafy.easyback.social.model.service;
 import com.ssafy.easyback.exhandler.UnauthorizedException;
 import com.ssafy.easyback.social.KakaoConstants;
 import com.ssafy.easyback.social.model.dto.KakaoToken;
+import com.ssafy.easyback.social.model.dto.LoginResponseDto;
+import com.ssafy.easyback.user.model.dto.ResponseUserDto;
+import com.ssafy.easyback.user.model.service.UserService;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -15,10 +21,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class KakaoService {
 
-
+  final UserService userService;
   /**
    * 초기 로그인시 토큰을 발급받습니다.
    *
@@ -31,7 +38,7 @@ public class KakaoService {
     params.add("client_id", KakaoConstants.API_KEY);
     params.add("redirect_uri", KakaoConstants.LOGIN_REDIRECT_URL);
     params.add("code", code);
-
+    log.info("LOGIN_REDIRECT_URL={}", KakaoConstants.LOGIN_REDIRECT_URL);
     return WebClient.builder()
         .baseUrl(KakaoConstants.KAUTH_URL)
         .build()
@@ -76,6 +83,25 @@ public class KakaoService {
   public Long getUserId(String accessToken) {
     return this.validateAccessToken(accessToken).block().getId();
   }
+
+  public ResponseEntity<LoginResponseDto> login(String accessToken, HttpSession session) {
+    Long userId = this.getUserId(accessToken);
+
+    LoginResponseDto loginResponseDto = new LoginResponseDto();
+    loginResponseDto.setLoginSuccess(false);
+    loginResponseDto.setUserId(userId);
+
+    ResponseUserDto userDto = userService.getUserInfo(userId);
+    if (userDto != null) {
+      log.info("이미 정보가있는 유저 userId={}", userDto.getUserId());
+
+      loginResponseDto.setLoginSuccess(true);
+      session.setAttribute("accessToken", accessToken);
+    }
+
+    return ResponseEntity.ok().body(loginResponseDto);
+  }
+
 
   /**
    * 토큰을 만료시킵니다.
