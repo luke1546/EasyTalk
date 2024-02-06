@@ -15,4 +15,6 @@ public interface UserMapper {
   int selectTodayAttendance(Long userId);
 
   void insertTodayAttendance(Long userID);
+
+  boolean selectUserbyPhoneNumber(String phone);
 }

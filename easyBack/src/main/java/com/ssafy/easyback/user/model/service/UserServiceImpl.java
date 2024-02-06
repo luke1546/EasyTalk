@@ -3,6 +3,7 @@ package com.ssafy.easyback.user.model.service;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
+import com.ssafy.easyback.user.model.dto.UserRegistrationStatus;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,14 +32,18 @@ public class UserServiceImpl implements UserService {
    */
   @Deprecated
   @Override
-  public HttpStatus checkRegisteredUser(long userId) {
+  public UserRegistrationStatus checkRegisteredUser(long userId, String phone) {
     ResponseUserDto userDto = this.getUserInfo(userId);
 
     if (userDto == null) {
-      return HttpStatus.UNAUTHORIZED;
+      return UserRegistrationStatus.UNREGISTERED;
     }
 
-    return HttpStatus.OK;
+    if (userMapper.selectUserbyPhoneNumber(phone)) {
+      return UserRegistrationStatus.DUPLICATED;
+    }
+
+    return UserRegistrationStatus.REGISTERED;
   }
 
   /**
@@ -78,4 +83,5 @@ public class UserServiceImpl implements UserService {
     registerUserInfo(userDto);
     setAttendance(userId);
   }
+
 }

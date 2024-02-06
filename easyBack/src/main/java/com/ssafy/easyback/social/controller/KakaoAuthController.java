@@ -1,24 +1,16 @@
 package com.ssafy.easyback.social.controller;
 
-import com.ssafy.easyback.exhandler.ErrorResult;
-import com.ssafy.easyback.exhandler.UnauthorizedException;
-import com.ssafy.easyback.social.KakaoConstants;
-import com.ssafy.easyback.social.model.dto.KakaoToken;
 import com.ssafy.easyback.social.model.dto.LoginResponseDto;
 import com.ssafy.easyback.social.model.service.KakaoService;
-import com.ssafy.easyback.user.model.service.UserService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,8 +30,7 @@ public class KakaoAuthController {
     log.info(" 프론트 /login/oauth/kakao 가보낸 code={}", request.getParameter("code"));
 
     return kakaoService.login(
-        kakaoService.getKakaoToken(request.getParameter("code"))
-            .getAccess_token(), session);
+        kakaoService.getKakaoToken(request.getParameter("code")).getAccess_token(), session);
   }
 
 

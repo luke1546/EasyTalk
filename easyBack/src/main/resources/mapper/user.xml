@@ -43,4 +43,13 @@
     INSERT INTO attendances (userId, attendanceDate)
     VALUES (#{userId}, CURDATE());
   </insert>
+
+  <select id="selectUserbyPhoneNumber" parameterType="String">
+    SELECT IF(
+             EXISTS(SELECT 1
+                    FROM users
+                    WHERE phone = #{phone}
+                      AND userId = #{userId}), 1, 0
+           );
+  </select>
 </mapper>
