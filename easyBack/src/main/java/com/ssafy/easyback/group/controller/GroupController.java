@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,10 +65,8 @@ public class GroupController {
    * @return
    */
   @PostMapping
-  public ResponseEntity<Object> createGroup(@Validated @ModelAttribute("CreateGroupDto")
-  CreateGroupDto createGroupDto, BindingResult bindingResult, HttpSession session) {
-
-    log.info("createGroupDto={}", createGroupDto.getGroupName());
+  public ResponseEntity<Object> createGroup(@Validated @RequestBody CreateGroupDto createGroupDto,
+      BindingResult bindingResult, HttpSession session) {
 
     // 사용자 입력값 검증
     if (bindingResult.hasErrors()) {
@@ -94,7 +93,7 @@ public class GroupController {
    */
   @PostMapping("/{groupId}/join")
   public ResponseEntity<HttpStatus> createGroupMember(@PathVariable("groupId") int groupId,
-      @RequestParam("password") String password,
+      @RequestBody String password,
       HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
 
