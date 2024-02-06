@@ -28,21 +28,6 @@ public class KakaoAuthController {
   private final KakaoService kakaoService;
 
   /**
-   * @return loginURI
-   */
-  @GetMapping("/login")
-  public String requestLoginForm() {
-    StringBuffer loginUrl = new StringBuffer();
-    loginUrl.append(KakaoConstants.KAUTH_URL);
-    loginUrl.append(KakaoConstants.AUTH_URI);
-    loginUrl.append("?response_type=code");
-    loginUrl.append("&client_id=" + KakaoConstants.API_KEY);
-    loginUrl.append("&redirect_uri=" + KakaoConstants.LOGIN_REDIRECT_URL);
-
-    return "redirect:" + loginUrl.toString();
-  }
-
-  /**
    * 카카오 서버가 리다이렉트해준 uri 토큰을 가져옴
    *
    * @return
