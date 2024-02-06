@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.neighbor.model.mapper.NeighborMapper">
+    <insert id="requestNeighbor" parameterType="neighborDto">
+        insert into neighbor_requests(requesterId, receiverId, statusCode)
+        values(#{userId}, #{neighborId}, #{status});
+    </insert>
+
+    <update id="receiveNeighbor" parameterType="neighborDto">
+        update neighbor_requests
+        set statusCode = #{status}
+        where requesterId = #{neighborId} and receiverId = #{userId}
+    </update>
+
+    <insert id="beNeighbor" parameterType="neighborDto">
+        insert into neighbors(userId, neighborId)
+        values(#{userId}, #{neighborId})
+    </insert>
+
+    <delete id="deleteNeighbor" parameterType="neighborDto">
+
+    </delete>
+</mapper>

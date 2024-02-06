@@ -28,13 +28,22 @@ public class WebConfig implements WebMvcConfigurer {
     */
   }
 
+//  @Override
+//  public void addCorsMappings(CorsRegistry registry) {
+//    registry.addMapping("/**")
+//        .allowedOriginPatterns("*") // '*'를 사용하는 대신 이렇게 변경
+//        .allowedMethods("*")
+//        .allowedHeaders("*")
+//        .allowCredentials(true)
+//        .maxAge(3600);
+//  }
+
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOriginPatterns("*") // '*'를 사용하는 대신 이렇게 변경
-        .allowedMethods("*")
-        .allowedHeaders("*")
-        .allowCredentials(true)
-        .maxAge(3600);
+            .allowedOrigins("http://localhost:8080")
+            .allowedMethods("GET", "POST", "PUT", "DELETE")
+            .allowedHeaders("*")
+            .allowCredentials(true);
   }
 }
