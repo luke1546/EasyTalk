@@ -11,14 +11,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TestDto {
-  private int questionId;
-  private int wordId;
-  private int musicId;
-  String word;
-  String meaning;
-  String wrong1;
-  String wrong2;
-  String wordAudioUri;
-  boolean isSaved;
+public class LyricsDto {
+    private int lyricId;
+    private int musicId;
+    private String lyric;
+    private String meaning;
+    private int startOffsetMs;
+    private int duration;
+    private String lyricAudioUri;
 }

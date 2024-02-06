@@ -2,26 +2,25 @@ package com.ssafy.easyback.study.stt;
 
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class SpeechToText {
-  public AccuracyDto getAccuracy(Map<String, Object> param) throws Exception {    //정확성 측정(clova)
-    String clientId = "0wj7mepfab";             // Application Client ID";
-    String clientSecret = "n7s3dQlngQtgJSpjMfKpe3kyEirZSuC4bVVPzqeD";     // Application Client Secret";
-    String FilePath = (String) param.get("url");
-    System.out.println(FilePath);
+  @Value("${clova.client.id}")
+  private String clientId; // Application Client ID";
+  @Value("${clova.client.secret}")
+  private String clientSecret;  // Application Client Secret";
+  public AccuracyDto getAccuracy(MultipartFile audioFile, String sentence) throws Exception {    //정확성 측정(clova)
+
     AccuracyDto accuracyDto = new AccuracyDto();
     try {
-      File voiceFile = new File(FilePath);
-
       String language = "Eng";        // 언어 코드 ( Kor, Jpn, Eng, Chn )
       String apiURL = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + language;
       URL url = new URL(apiURL);
@@ -34,8 +33,17 @@ public class SpeechToText {
       conn.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
       conn.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
 
+//      OutputStream outputStream = conn.getOutputStream();
+//      FileInputStream inputStream = new FileInputStream(voiceFile);
+//      byte[] buffer = new byte[4096];
+//      int bytesRead = -1;
+//      while ((bytesRead = inputStream.read(buffer)) != -1) {
+//        outputStream.write(buffer, 0, bytesRead);
+//      }
+//      outputStream.flush();
+//      inputStream.close();
       OutputStream outputStream = conn.getOutputStream();
-      FileInputStream inputStream = new FileInputStream(voiceFile);
+      InputStream inputStream = audioFile.getInputStream();
       byte[] buffer = new byte[4096];
       int bytesRead = -1;
       while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -43,6 +51,7 @@ public class SpeechToText {
       }
       outputStream.flush();
       inputStream.close();
+
       BufferedReader br = null;
       int responseCode = conn.getResponseCode();
       if(responseCode == 200) { // 정상 호출
@@ -67,8 +76,7 @@ public class SpeechToText {
     } catch (Exception e) {
       System.out.println(e);
     }
-    String originalText = (String) param.get("sentence");
-    accuracyDto.setScore(calculateScore(accuracyDto.getRecognize(), originalText));
+    accuracyDto.setScore(calculateScore(accuracyDto.getRecognize(), sentence));
     return accuracyDto;
   }
 
@@ -88,7 +96,7 @@ public class SpeechToText {
       else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);;
     }
     System.out.println("전체 글자 수 : " + R);
-    System.out.println("전체 글자 수 : " + dp[R][C]);
+    System.out.println("일치하는 글자 수 : " + dp[R][C]);
     System.out.println("점수 : " + (int)(dp[R][C]/(float)R*100));
 
     int i=R, j=C;
