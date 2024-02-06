@@ -34,6 +34,8 @@ public class KakaoAuthController {
     loginUrl.append("&client_id=" + KakaoConstants.API_KEY);
     loginUrl.append("&redirect_uri=" + KakaoConstants.LOGIN_REDIRECT_URL);
 
+    log.info("loginUrl={}", loginUrl );
+
     return "redirect:" + loginUrl.toString();
   }
 
@@ -56,7 +58,7 @@ public class KakaoAuthController {
   }
 
   @ResponseBody
-  @GetMapping("logout")
+  @GetMapping("/logout")
   public String logout(HttpSession session) {
     kakaoService.logout((String) session.getAttribute("access_token"));
     session.invalidate();
