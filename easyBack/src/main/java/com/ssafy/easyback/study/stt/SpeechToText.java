@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class SpeechToText {
   @Value("${clova.client.id}")
   private String clientId; // Application Client ID";
-  @Value("${clova.client.pw}")
+  @Value("${clova.client.secret}")
   private String clientSecret;  // Application Client Secret";
   public AccuracyDto getAccuracy(MultipartFile audioFile, String sentence) throws Exception {    //정확성 측정(clova)
 

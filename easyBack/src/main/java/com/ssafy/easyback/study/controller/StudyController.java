@@ -4,6 +4,7 @@ import com.ssafy.easyback.study.model.dto.AccuracyDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
+import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.SentenceDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
 import com.ssafy.easyback.study.model.dto.WordDto;
@@ -92,6 +93,7 @@ public class StudyController {
     param.put("level", level);
     param.put("filter", filter);
     param.put("musicId", musicId);
+
     return ResponseEntity.ok(studyService.getWordTest(param));
   }
 
@@ -210,5 +212,46 @@ public class StudyController {
     param.put("userId",userId);
     studyService.addToMyMusicBook(param);
     return ResponseEntity.ok("ok");
+  }
+
+  @DeleteMapping("music")
+  public ResponseEntity<String> deleteMyMusic(@RequestParam("target") int musicId, HttpSession session) throws Exception {
+    HashMap<String, Object> param = new HashMap<>();
+    Long userId = (Long) session.getAttribute("userId");
+    userId = Long.parseLong("3301009684");    //지우기
+    param.put("userId", userId);
+    param.put("musicId", musicId);
+    studyService.deleteMyMusic(param);
+    return ResponseEntity.ok("200");
+  }
+
+  @GetMapping("test/record")
+  public ResponseEntity<List<RecordDto>> getWordRecord(
+      @RequestParam(value="order", defaultValue = "startTime") String order,
+      @RequestParam(value="sort", defaultValue = "desc") String sort,
+      @RequestParam(value="target", defaultValue = "word") String target,
+      HttpSession session
+  ) throws Exception{
+    HashMap<String, Object> param = new HashMap<>();
+    Long userId = (Long) session.getAttribute("userId");
+    userId = Long.parseLong("3301009684");    //지우기
+    param.put("userId", userId);
+    param.put("order", order);
+    param.put("sort", sort);
+    param.put("target", target);
+    return ResponseEntity.ok(studyService.getWordRecord(param));
+  }
+
+  @GetMapping("test/record/detail")
+  public ResponseEntity<List<WordDto>> getWordRecordDetail(
+      @RequestParam(value="target") String testId,
+      HttpSession session
+  ) throws Exception{
+    HashMap<String, Object> param = new HashMap<>();
+    Long userId = (Long) session.getAttribute("userId");
+    userId = Long.parseLong("3301009684");    //지우기
+    param.put("userId", userId);
+    param.put("testId", testId);
+    return ResponseEntity.ok(studyService.getWordRecordDetail(param));
   }
 }

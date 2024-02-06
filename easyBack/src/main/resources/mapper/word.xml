@@ -152,4 +152,27 @@
         from words
         where word=#{word}
     </select>
+
+  <select id="getWordRecord" parameterType="map" resultType="recordDto">
+    select testId, IF(testType != "music" and musicId = 0,"word","music") as "filter", testTitle, startTime, score,
+           IF(testType = "music", concat("/study/music/test/audio/", testId, ".mp3"), "") as "testAudioUri"
+    from tests
+    where userId = #{userId}
+    <if test="target == 'word'">
+      and testType != "music"
+    </if>
+    <if test="target == 'music'">
+      and testType = "music"
+    </if>
+    order by #{order} #{sort}
+  </select>
+
+  <select id="getWordRecordDetail" parameterType="map" resultType="wordDto">
+    select w.wordId, word, meaning, wordAudioUri,
+           IF(input = word or input = meaning,true,false) as "isRight"
+    from word_tests t
+    join words w
+    on t.wordId = w.wordId
+    where testId = #{testId}
+  </select>
 </mapper>

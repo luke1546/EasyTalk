@@ -5,6 +5,7 @@ import com.ssafy.easyback.study.model.dto.AccuracyDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
+import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.SentenceDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
 import com.ssafy.easyback.study.model.dto.WordDto;
@@ -42,4 +43,10 @@ public interface StudyService {
   void submitMusicTest(Map<String, Object> param, MultipartFile audioFile) throws Exception;
 
   void addToMyMusicBook(HashMap<String,Object> param) throws Exception;
+
+  void deleteMyMusic(HashMap<String, Object> param) throws Exception;
+
+  List<RecordDto> getWordRecord(HashMap<String, Object> param) throws Exception;
+
+  List<WordDto> getWordRecordDetail(HashMap<String, Object> param) throws Exception;
 }

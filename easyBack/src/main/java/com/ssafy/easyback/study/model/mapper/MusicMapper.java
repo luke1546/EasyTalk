@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface MusicMapper {
+
   List<MusicDto> getMusicList(MusicDto musicDto) throws Exception;
 
   List<LyricsDto> getMusicDetail(int musicId) throws Exception;
-
 
   MusicDto getMusicInfo(int musicId) throws Exception;
   void insertMusicTest(HashMap<String, Object> param) throws Exception;
@@ -23,4 +23,6 @@ public interface MusicMapper {
   void submitMusicTest2(Map<String, Object> param) throws Exception;
 
   void addToMyMusicBook(HashMap<String,Object> param) throws Exception;
+
+  void deleteMyMusic(HashMap<String, Object> param) throws Exception;
 }

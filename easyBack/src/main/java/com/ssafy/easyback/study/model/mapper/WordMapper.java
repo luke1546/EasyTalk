@@ -1,5 +1,6 @@
 package com.ssafy.easyback.study.model.mapper;
 
+import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
 
@@ -25,4 +26,7 @@ public interface WordMapper {
   List<TestDto> getWordTest(int testId) throws Exception;
   void insertAnswer(HashMap<String,Object> answer) throws Exception;
   void gradingWordTest(Object testId) throws Exception;
+  List<RecordDto> getWordRecord(HashMap<String, Object> param) throws Exception;
+
+  List<WordDto> getWordRecordDetail(HashMap<String, Object> param) throws Exception;
 }

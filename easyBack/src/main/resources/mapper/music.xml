@@ -58,4 +58,10 @@
     insert into music_books(musicId, userId, artistId)
     values(#{musicId},#{userId},#{artistId})
   </insert>
+
+  <delete id="deleteMyMusic" parameterType="map">
+    delete
+    from music_books
+    where userId=#{userId}
+  </delete>
 </mapper>

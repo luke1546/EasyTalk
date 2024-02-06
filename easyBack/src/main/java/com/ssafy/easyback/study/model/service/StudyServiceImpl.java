@@ -29,7 +29,7 @@ public class StudyServiceImpl implements StudyService{
     HashMap<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
     for(int key : myList) hm.put(key,true);
     for(WordDto word : list)  {
-      if(hm.containsKey(word.getWordId())) word.setSaved(true);
+      if(hm.containsKey(word.getWordId())) word.setIsSaved(true);
       List<WordMeaningDto> meaning = wordMapper.getMeaning(word.getWordId());
       word.setWordMeaningDto(meaning);
     }
@@ -48,7 +48,7 @@ public class StudyServiceImpl implements StudyService{
     WordDto word = wordMapper.getWord(wordDto);
     List<WordMeaningDto> meaning = wordMapper.getMeaning(wordDto.getWordId());
     for(int key : myList) hm.put(key,true);
-    if(hm.containsKey(word.getWordId())) word.setSaved(true);
+    if(hm.containsKey(word.getWordId())) word.setIsSaved(true);
     word.setWordMeaningDto(meaning);
     return word;
   }
@@ -58,6 +58,14 @@ public class StudyServiceImpl implements StudyService{
       (Map<String, Object> param) throws Exception {  //단어 시험보기
     Long userId = (Long)param.get("userId");    // 유저아이디 얻기
     param.put("testTitle","단어시험");
+
+    int musicId = (Integer) param.get("musicId");
+
+    if(musicId != 0 ) {
+      String title = musicMapper.getMusicInfo(musicId).getTitle();  // 음악 정보 받아오기
+      param.put("testTitle", title); // 음악 제목 셋팅
+    }
+
     wordMapper.insertTests(param);             // tests 테이블에 테스트 추가
     int testId = wordMapper.getTestId(userId); // 테스트ID 받아오기
     param.put("testId", testId);                // 테스트ID param에 셋팅
@@ -134,11 +142,7 @@ public class StudyServiceImpl implements StudyService{
   public List<LyricsDto> getMusicTest(HashMap<String, Object> param) throws Exception {
     int musicId = (int) param.get("musicId");
     Long userId = (Long) param.get("userId");
-
-    MusicDto musicDto = musicMapper.getMusicInfo(musicId);  // 음악 정보 받아오기
-    param.put("testTitle", musicDto.getTitle()); // 음악 제목 셋팅
     wordMapper.insertTests(param);
-
     int testId = wordMapper.getTestId(userId); // 테스트ID 받아오기
     param.put("testId", testId);                // 테스트ID param에 셋팅
 
@@ -169,5 +173,25 @@ public class StudyServiceImpl implements StudyService{
     musicMapper.addToMyMusicBook(param);
   }
 
+  @Override
+  public void deleteMyMusic(HashMap<String, Object> param) throws Exception {
+    musicMapper.deleteMyMusic(param);
+  }
+  @Override
+  public List<RecordDto> getWordRecord(HashMap<String, Object> param) throws Exception {
+    return wordMapper.getWordRecord(param);
+  }
 
+  @Override
+  public List<WordDto> getWordRecordDetail(HashMap<String, Object> param) throws Exception {
+    List<Integer> myList = wordMapper.getMyWordsList((Long) param.get("userId"));
+    List<WordDto> list = wordMapper.getWordRecordDetail(param);
+    HashMap<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
+    for(int key : myList) hm.put(key,true);
+    for(WordDto word : list) {
+      if (hm.containsKey(word.getWordId()))
+        word.setIsSaved(true);
+    }
+    return list;
+  }
 }
