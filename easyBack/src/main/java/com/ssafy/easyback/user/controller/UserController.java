@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,7 @@ public class UserController {
   final UserService userService;
   final KakaoService kakaoService;
 
+  @Deprecated
   @GetMapping("/registration-check")
   public ResponseEntity<HttpStatus> checkRegisteredUser(HttpSession session) {
     long userId = (Long) session.getAttribute("userId");
@@ -38,12 +40,12 @@ public class UserController {
     return ResponseEntity.status(httpStatus).build();
   }
 
+
   @PostMapping("/register")
-  public ResponseEntity<HttpStatus> registerUserInfo(@ModelAttribute("userDto") RegistrationUserDTO userDto,
+  public ResponseEntity<HttpStatus> registerUserInfo(@RequestBody RegistrationUserDTO userDto,
       HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     userDto.setUserId(userId);
-
 
     userService.registerUserAndSetAttendance(userDto, userId);
     return ResponseEntity.status(HttpStatus.OK).build();

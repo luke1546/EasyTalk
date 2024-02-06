@@ -14,6 +14,7 @@ import lombok.ToString;
 public class TestDto {
   private int questionId;
   private int wordId;
+  private int musicId;
   String word;
   String meaning;
   String wrong1;

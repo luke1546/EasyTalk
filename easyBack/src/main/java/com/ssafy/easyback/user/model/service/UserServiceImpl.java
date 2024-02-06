@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
    * @param userId
    * @return
    */
+  @Deprecated
   @Override
   public HttpStatus checkRegisteredUser(long userId) {
     ResponseUserDto userDto = this.getUserInfo(userId);

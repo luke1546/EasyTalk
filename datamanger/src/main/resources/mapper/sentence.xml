@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.datamanager.study.model.mapper.SentenceMapper">
+
+  <insert id="insertSentence" parameterType="map">
+    insert into sentences(sentence, meaning)
+    values(#{sentence}, #{meaning});
+  </insert>
+
+  <update id="updateUri">
+    UPDATE sentences
+    SET sentenceAudioUri=concat("/study/sentence/audio/",LAST_INSERT_ID(),".mp3")
+    where sentenceId = LAST_INSERT_ID()
+  </update>
+</mapper>
