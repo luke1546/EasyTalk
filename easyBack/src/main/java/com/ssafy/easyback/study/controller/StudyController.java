@@ -50,7 +50,6 @@ public class StudyController {
     optionDto.setEnd(end);
 
     wordDto.setUserId(userId);
-    wordDto.setUserId(Long.parseLong("3301009684"));  //session 설정되면 지우기!!
     wordDto.setLevel(level);
     wordDto.setMusicId(musicId);
     wordDto.setOptionDto(optionDto);
@@ -61,18 +60,17 @@ public class StudyController {
   public ResponseEntity<String> addToMyWordBook(@RequestBody WordDto wordDto ,HttpSession session) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
     wordDto.setUserId(userId);
-    wordDto.setUserId(Long.parseLong("3301009684"));  //session 설정되면 지우기!!
     studyService.addToMyWordBook(wordDto);
     return ResponseEntity.ok("ok");
   }
 
   @GetMapping("word/detail") //단어 상세화면
-  public ResponseEntity<WordDto> getWord(@RequestParam(value="target") int wordId, HttpSession session) throws Exception {
+  public ResponseEntity<WordDto> getWord(@RequestParam(value="target") int wordId, HttpSession session)
+      throws Exception {
     WordDto wordDto = new WordDto();
     Long userId = (Long) session.getAttribute("userId");
     wordDto.setUserId(userId);
     wordDto.setWordId(wordId);
-    wordDto.setUserId(Long.parseLong("3301009684"));  //session 설정되면 지우기!!
     return ResponseEntity.ok(studyService.getWord(wordDto));
   }
 
@@ -86,7 +84,6 @@ public class StudyController {
   ) throws Exception {
     Map<String, Object> param = new HashMap<String, Object>();
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");  //session 설정되면 지우기!!
     param.put("userId", userId);
     param.put("testType", testType);
     param.put("level", level);
@@ -111,7 +108,6 @@ public class StudyController {
       HttpSession session
   ) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");    //지우기
     SentenceDto sentenceDto = new SentenceDto();
     OptionDto optionDto = new OptionDto();
     int start = page*PAGE_SIZE-20;
@@ -129,7 +125,6 @@ public class StudyController {
   @PostMapping("sentence") //문장 자장하기
   public ResponseEntity<String> addToMySentenceBook(@RequestBody SentenceDto sentenceDto ,HttpSession session) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");  //session 설정되면 지우기!!
     sentenceDto.setUserId(userId);
     studyService.addToMySentenceBook(sentenceDto);
     return ResponseEntity.ok("ok");
@@ -141,7 +136,6 @@ public class StudyController {
     Long userId = (Long) session.getAttribute("userId");
     HashMap<String, Object> param = new HashMap<>();
     param.put("userId", userId);
-    param.put("userId",Long.parseLong("3301009684"));  //session 설정되면 지우기!!
     param.put("sentenceId", sentenceId);
     return ResponseEntity.ok(studyService.getSentence(param));
   }
@@ -154,14 +148,13 @@ public class StudyController {
   @GetMapping("music")    // 음악 리스트 가져오기
   public ResponseEntity<List<MusicDto>> getMusicList(
       @RequestParam(value="order", defaultValue = "hit") String order,
-      @RequestParam(value="sort", defaultValue = "asc") String sort,
+      @RequestParam(value="sort", defaultValue = "desc") String sort,
       @RequestParam(value="page", defaultValue = "1") int page,
       @RequestParam(value="keyword", defaultValue = "") String keyword,
       @RequestParam(value="filter", defaultValue = "list") String filter,
       HttpSession session
   ) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");    //지우기
     MusicDto musicDto = new MusicDto();
     OptionDto optionDto = new OptionDto();
     int start = page*PAGE_SIZE-20;
@@ -186,7 +179,6 @@ public class StudyController {
   public ResponseEntity<List<LyricsDto>> getMusicTest(@RequestParam("target") int musicId, HttpSession session) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");    //지우기
     param.put("musicId", musicId);
     param.put("userId", userId);
     return ResponseEntity.ok(studyService.getMusicTest(param));
@@ -196,7 +188,6 @@ public class StudyController {
   public ResponseEntity<String> submitMusicTest(@RequestParam("audio") MultipartFile audioFile, @RequestParam("target") int testId, HttpSession session) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");    //지우기
     param.put("userId", userId);
     param.put("testId", testId);
     studyService.submitMusicTest(param, audioFile);
@@ -206,8 +197,6 @@ public class StudyController {
   @PostMapping("music") // 음악 자장하기
   public ResponseEntity<String> addToMyMusicBook(@RequestBody HashMap<String,Object> param, HttpSession session) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");  //session 설정되면 지우기!!
-
     param.put("userId",userId);
     studyService.addToMyMusicBook(param);
     return ResponseEntity.ok("ok");
@@ -217,7 +206,6 @@ public class StudyController {
   public ResponseEntity<String> deleteMyMusic(@RequestParam("target") int musicId, HttpSession session) throws Exception {
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");    //지우기
     param.put("userId", userId);
     param.put("musicId", musicId);
     studyService.deleteMyMusic(param);
@@ -233,7 +221,6 @@ public class StudyController {
   ) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");    //지우기
     param.put("userId", userId);
     param.put("order", order);
     param.put("sort", sort);
@@ -248,7 +235,6 @@ public class StudyController {
   ) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3301009684");    //지우기
     param.put("userId", userId);
     param.put("testId", testId);
     return ResponseEntity.ok(studyService.getWordRecordDetail(param));
