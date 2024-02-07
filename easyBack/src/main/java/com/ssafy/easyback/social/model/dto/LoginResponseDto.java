@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class LoginResponseDto {
-  public boolean loginSuccess;
+
+  public Enum UserRegistrationStatus;
   public Long userId;
 }

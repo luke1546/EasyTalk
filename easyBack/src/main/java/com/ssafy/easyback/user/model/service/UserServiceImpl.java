@@ -3,6 +3,7 @@ package com.ssafy.easyback.user.model.service;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
+import com.ssafy.easyback.user.model.dto.UserRegistrationStatus;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,14 +32,19 @@ public class UserServiceImpl implements UserService {
    */
   @Deprecated
   @Override
-  public HttpStatus checkRegisteredUser(long userId) {
+  public UserRegistrationStatus checkRegisteredUser(long userId, String phone) {
     ResponseUserDto userDto = this.getUserInfo(userId);
 
     if (userDto == null) {
-      return HttpStatus.UNAUTHORIZED;
+      return UserRegistrationStatus.UNREGISTERED;
     }
 
-    return HttpStatus.OK;
+    /** 비즈니스로직 폰 중복사용자 인지 체크하기 */
+    if (phone != null && userMapper.selectUserbyPhoneNumber(phone)) {
+      return UserRegistrationStatus.DUPLICATED;
+    }
+
+    return UserRegistrationStatus.REGISTERED;
   }
 
   /**
@@ -52,6 +58,7 @@ public class UserServiceImpl implements UserService {
       파일서버에 저장하는 로직
       myFileSerer.save("/user/profile/image{userDto.getUserID}.jpg");
     */
+    userDto.setProfileImageUri("/user/profile/image/default.jpg");
     userMapper.insertUserInfo(userDto);
   }
 
@@ -78,4 +85,5 @@ public class UserServiceImpl implements UserService {
     registerUserInfo(userDto);
     setAttendance(userId);
   }
+
 }
