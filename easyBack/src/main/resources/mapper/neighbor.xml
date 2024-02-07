@@ -4,23 +4,30 @@
 
 <mapper namespace="com.ssafy.easyback.neighbor.model.mapper.NeighborMapper">
     <insert id="requestNeighbor" parameterType="neighborDto">
-        insert into neighbor_requests(requesterId, receiverId, statusCode)
-        values(#{userId}, #{neighborId}, #{status});
+        insert into neighbors(userId, neighborId, statusCode)
+        values(#{userId}, #{neighborId}, #{status}),
+            (#{neighborId}, #{userId}, "RECEIVED")
     </insert>
 
     <update id="receiveNeighbor" parameterType="neighborDto">
-        update neighbor_requests
-        set statusCode = #{status}
-        where requesterId = #{neighborId} and receiverId = #{userId}
+        update neighbors
+        set statusCode = #{status},
+            since = current_timestamp()
+        where userId = #{neighborId} and neighborId = #{userId}
+            or userId = #{userId} and neighborId = #{neighborId}
     </update>
 
-    <insert id="beNeighbor" parameterType="neighborDto">
-        insert into neighbors(userId, neighborId)
-        values(#{userId}, #{neighborId}),
-            (#{neighborId}, #{userId})
-    </insert>
-
     <delete id="deleteNeighbor" parameterType="neighborDto">
-
+        delete
+        from neighbors
+        where userId = #{neighborId} and neighborId = #{userId}
+           or userId = #{userId} and neighborId = #{neighborId}
     </delete>
+
+    <select id="getNeighborList" parameterType="map" resultType="responseUserDto">
+        select *
+        from neighbors
+        where userId = #{userId} and statusCode = #{status}
+        order by #{order} #{sort}
+    </select>
 </mapper>

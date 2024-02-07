@@ -1,6 +1,11 @@
 package com.ssafy.easyback.neighbor.model.service;
 
 import com.ssafy.easyback.neighbor.model.dto.NeighborDto;
+import com.ssafy.easyback.user.model.dto.ResponseUserDto;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface NeighborService {
 
@@ -9,4 +14,7 @@ public interface NeighborService {
     void receiveNeighbor(NeighborDto neighborDto) throws Exception;
 
     void deleteNeighbor(NeighborDto neighborDto) throws Exception;
+    List<ResponseUserDto> getNeighborList(HashMap<String, Object> param) throws Exception;
+
+    void writeFeed(HashMap<String, Object> param) throws Exception;
 }

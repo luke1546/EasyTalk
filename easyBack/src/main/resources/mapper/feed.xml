@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.neighbor.model.mapper.NeighborMapper">
+    <insert id="writeFeed" parameterType="map">
+        insert into feeds(userId, content)
+        values(#{userId}, #{content});
+    </insert>
+
+    <select id="getFeedId" resultType="int">
+        select last_insert_id()
+    </select>
+
+    <insert id="insertImageUri" parameterType="map">
+        insert into feed_images(feedId, feedImageUri)
+        values(#{feedId}, concat("/neighbor/feed/image/",#{feedId},"_",#{index},".jpg"));
+    </insert>
+</mapper>
