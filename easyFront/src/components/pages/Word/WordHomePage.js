@@ -1,11 +1,8 @@
 // WordHomePage.js
 
 import React from 'react';
-import { Routes, Route, useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Textbox from '../../UI/atoms/Text/Textbox';
-import WordListPage from './WordListPage';
-import WordStagePage from './WordStagePage';
-import WordTestPage from './WordTestPage';
 
 const WordHomePage = () => {
   const navigate = useNavigate();
@@ -16,16 +13,16 @@ const WordHomePage = () => {
 
   return (
     <div className="WordHomePage">
-      <Link to={WordStagePage}>
+      <div onClick={() => handleNavigation('stage')}>
         <Textbox section="singlePage" context1="단계별 단어 공부" />
-      </Link>
-      <Link to={WordListPage} state={userId}>
+      </div>
+      <div onClick={() => handleNavigation('my')}>
         <Textbox section="singlePage" context1="내 단어장" />
-      </Link>
-      <div onClick={() => handleNavigation('/study/word/stagetest')}>
+      </div>
+      <div onClick={() => handleNavigation('stagetest')}>
         <Textbox section="singlePage" context1="단계별 단어 시험" />
       </div>
-      <div onClick={() => handleNavigation('/study/word/musictest')}>
+      <div onClick={() => handleNavigation('musictest')}>
         <Textbox section="singlePage" context1="노래별 단어 시험" />
       </div>
     </div>

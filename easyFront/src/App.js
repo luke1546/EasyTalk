@@ -6,13 +6,10 @@ import Footer from "./components/UI/modules/Footer";
 import IntroPage from "./components/pages/Login/IntroPage";
 import LoginPage from "./components/pages/Login/LoginPage";
 import HomePage from "./components/pages/Login/HomePage";
-import MusicHomePage from "./components/pages/Music/MusicHomePage";
+import StudyPage from "./components/pages/Common/StudyPage";
 import GroupHomePage from "./components/pages/Group/GroupHomePage";
 import PlaceHomePage from "./components/pages/Place/PlaceHomePage";
 import MyHomePage from "./components/pages/My/MyHomePage";
-import Button from "./components/UI/atoms/Button/Button";
-
-import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
 
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
@@ -26,11 +23,10 @@ const App = () => {
             <Route path="/" exact element={<IntroPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePage />} />
-            <Route path="/study" element={<MusicHomePage />} />
+            <Route path="/study/*" element={<StudyPage />} />
             <Route path="/group" element={<GroupHomePage />} />
             <Route path="/place" element={<PlaceHomePage />} />
             <Route path="/my" element={<MyHomePage />} />
-            <Route path={`/study/:index`} element={<MusicDetailPage />} />
           </Routes>
         </div>
         <Footer className="Footer" />
