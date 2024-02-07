@@ -16,8 +16,8 @@
 
   <insert id="insertUserInfo" parameterType="com.ssafy.easyback.user.model.dto.RegistrationUserDTO">
     INSERT INTO `users`
-      (userId, nickname, profileImageUri, exp, info, phone)
-    VALUES (#{userId}, #{nickname}, #{profileImageUri}, #{exp}, #{info}, #{phone})
+      (userId, nickname, profileImageUri, info)
+    VALUES (#{userId}, #{nickname}, #{profileImageUri}, #{info} )
   </insert>
 
   <select id="selectAttendanceById" parameterType="java.lang.Long"
