@@ -1,6 +1,7 @@
 package com.ssafy.easyback.user.controller;
 
 import com.ssafy.easyback.social.model.service.KakaoService;
+import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.service.UserService;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,6 +56,14 @@ public class UserController {
     UserAttendance userAttendance = userService.getAttendance(userId);
 
     return ResponseEntity.status(HttpStatus.OK).body(userAttendance);
+  }
+
+  @GetMapping("/profile")
+  public ResponseEntity<Object> getUserInfo(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    ResponseUserDto userInfo = userService.getUserInfo(userId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(userInfo);
   }
 }
 
