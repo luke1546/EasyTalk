@@ -5,6 +5,7 @@ import com.ssafy.easyback.social.KakaoConstants;
 import com.ssafy.easyback.social.model.dto.KakaoToken;
 import com.ssafy.easyback.social.model.dto.LoginResponseDto;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
+import com.ssafy.easyback.user.model.dto.UserRegistrationStatus;
 import com.ssafy.easyback.user.model.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -90,7 +91,16 @@ public class KakaoService {
     
     LoginResponseDto loginResponseDto = new LoginResponseDto();
     loginResponseDto.setUserId(userId);
-    loginResponseDto.setUserRegistrationStatus(userService.checkRegisteredUser(userId, phone));
+
+    /**
+     * 세션 값 저장해주기
+     *    - 중복된 사용자 제외
+     */
+    UserRegistrationStatus userRegistrationStatus = userService.checkRegisteredUser(userId, phone);
+    if (userRegistrationStatus != UserRegistrationStatus.DUPLICATED) {
+      session.setAttribute("access_token", accessToken);
+    }
+    loginResponseDto.setUserRegistrationStatus(userRegistrationStatus);
 
     return ResponseEntity.ok().body(loginResponseDto);
   }
