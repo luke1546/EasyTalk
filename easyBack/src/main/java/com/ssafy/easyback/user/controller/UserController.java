@@ -26,21 +26,6 @@ public class UserController {
   final UserService userService;
   final KakaoService kakaoService;
 
-  @Deprecated
-  @GetMapping("/registration-check")
-  public ResponseEntity<HttpStatus> checkRegisteredUser(HttpSession session) {
-    long userId = (Long) session.getAttribute("userId");
-
-    // 회원 등록된 사용자인지 확인
-    HttpStatus httpStatus = userService.checkRegisteredUser(userId);
-    if (httpStatus == HttpStatus.OK) {
-      userService.setAttendance(userId); // 등록된 사용자이면 출석체크
-    }
-
-    return ResponseEntity.status(httpStatus).build();
-  }
-
-
   @PostMapping("/register")
   public ResponseEntity<HttpStatus> registerUserInfo(@RequestBody RegistrationUserDTO userDto,
       HttpSession session) {
