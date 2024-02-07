@@ -51,8 +51,10 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  @GetMapping("/attendance/{userId}")
-  public ResponseEntity<Object> getAttendanceInfo(@PathVariable("userId") Long userId) {
+  @GetMapping("/attendance")
+  public ResponseEntity<Object> getAttendanceInfo(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+
     UserAttendance userAttendance = userService.getAttendance(userId);
 
     return ResponseEntity.status(HttpStatus.OK).body(userAttendance);
