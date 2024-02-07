@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
    * @param userId
    * @return
    */
-  @Deprecated
   @Override
   public UserRegistrationStatus checkRegisteredUser(long userId, String phone) {
     ResponseUserDto userDto = this.getUserInfo(userId);
