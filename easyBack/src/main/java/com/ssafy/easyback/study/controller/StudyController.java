@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/study")
-@CrossOrigin("*")
 public class StudyController {
   private final StudyService studyService;
   private final SpeechToText speechToText;
