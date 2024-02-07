@@ -99,6 +99,7 @@ public class KakaoService {
     UserRegistrationStatus userRegistrationStatus = userService.checkRegisteredUser(userId, phone);
     if (userRegistrationStatus != UserRegistrationStatus.DUPLICATED) {
       session.setAttribute("access_token", accessToken);
+      session.setAttribute("userId", userId);
     }
     loginResponseDto.setUserRegistrationStatus(userRegistrationStatus);
 
