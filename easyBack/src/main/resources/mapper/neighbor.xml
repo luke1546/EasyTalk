@@ -16,7 +16,8 @@
 
     <insert id="beNeighbor" parameterType="neighborDto">
         insert into neighbors(userId, neighborId)
-        values(#{userId}, #{neighborId})
+        values(#{userId}, #{neighborId}),
+            (#{neighborId}, #{userId})
     </insert>
 
     <delete id="deleteNeighbor" parameterType="neighborDto">

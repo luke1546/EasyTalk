@@ -11,4 +11,6 @@ public interface NeighborMapper {
     void beNeighbor(NeighborDto neighborDto) throws Exception;
 
     void deleteNeighbor(NeighborDto neighborDto) throws Exception;
+
+    void cancelRequest(NeighborDto neighborDto) throws Exception;
 }

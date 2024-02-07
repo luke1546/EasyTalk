@@ -25,6 +25,7 @@ public class NeighborServiceImpl implements NeighborService{
 
     @Override
     public void deleteNeighbor(NeighborDto neighborDto) throws Exception {
-        neighborMapper.deleteNeighbor(neighborDto);
+        if(neighborDto.getStatus().equals("NEIGHBOR"))  neighborMapper.deleteNeighbor(neighborDto);
+        else neighborMapper.cancelRequest(neighborDto);
     }
 }
