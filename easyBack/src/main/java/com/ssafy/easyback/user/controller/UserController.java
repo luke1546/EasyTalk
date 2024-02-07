@@ -1,9 +1,9 @@
 package com.ssafy.easyback.user.controller;
 
 import com.ssafy.easyback.social.model.service.KakaoService;
-import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
+import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
-import com.ssafy.easyback.user.model.dto.UserRegistrationStatus;
+import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -26,19 +26,19 @@ public class UserController {
   final UserService userService;
   final KakaoService kakaoService;
 
-//  @Deprecated
-//  @GetMapping("/registration-check")
-//  public UserRegistrationStatus checkRegisteredUser(HttpSession session) {
-//    long userId = (Long) session.getAttribute("userId");
-//
-//    // 회원 등록된 사용자인지 확인
-//    HttpStatus httpStatus = userService.checkRegisteredUser(userId);
-//    if (httpStatus == HttpStatus.OK) {
-//      userService.setAttendance(userId); // 등록된 사용자이면 출석체크
-//    }
-//
-//    return ResponseEntity.status(httpStatus).build();
-//  }
+  @Deprecated
+  @GetMapping("/registration-check")
+  public ResponseEntity<HttpStatus> checkRegisteredUser(HttpSession session) {
+    long userId = (Long) session.getAttribute("userId");
+
+    // 회원 등록된 사용자인지 확인
+    HttpStatus httpStatus = userService.checkRegisteredUser(userId);
+    if (httpStatus == HttpStatus.OK) {
+      userService.setAttendance(userId); // 등록된 사용자이면 출석체크
+    }
+
+    return ResponseEntity.status(httpStatus).build();
+  }
 
 
   @PostMapping("/register")
@@ -51,11 +51,21 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  @GetMapping("/attendance/{userId}")
-  public ResponseEntity<Object> getAttendanceInfo(@PathVariable("userId") Long userId) {
+  @GetMapping("/attendance")
+  public ResponseEntity<Object> getAttendanceInfo(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+
     UserAttendance userAttendance = userService.getAttendance(userId);
 
     return ResponseEntity.status(HttpStatus.OK).body(userAttendance);
+  }
+
+  @GetMapping("/profile")
+  public ResponseEntity<Object> getUserInfo(HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+    ResponseUserDto userInfo = userService.getUserInfo(userId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(userInfo);
   }
 }
 
