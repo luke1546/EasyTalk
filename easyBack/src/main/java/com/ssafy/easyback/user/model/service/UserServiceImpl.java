@@ -78,11 +78,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserAttendance getAttendance(Long userId) {
+  public List<Integer> getAttendance(Long userId) {
     ResponseUserDto userDto = this.getUserInfo(userId);
     List<Integer> attendanceList = userMapper.selectAttendanceById(userId);
 
-    return new UserAttendance(userDto, attendanceList);
+    return attendanceList;
   }
 
   @Override
