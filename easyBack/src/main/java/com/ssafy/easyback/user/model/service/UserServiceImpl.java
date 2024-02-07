@@ -39,7 +39,8 @@ public class UserServiceImpl implements UserService {
       return UserRegistrationStatus.UNREGISTERED;
     }
 
-    if (userMapper.selectUserbyPhoneNumber(phone)) {
+    /** 비즈니스로직 폰 중복사용자 인지 체크하기 */
+    if (phone != null && userMapper.selectUserbyPhoneNumber(phone)) {
       return UserRegistrationStatus.DUPLICATED;
     }
 
@@ -57,6 +58,7 @@ public class UserServiceImpl implements UserService {
       파일서버에 저장하는 로직
       myFileSerer.save("/user/profile/image{userDto.getUserID}.jpg");
     */
+    userDto.setProfileImageUri("/user/profile/image/default.jpg");
     userMapper.insertUserInfo(userDto);
   }
 
