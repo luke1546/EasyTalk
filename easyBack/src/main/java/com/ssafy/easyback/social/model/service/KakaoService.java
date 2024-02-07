@@ -88,7 +88,7 @@ public class KakaoService {
   public ResponseEntity<LoginResponseDto> login(String accessToken, HttpSession session) {
     Long userId = this.getUserId(accessToken);
     String phone = this.getUserPhoneNumber(userId);
-    
+
     LoginResponseDto loginResponseDto = new LoginResponseDto();
     loginResponseDto.setUserId(userId);
 
