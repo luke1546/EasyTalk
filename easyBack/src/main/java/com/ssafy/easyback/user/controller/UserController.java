@@ -6,15 +6,18 @@ import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,10 +30,12 @@ public class UserController {
   final KakaoService kakaoService;
 
   @PostMapping("/register")
-  public ResponseEntity<HttpStatus> registerUserInfo(@RequestBody RegistrationUserDTO userDto,
+  public ResponseEntity<HttpStatus> registerUserInfo(@ModelAttribute RegistrationUserDTO userDto,
       HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
     userDto.setUserId(userId);
+
+    log.info("image file size={}", userDto.getProfileImage().getSize());
 
     userService.registerUserAndSetAttendance(userDto, userId);
     return ResponseEntity.status(HttpStatus.OK).build();
@@ -40,17 +45,22 @@ public class UserController {
   public ResponseEntity<Object> getAttendanceInfo(HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
 
-    UserAttendance userAttendance = userService.getAttendance(userId);
+    List<Integer> userAttendance = userService.getAttendance(userId);
 
     return ResponseEntity.status(HttpStatus.OK).body(userAttendance);
   }
 
-  @GetMapping("/profile")
-  public ResponseEntity<Object> getUserInfo(HttpSession session) {
+  @GetMapping
+  public ResponseEntity<Object> getUserInfo(@RequestParam(required = false) Long targetId, HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
+
+    if (targetId != null) {
+      userId = targetId;
+    }
     ResponseUserDto userInfo = userService.getUserInfo(userId);
 
     return ResponseEntity.status(HttpStatus.OK).body(userInfo);
   }
+
 }
 

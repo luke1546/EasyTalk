@@ -29,6 +29,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.4' // AWS
+	implementation 'javax.xml.bind:jaxb-api:2.3.1' // AWS
 	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.17.0'	//selenium
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'				//gson
 	implementation group: 'org.json', name: 'json', version: '20231013'	// 유튜브 가사 가져오기
