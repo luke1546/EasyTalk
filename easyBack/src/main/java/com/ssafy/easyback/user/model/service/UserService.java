@@ -4,6 +4,7 @@ import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.UserRegistrationStatus;
+import java.util.List;
 
 public interface UserService {
 
@@ -13,7 +14,7 @@ public interface UserService {
 
   void registerUserInfo(RegistrationUserDTO userDto);
 
-  UserAttendance getAttendance(Long userId);
+  List<Integer> getAttendance(Long userId);
 
   void setAttendance(Long userId);
 
