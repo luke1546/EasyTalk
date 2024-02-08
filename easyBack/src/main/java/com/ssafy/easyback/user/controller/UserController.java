@@ -51,9 +51,8 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity<Object> getUserInfo(@RequestParam(required = false) Long targetId, HttpSession session) {
+  public ResponseEntity<Object> getUserInfo(@RequestParam(value = "targetId", required = false) Long targetId, HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
-
     if (targetId != null) {
       userId = targetId;
     }
