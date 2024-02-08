@@ -1,5 +1,7 @@
 package com.ssafy.easyback.user.model.service;
 
+import com.ssafy.easyback.S3.model.service.S3UploadService;
+import com.ssafy.easyback.config.PathUri;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
+  final S3UploadService s3UploadService;
   public final UserMapper userMapper;
 
   @Override
@@ -57,16 +60,29 @@ public class UserServiceImpl implements UserService {
       파일서버에 저장하는 로직
       myFileSerer.save("/user/profile/image{userDto.getUserID}.jpg");
     */
-    userDto.setProfileImageUri("/user/profile/image/default.jpg");
+    if (userDto.getProfileImage().isEmpty()) {
+      log.info("no File");
+      userDto.setProfileImageUri(PathUri.PROFILE_IMAGE_URI + "default" + PathUri.IMAGE_EXTENSIONS);
+    } else {
+      userDto.setProfileImageUri(PathUri.PROFILE_IMAGE_URI + userDto.getUserId() + PathUri.IMAGE_EXTENSIONS);
+    }
+
+    try {
+      s3UploadService.saveFile(userDto.getProfileImage(), userDto.getProfileImageUri());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     userMapper.insertUserInfo(userDto);
+
   }
 
   @Override
-  public UserAttendance getAttendance(Long userId) {
+  public List<Integer> getAttendance(Long userId) {
     ResponseUserDto userDto = this.getUserInfo(userId);
     List<Integer> attendanceList = userMapper.selectAttendanceById(userId);
 
-    return new UserAttendance(userDto, attendanceList);
+    return attendanceList;
   }
 
   @Override
