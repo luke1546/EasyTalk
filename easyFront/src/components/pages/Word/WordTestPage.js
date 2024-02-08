@@ -3,18 +3,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Textbox from "../../UI/atoms/Text/Textbox";
+import BtnBox from "../../UI/modules/BtnBox";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const WordTestPage = ( ) => {
   const [testWord, setTestWord] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isRight, setRight] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const selectedAnswers = [];
   const { level } = useParams();
   const currentWord = testWord[currentIndex];
-  const choices = shuffleArray([currentWord.answer, currentWord.wrong1, currentWord.wrong2]);
-
+  const [choices, setChoices] = useState(shuffleArray([currentWord.answer, currentWord.wrong1, currentWord.wrong2]));
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     const mw = Math.random();
 
@@ -47,10 +50,16 @@ const WordTestPage = ( ) => {
   };
 
   const handleAnswerClick = (selectedAnswer) => {
-    if (selectedAnswer === wordsData[currentIndex].answer) {
+    if (selectedAnswer === currentWord.answer) {
+      setRight(true)
+      selectedAnswers.push(selectedAnswer);
       setCorrectAnswers(correctAnswers + 1);
     }
-    if (currentIndex === wordsData.length - 1) {
+    else {
+      setRight(false)
+      selectedAnswers.push(selectedAnswer);
+    }
+    if (currentIndex === testWord.length - 1) {
       setShowResult(true);
     } else {
       setCurrentIndex(currentIndex + 1);
@@ -58,12 +67,11 @@ const WordTestPage = ( ) => {
   };
 
   const handleNextQuestion = () => {
-    setCurrentIndex(currentIndex + 1);
-    setShowResult(false);
+
   };
 
-  const handleFinishTest = () => {
-    // 시험 종료 로직 구현
+  const handleSaveWord = () => {
+
   };
 
 
@@ -78,6 +86,23 @@ const WordTestPage = ( ) => {
               {choice}
             </button>
           ))}
+          <div >
+            {isModalOpen && (isRight ? (
+              <>
+                <Textbox section={'singleText'} context1={'맞았습니다!'} />
+                <button onClick={handleNextQuestion}>
+                  다음 문제로
+                </button>
+              </>
+            ) : (
+              <>
+                <Textbox section={'singleText'} context1={'틀렸습니다!'} />
+                <button onClick={handleSaveWord}>
+                  저장하고 다음문제로
+                </button>
+              </>
+            ))}
+          </div>
         </>
       ) : (
         <>
@@ -87,7 +112,7 @@ const WordTestPage = ( ) => {
         </>
       )}
     </div>
-  );
+  ); 
 };
 
-export default WordStagePage;
+export default WordTestPage;
