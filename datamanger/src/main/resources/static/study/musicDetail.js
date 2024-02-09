@@ -44,12 +44,12 @@ async function insertMusicWords() {
   }
 }
 
-async function deleteLyric() {
+async function deleteLyric(lyricId) {
   // 삭제 확인창을 띄웁니다.
   const isConfirmed = confirm(lyricId + ' 번 가사를 삭제할까요?');
   if (isConfirmed) {
     // '예'를 선택하면 삭제 API를 호출합니다.
-    await axios.delete("http://localhost/study/music/word?musicId=" + musicId);  // 이 URL은 실제 API 주소로 변경해야 합니다.
+    await axios.delete("http://localhost/study/music/lyric?lyricId=" + lyricId);  // 이 URL은 실제 API 주소로 변경해야 합니다.
     // 페이지를 새로 고침하여 삭제된 가사를 화면에서 제거합니다.
     location.reload();
   }

@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class FeedDto {
+    private Long targetUserId;
     private int feedId;
     private String profileImageUri;
     private String nickname;

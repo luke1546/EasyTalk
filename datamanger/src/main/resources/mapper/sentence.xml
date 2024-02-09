@@ -11,7 +11,7 @@
 
   <update id="updateUri">
     UPDATE sentences
-    SET sentenceAudioUri=concat("/study/sentence/audio/",LAST_INSERT_ID(),".mp3")
+    SET sentenceAudioUri=concat("/study/sentence/audio/",LAST_INSERT_ID())
     where sentenceId = LAST_INSERT_ID()
   </update>
 </mapper>

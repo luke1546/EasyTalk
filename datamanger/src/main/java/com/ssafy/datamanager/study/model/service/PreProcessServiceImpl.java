@@ -51,8 +51,8 @@ public class PreProcessServiceImpl implements PreProcessService {
   @Override
   public void insertWordList(String filePath, int level) throws Exception {
       int count = 1;
-      try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-        String line;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+          String line;
           while ((line = reader.readLine()) != null) {
             System.out.print(count++ + ". ");
             crawlingWord(line, level);
@@ -119,11 +119,16 @@ public class PreProcessServiceImpl implements PreProcessService {
         String word = st.nextToken();
         word = word.toLowerCase();
         if(wordMapper.checkWord(word)==0) crawlingWord(word, 0);
-        int wordId = wordMapper.getWordId(word);
-        param.put("musicId", musicId);
-        param.put("wordId", wordId);
-        try{wordMapper.insertWordMusic(param);}
-        catch(Exception e){log.info("중복된 단어입니다.");}
+        try {
+          int wordId = wordMapper.getWordId(word);
+          param.put("musicId", musicId);
+          param.put("wordId", wordId);
+          try {
+            wordMapper.insertWordMusic(param);
+          } catch (Exception e) {
+            log.info(word + "는 중복된 단어입니다.");
+          }
+        }catch(Exception e){log.info(word + "에 해당하는 단어는 존재하지 않습니다.");}
       }
     }
   }
@@ -162,7 +167,7 @@ public class PreProcessServiceImpl implements PreProcessService {
   private void putIntoDB(String word, int level) throws Exception {
     int mCount = meaning.size(); //단어가 가진 뜻의 수
     if(mCount == 0) {
-      log.info("해당 단어는 찾을 수 없습니다.");
+      log.info(word + "에 해당하는 단어는 찾을 수 없습니다.");
       return;
     }
     WordDto wordDto = new WordDto();

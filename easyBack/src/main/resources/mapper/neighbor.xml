@@ -13,15 +13,15 @@
         update neighbors
         set statusCode = #{status},
             since = current_timestamp()
-        where userId = #{neighborId} and neighborId = #{userId}
-            or userId = #{userId} and neighborId = #{neighborId}
+        where (userId = #{neighborId} and neighborId = #{userId})
+            or (userId = #{userId} and neighborId = #{neighborId})
     </update>
 
     <delete id="deleteNeighbor" parameterType="neighborDto">
         delete
         from neighbors
-        where userId = #{neighborId} and neighborId = #{userId}
-           or userId = #{userId} and neighborId = #{neighborId}
+        where (userId = #{neighborId} and neighborId = #{userId})
+           or (userId = #{userId} and neighborId = #{neighborId})
     </delete>
 
     <select id="getNeighborList" parameterType="map" resultType="responseUserDto">

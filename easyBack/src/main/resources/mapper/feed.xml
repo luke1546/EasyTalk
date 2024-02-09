@@ -18,7 +18,7 @@
     </insert>
 
     <select id="getFeedList" parameterType="map" resultType="feedDto">
-        select feedId, nickname, profileImageUri, (
+        select f.userId as "targetUserId", feedId, nickname, profileImageUri, (
         select count(*)
         from hearts
         where feedId = f.feedId
@@ -42,6 +42,9 @@
         <if test="type == 'detail'">
             where f.userId = #{neighborId}
         </if>
+        <if test="type == 'myList'">
+            where f.userId = #{userId}
+        </if>
     </select>
 
     <select id="getFeedImages" parameterType="int" resultType="String">
@@ -51,7 +54,7 @@
     </select>
 
     <select id="getFeedDetail" parameterType="map" resultType="feedDto">
-        select feedId, nickname, profileImageUri, (
+        select f.userId as "targetUserId", feedId, nickname, profileImageUri, (
             select count(*)
             from hearts
             where feedId = f.feedId
