@@ -53,4 +53,10 @@
     from lyrics
     where lyricId = #{lyricId}
   </delete>
+
+  <update id="updateLyric" parameterType="map">
+    update lyrics
+    set meaning = #{newValue}
+    where lyric = #{lyric}
+  </update>
 </mapper>

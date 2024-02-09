@@ -80,4 +80,10 @@ public class StudyController {
     return ResponseEntity.ok("200");
   }
 
+  @PutMapping("music/lyric")
+  public ResponseEntity<String> updateLyric(@RequestBody HashMap<String, Object> param) throws Exception{
+    musicService.updateLyric(param);
+    return ResponseEntity.ok("200");
+  }
+
 }

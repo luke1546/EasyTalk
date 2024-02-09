@@ -16,4 +16,5 @@ public interface MusicMapper {
   List<MusicDto> getMusicList() throws Exception;
   List<LyricsDto> getMusicDetail(int musicId) throws Exception;
   void deleteLyric(int lyricId) throws Exception;
+  void updateLyric(HashMap<String, Object> param) throws Exception;
 }
