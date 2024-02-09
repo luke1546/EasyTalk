@@ -56,22 +56,22 @@ public class UserServiceImpl implements UserService {
    */
   @Override
   public void registerUserInfo(RegistrationUserDTO userDto) {
-    /*
-      파일서버에 저장하는 로직
-      myFileSerer.save("/user/profile/image{userDto.getUserID}.jpg");
-    */
+
     if (userDto.getProfileImage().isEmpty()) {
       log.info("no File");
       userDto.setProfileImageUri(PathUri.PROFILE_IMAGE_URI + "default" + PathUri.IMAGE_EXTENSIONS);
+
     } else {
       userDto.setProfileImageUri(PathUri.PROFILE_IMAGE_URI + userDto.getUserId() + PathUri.IMAGE_EXTENSIONS);
+
+      try {
+        s3UploadService.saveFile(userDto.getProfileImage(), userDto.getProfileImageUri());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
 
-    try {
-      s3UploadService.saveFile(userDto.getProfileImage(), userDto.getProfileImageUri());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+
 
     userMapper.insertUserInfo(userDto);
 
