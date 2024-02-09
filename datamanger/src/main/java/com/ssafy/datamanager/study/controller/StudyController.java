@@ -41,7 +41,7 @@ public class StudyController {
   }
 
 
-  @GetMapping("sentence")   // 메모장에 저장된 음악정보 넣기
+  @PostMapping("sentence")   // 메모장에 저장된 문장정보 넣기
   public ResponseEntity<String> insertSentence(@RequestParam("filePath") String filePath) throws Exception{
     preProcessService.insertSentence(filePath);
     return ResponseEntity.ok("200");

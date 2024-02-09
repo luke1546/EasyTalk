@@ -77,6 +77,7 @@ public class StudyServiceImpl implements StudyService{
       List<WordMeaningDto> meaning = wordMapper.getMeaning(wordId);  // 뜻 가져오기
       List<Map<String, String>> wrong = wordMapper.createWrong(wordId); // 오답보기 2개 생성하기
       param.put("wordId",wordId);                         //정답 wordId
+      System.out.println(meaning);
       param.put("meaning",meaning.get(0).getMeaning());    // 정답 보기 세팅
 
       if (wrong.size() == 2) {

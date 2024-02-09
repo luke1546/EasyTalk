@@ -212,7 +212,7 @@ public class StudyController {
     return ResponseEntity.ok("200");
   }
 
-  @GetMapping("test/record")
+  @GetMapping("test/record")    // 학습 기록 가져오기
   public ResponseEntity<List<RecordDto>> getWordRecord(
       @RequestParam(value="order", defaultValue = "startTime") String order,
       @RequestParam(value="sort", defaultValue = "desc") String sort,

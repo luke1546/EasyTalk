@@ -26,7 +26,7 @@
 
   <update id="updateUri" parameterType="String">
     update words
-    set wordAudioUri= concat("/study/word/audio/",LAST_INSERT_ID(),".wav")
+    set wordAudioUri= concat("/study/word/audio/",LAST_INSERT_ID())
     where wordId = LAST_INSERT_ID()
   </update>
     <select id="checkWord" resultType="int" parameterType="String">

@@ -33,7 +33,7 @@
 
   <update id="insertLyricAudioUri">
     update lyrics
-    set lyricAudioUri = concat("/study/music/lyric/audio/",last_insert_id(),".jpg")
+    set lyricAudioUri = concat("/study/music/lyric/audio/",last_insert_id())
     where lyricId = last_insert_id()
   </update>
 

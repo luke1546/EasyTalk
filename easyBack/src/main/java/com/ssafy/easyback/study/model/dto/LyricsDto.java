@@ -17,6 +17,6 @@ public class LyricsDto {
     private String lyric;
     private String meaning;
     private int startOffsetMs;
-    private int duration;
+    private int durationMs;
     private String lyricAudioUri;
 }
