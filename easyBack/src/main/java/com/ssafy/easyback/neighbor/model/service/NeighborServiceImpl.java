@@ -1,5 +1,7 @@
 package com.ssafy.easyback.neighbor.model.service;
 
+import com.ssafy.easyback.S3.model.service.S3UploadService;
+import com.ssafy.easyback.config.PathUri;
 import com.ssafy.easyback.neighbor.model.dto.CommentDto;
 import com.ssafy.easyback.neighbor.model.dto.FeedDto;
 import com.ssafy.easyback.neighbor.model.dto.NeighborDto;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class NeighborServiceImpl implements NeighborService{
     private final NeighborMapper neighborMapper;
+    private final S3UploadService s3UploadService;
 
     @Override
     public void requestNeighbor(NeighborDto neighborDto) throws Exception {
@@ -47,18 +50,12 @@ public class NeighborServiceImpl implements NeighborService{
         if(images != null) {
             int feedId = neighborMapper.getFeedId();
             param.put("feedId", feedId);
-            List<String> fileNames = new ArrayList<>();
             for (MultipartFile image : images) {
 
                 String fileName = image.getOriginalFilename();
                 String extension = fileName.substring(fileName.lastIndexOf("."));  // 확장자 추출
-                String newFilename = UUID.randomUUID().toString() + extension;  // UUID와 확장자를 조합하여 새로운 파일 이름 생성
-                System.out.println(newFilename);
-                fileNames.add(fileName);
-                File targetFile = new File("./src/main/resources/" + newFilename);
-                FileOutputStream fileOutputStream = new FileOutputStream(targetFile);
-                fileOutputStream.write(image.getBytes());
-                fileOutputStream.close();
+                String newFilename = PathUri.FEED_IMAGE_URI + UUID.randomUUID().toString() + extension;  // UUID와 확장자를 조합하여 새로운 파일 이름 생성
+                s3UploadService.saveFile(image, newFilename);
                 param.put("UUID", newFilename);
                 neighborMapper.insertImageUri(param);
             }

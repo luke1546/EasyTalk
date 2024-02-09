@@ -81,7 +81,6 @@ public class NeighborController {
     public ResponseEntity<?> writeFeed(@RequestParam("content") String content, @RequestParam(value = "images", required = false) MultipartFile[] images, HttpSession session) throws Exception {
         HashMap<String, Object> param = new HashMap<>();
         Long userId = (Long) session.getAttribute("userId");
-
         param.put("content", content);
         param.put("images", images);
         param.put("userId", userId);
