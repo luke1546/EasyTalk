@@ -24,9 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class NeighborController {
     private final NeighborService neighborService;
-    @PostMapping("")
+    @PostMapping("")    // 이웃 신청
     public ResponseEntity<String> requestNeighbor(@RequestBody NeighborDto neighborDto, HttpSession session) throws Exception {
         Long userId = (Long) session.getAttribute("userId");
+        userId = (Long) Long.parseLong("9999999991");
         neighborDto.setUserId(userId);
         neighborService.requestNeighbor(neighborDto);
         return ResponseEntity.ok("200");
@@ -58,7 +59,6 @@ public class NeighborController {
         HttpSession session) throws  Exception{
         HashMap<String,Object> param = new HashMap<>();
         Long userId = (Long) session.getAttribute("userId");
-        userId = Long.parseLong("3301009684");
         param.put("userId", userId);
         param.put("status", status);
         param.put("order", order);
@@ -82,6 +82,7 @@ public class NeighborController {
     public ResponseEntity<?> writeFeed(@RequestParam("content") String content, @RequestParam(value = "images", required = false) MultipartFile[] images, HttpSession session) throws Exception {
         HashMap<String, Object> param = new HashMap<>();
         Long userId = (Long) session.getAttribute("userId");
+
         param.put("content", content);
         param.put("images", images);
         param.put("userId", userId);

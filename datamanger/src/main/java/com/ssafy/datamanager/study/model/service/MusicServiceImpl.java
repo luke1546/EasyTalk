@@ -39,7 +39,7 @@ public class MusicServiceImpl implements MusicService{
     int artistId = musicMapper.getArtistId(artistName);
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
-        .uri(new URI("https://youtube.googleapis.com/youtube/v3/videos?part=snippet&part=contentDetails&id=gset79KMmt0&key="+youtubeKey))
+        .uri(new URI("https://youtube.googleapis.com/youtube/v3/videos?part=snippet&part=contentDetails&id="+ videoId +"&key="+youtubeKey))
         .build();
     HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
     ObjectMapper mapper = new ObjectMapper();
@@ -83,8 +83,6 @@ public class MusicServiceImpl implements MusicService{
 
       resultData.add(resultItem);
     }
-
-
     musicDto.setArtistId(artistId);
     musicDto.setVideoId(videoId);
     musicDto.setMusicTime(musicTime);
@@ -95,13 +93,15 @@ public class MusicServiceImpl implements MusicService{
     Papago papago = new Papago();
     int musicId = musicMapper.getMusicId(videoId);
     System.out.println(musicId);
+    System.out.println(resultData);
     for(JsonNode jn : resultData) {
       String lyric = jn.get("caption").asText();
       int startOffsetMs = jn.get("startOffsetMs").asInt();
       int durationMs = jn.get("durationMs").asInt();
-      lyric = lyric.replaceAll("[^ㄱ-ㅎ가-힣a-zA-Z0-9 \n]","").trim();
+      lyric = lyric.replaceAll("[^ㄱ-ㅎ가-힣a-zA-Z0-9 \n']","").trim();
       lyric = lyric.replace("\n", " ");
       lyric = lyric.replace("  ", " ");
+      System.out.println(lyric);
       String meaning = papago.translate(lyric);
       param.put("lyric", lyric);
       param.put("meaning", meaning);

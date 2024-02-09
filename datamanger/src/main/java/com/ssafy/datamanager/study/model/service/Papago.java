@@ -16,22 +16,26 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 
 public class Papago {
-  @Value("${client.id}")
-  private String clientId; //애플리케이션 클라이언트 아이디값";
-  @Value("${client.secret}")
-  String clientSecret;  //애플리케이션 클라이언트 시크릿값";
+  @Value("$papago.client.id}")
+  private static String clientId; //애플리케이션 클라이언트 아이디값";
+  @Value("${papago.client.secret}")
+  private static String clientSecret;  //애플리케이션 클라이언트 시크릿값";
 
   public String translate(String text) throws JsonProcessingException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     ObjectMapper mapper = new ObjectMapper();
     String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
     Map<String, String> requestHeaders = new HashMap<>();
-    requestHeaders.put("X-Naver-Client-Id", clientId);
-    requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-//    System.out.println(text);
+
+    requestHeaders.put("X-Naver-Client-Id", "x84siAtbmq5tE0OfHdmZ");
+    requestHeaders.put("X-Naver-Client-Secret", "FIOVncWVzQ");
     String responseBody = post(apiURL, requestHeaders, "en", "ko", text);
     JsonNode jsonNode = mapper.readTree(responseBody);
-    String result = jsonNode.get("message").get("result").get("translatedText").asText();
+    String result="";
+    try {
+      result = jsonNode.get("message").get("result").get("translatedText").asText();
+    }catch (Exception e){
+      System.out.println(jsonNode);}
     return result;
   }
 
