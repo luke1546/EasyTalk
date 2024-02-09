@@ -27,7 +27,6 @@ public class NeighborController {
     @PostMapping("")    // 이웃 신청
     public ResponseEntity<String> requestNeighbor(@RequestBody NeighborDto neighborDto, HttpSession session) throws Exception {
         Long userId = (Long) session.getAttribute("userId");
-        userId = (Long) Long.parseLong("9999999991");
         neighborDto.setUserId(userId);
         neighborService.requestNeighbor(neighborDto);
         return ResponseEntity.ok("200");
