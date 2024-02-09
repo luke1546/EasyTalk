@@ -14,7 +14,7 @@
 
     <insert id="insertImageUri" parameterType="map">
         insert into feed_images(feedId, feedImageUri)
-        values(#{feedId}, concat("/neighbor/feed/image/",#{UUID}));
+        values(#{feedId}, #{UUID})
     </insert>
 
     <select id="getFeedList" parameterType="map" resultType="feedDto">
