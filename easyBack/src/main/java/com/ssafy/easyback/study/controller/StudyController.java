@@ -1,6 +1,7 @@
 package com.ssafy.easyback.study.controller;
 
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
+import com.ssafy.easyback.study.model.dto.AnswerDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
@@ -94,7 +95,11 @@ public class StudyController {
   }
 
   @PutMapping("word/test")      // 사용자 시험지 제출 -> 스코이 기입, 사용자 입력값 기입
-  public ResponseEntity<String> insertAnswerList(@RequestBody Map<String, Object> param) throws Exception {
+  public ResponseEntity<String> insertAnswerList(@RequestBody List<AnswerDto> answerList, HttpSession session) throws Exception {
+    HashMap<String, Object> param = new HashMap<>();
+    Long userId = (Long) session.getAttribute("userId");
+    param.put("answerList", answerList);
+    param.put("userId", userId);
     studyService.insertAnswerList(param);
     return ResponseEntity.ok("ok");
   }
@@ -142,7 +147,7 @@ public class StudyController {
 
   @PostMapping("speech")
   public ResponseEntity<AccuracyDto> SpeechToText(@RequestParam("audio") MultipartFile audioFile, @RequestParam("sentence") String sentence)  throws Exception {
-    return ResponseEntity.ok(speechToText.getAccuracy(audioFile, sentence));
+    return ResponseEntity.ok(speechToText.getText(audioFile, sentence));
   }
 //don't cry snowman not in front of me
   @GetMapping("music")    // 음악 리스트 가져오기

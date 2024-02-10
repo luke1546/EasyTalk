@@ -128,4 +128,9 @@ public class MusicServiceImpl implements MusicService{
   public void deleteLyric(int lyricId) throws Exception {
     musicMapper.deleteLyric(lyricId);
   }
+
+  @Override
+  public void updateLyric(HashMap<String, Object> param) throws Exception {
+    musicMapper.updateLyric(param);
+  }
 }

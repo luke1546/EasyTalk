@@ -16,7 +16,7 @@ const ImageUpload = () => {
         selectedImages.forEach((image) => {
             formData.append("images", image);
         });
-        formData.append("content", "나 하닌데 개추눌렀다.");
+        formData.append("content", "1231231241355");
 
         try {
             const response = await axios.post('http://localhost:8080/neighbor/feed', formData, {
