@@ -1,12 +1,21 @@
 package com.ssafy.easyback.study.stt;
 
+import com.google.cloud.speech.v1.RecognitionAudio;
+import com.google.cloud.speech.v1.RecognitionConfig;
+import com.google.cloud.speech.v1.RecognizeResponse;
+import com.google.cloud.speech.v1.SpeechClient;
+import com.google.cloud.speech.v1.SpeechRecognitionAlternative;
+import com.google.cloud.speech.v1.SpeechRecognitionResult;
+import com.google.protobuf.ByteString;
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +26,9 @@ public class SpeechToText {
   private String clientId; // Application Client ID";
   @Value("${clova.client.secret}")
   private String clientSecret;  // Application Client Secret";
+  @Value("${gstt.credentials.uri}")
+  String credentialsPath;
+
   public AccuracyDto getAccuracy(MultipartFile audioFile, String sentence) throws Exception {    //정확성 측정(clova)
 
     AccuracyDto accuracyDto = new AccuracyDto();
@@ -82,8 +94,10 @@ public class SpeechToText {
 
   private int calculateScore(String recognize, String originalText) {   //LCS BJ_9251
     StringBuilder sb = new StringBuilder();
+    int score;
     originalText = originalText.replaceAll("[^가-힣a-zA-Z0-9\\s]", "");
     originalText = originalText.replace(" ", "");
+    recognize = recognize.replaceAll("[^가-힣a-zA-Z0-9\\s]", "");
     recognize = recognize.replace(" ", "");
     System.out.println("원문 : " + originalText);
     System.out.println("인식된 문장 : " + recognize);
@@ -95,9 +109,10 @@ public class SpeechToText {
       if(recognize.charAt(j-1) == originalText.charAt(i-1))    dp[i][j] = dp[i-1][j-1]+1;
       else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);;
     }
-    System.out.println("전체 글자 수 : " + R);
+    score = (int)(dp[R][C]/(float)Math.max(R,C)*100);
+    System.out.println("전체 글자 수 : " + Math.max(R,C));
     System.out.println("일치하는 글자 수 : " + dp[R][C]);
-    System.out.println("점수 : " + (int)(dp[R][C]/(float)R*100));
+    System.out.println("점수 : " + score);
 
     int i=R, j=C;
     while(i > 0 && j>0){
@@ -111,6 +126,49 @@ public class SpeechToText {
       }
     }
     System.out.println("일치하는 부분 : " + sb.reverse().toString());
-    return (int)(dp[R][C]/(float)R*100);
+    return score;
+  }
+
+  public AccuracyDto getText(MultipartFile audioFile, String sentence) throws IOException {   //음성인식
+    AccuracyDto accuracyDto = new AccuracyDto();
+    sentence = sentence.toLowerCase();
+
+    // 인증 정보 설정
+    System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath);
+
+    // MultipartFile 읽기
+    byte[] audioBytes = audioFile.getBytes();
+    ByteString audioData = ByteString.copyFrom(audioBytes);
+
+    // RecognitionConfig 생성
+    RecognitionConfig config = RecognitionConfig.newBuilder()
+        .setEncoding(RecognitionConfig.AudioEncoding.MP3) // 인코딩을 MP3로 변경
+        .setSampleRateHertz(16000) // 필요한 경우 샘플링 레이트를 수정하세요.
+        .setLanguageCode("en-US")
+        .build();
+
+    // RecognitionAudio 생성
+    RecognitionAudio audio = RecognitionAudio.newBuilder()
+        .setContent(audioData)
+        .build();
+
+    try (SpeechClient speechClient = SpeechClient.create()) {
+      // Speech-to-Text 변환 요청
+      RecognizeResponse response = speechClient.recognize(config, audio);
+      List<SpeechRecognitionResult> results = response.getResultsList();
+
+      // 변환 결과 출력
+      StringBuilder transcript = new StringBuilder();
+      for (SpeechRecognitionResult result : results) {
+        List<SpeechRecognitionAlternative> alternatives = result.getAlternativesList();
+        for (SpeechRecognitionAlternative alternative : alternatives) {
+          transcript.append(alternative.getTranscript());
+        }
+      }
+
+      accuracyDto.setRecognize(transcript.toString().toLowerCase());
+      accuracyDto.setScore(calculateScore(accuracyDto.getRecognize(), sentence));
+      return accuracyDto;
+    }
   }
 }

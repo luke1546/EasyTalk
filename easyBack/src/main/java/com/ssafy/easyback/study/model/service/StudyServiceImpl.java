@@ -95,10 +95,13 @@ public class StudyServiceImpl implements StudyService{
   }
 
   @Override
-  public void insertAnswerList(Map<String, Object> param) throws Exception {
-    List<HashMap<String,Object>> answers = (List<HashMap<String, Object>>) param.get("answers");
-    for(HashMap<String,Object> answer : answers) wordMapper.insertAnswer(answer);
-    wordMapper.gradingWordTest(param.get("testId"));
+  public void insertAnswerList(HashMap<String, Object> param) throws Exception {
+    List<AnswerDto> answerList = (List<AnswerDto>) param.get("answerList");
+    Long userId = (Long) param.get("userId");
+    for(AnswerDto answer : answerList) wordMapper.insertAnswer(answer);
+    int testId = wordMapper.getTestId((Long)param.get("userId"));
+    System.out.println(testId);
+    wordMapper.gradingWordTest(testId);
   }
 
   @Override

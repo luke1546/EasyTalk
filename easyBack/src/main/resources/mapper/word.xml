@@ -99,7 +99,7 @@
     limit 20
   </select>
 
-    <update id="insertAnswer" parameterType="map">
+    <update id="insertAnswer" parameterType="answerDto">
         update word_tests
         set input = #{input}
         where questionId = #{questionId}

@@ -2,6 +2,7 @@ package com.ssafy.easyback.study.model.service;
 
 
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
+import com.ssafy.easyback.study.model.dto.AnswerDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
@@ -26,7 +27,7 @@ public interface StudyService {
 
   List<TestDto> getWordTest(Map<String, Object> param) throws Exception;
 
-  void insertAnswerList(Map<String, Object> param) throws Exception;
+  void insertAnswerList(HashMap<String, Object> param) throws Exception;
 
   List<SentenceDto> getSentencesList(SentenceDto sentenceDto) throws Exception;
 

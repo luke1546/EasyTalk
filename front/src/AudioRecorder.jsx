@@ -55,9 +55,9 @@ const MusicHomePage = () => {
     const audioBlob = new Blob(recordedChunks);
     const formData = new FormData();
     formData.append("audio", audioBlob);
-    formData.append("target", 7);
+    formData.append("sentence", "do you wanna build a snowman? come one let's go and play");
     try {
-      const response = await axios.put("http://localhost:8080/study/music/test", formData);
+      const response = await axios.post("http://localhost:8080/study/speech", formData);
       console.log(response.data);
     } catch (error) {
       console.error("오류가 발생했습니다:", error);
