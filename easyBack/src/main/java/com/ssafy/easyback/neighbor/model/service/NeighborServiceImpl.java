@@ -93,7 +93,7 @@ public class NeighborServiceImpl implements NeighborService{
     }
 
     @Override
-    public CommentDto getFeedComment(HashMap<String, Object> param) throws Exception {
+    public List<CommentDto> getFeedComment(HashMap<String, Object> param) throws Exception {
         return neighborMapper.getFeedComment(param);
     }
 }
