@@ -12,9 +12,9 @@ const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
   const handleSaveClick = async () => {
     try {
       if (!Saved) {
-        await axios.post(`https://i10b307.p.ssafy.io/study/word`, { 'wordId': wordId });
+        await axios.post(`https://i10b307.p.ssafy.io:8080/study/word`, { 'wordId': wordId });
       } else {
-        await axios.delete(`https://i10b307.p.ssafy.io/study/word`, { 'wordId': wordId });
+        await axios.delete(`https://i10b307.p.ssafy.io:8080/study/word`, { 'wordId': wordId });
       }
       setSaved(!Saved)
     } catch (error) {

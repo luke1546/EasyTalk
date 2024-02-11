@@ -9,7 +9,8 @@ import MusicDetailPage from "../Music/MusicDetailPage";
 import WordStagePage from "../Word/WordStagePage";
 // import MusicSearchPage from "../Music/MusicSearchPage";
 // import ArtistDetailPage from "../Music/ArtistDetailPage";
-import SentenceHomePage from "../Sentence/SentenceHomePage";
+// import SentenceHomePage from "../Sentence/SentenceHomePage";
+import WordTestPage from "../Word/WordTestPage";
 import WordListPage from "../Word/WordListPage";
 
 const StudyPage = () => {
@@ -29,10 +30,10 @@ const StudyPage = () => {
 
         {/* Word Route */}
         <Route path="word/stage" element={<WordStagePage />} />
-        <Route path="word/stage/:level" element={<WordListPage />} />
+        <Route path={`word/stage/:level`} element={<WordListPage />} />
         <Route path="word/my" element={<WordListPage />} />
         <Route path="word/stagetest" element={<WordStagePage />} />
-        {/* <Route path="word/stagetest/:level" element={<WordTestPage />} /> */}
+        <Route path={`word/stagetest/:level`} element={<WordTestPage />} />
         {/* <Route path="word/musictest" element={<MusicSearchPage />} /> */}
       </Routes>
     </div>
