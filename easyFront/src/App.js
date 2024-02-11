@@ -13,7 +13,7 @@ import MyHomePage from "./components/pages/My/MyHomePage";
 import MyEditPage from "./components/pages/My/MyEditPage";
 import MyMusicPage from "./components/pages/My/MyMusicPage";
 import MyRecodeMusicPage from "./components/pages/My/MyRecodeMusicPage";
-import MyRecodWordePage from "./components/pages/My/MyRecodWordePage";
+import MyRecodeWordPage from "./components/pages/My/MyRecodeWordPage";
 import MyFeedPage from "./components/pages/My/MyFeedPage";
 import MyGroupPage from "./components/pages/My/MyGroupPage";
 import MyNeighborPage from "./components/pages/My/MyNeighborPage";
@@ -41,7 +41,7 @@ const App = () => {
             <Route path="/myedit" element={<MyEditPage />} />
             <Route path="/mymusic" element={<MyMusicPage />} />
             <Route path="/myrecodemusic" element={<MyRecodeMusicPage />} />
-            <Route path="/myrecodword" element={<MyRecodWordePage />} />
+            <Route path="/myrecodeword" element={<MyRecodeWordPage />} />
             <Route path="/myfeed" element={<MyFeedPage />} />
             <Route path="/myneighbor" element={<MyNeighborPage />} />
             <Route path="/myreceive" element={<MyNeighborReceivePage />} />

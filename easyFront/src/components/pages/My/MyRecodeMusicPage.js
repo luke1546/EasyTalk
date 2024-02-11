@@ -37,25 +37,25 @@ const MyRecodeMusicPage = () => {
    };
  
 
-  return (
-    <>
-      <TabBar tabs={RecodeTabs} />
-      <div onClick={() => handleSaveClick()}>
-        <Button
-          name="submitBtn"
-          text={issaving? '저장완료' : '저장'}
-          color={issaving ? 'red' : 'blue'}
-          />
-      </div>
-      <div>
-        {myrecodemusic.map((remusic, index) => (
-          <div key={index}>
+  // return (
+  //   <>
+  //     <TabBar tabs={RecodeTabs} />
+  //     <div onClick={() => handleSaveClick()}>
+  //       <Button
+  //         name="submitBtn"
+  //         text={issaving? '저장완료' : '저장'}
+  //         color={issaving ? 'red' : 'blue'}
+  //         />
+  //     </div>
+  //     <div>
+  //       {myrecodemusic.map((remusic, index) => (
+  //         <div key={index}>
             
-        ))}
-      </div>
+  //       ))}
+  //     </div>
 
-    </>
-  )
+  //   </>
+  // )
 };
 
 export default MyRecodeMusicPage;
