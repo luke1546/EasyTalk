@@ -65,7 +65,7 @@ public class NeighborServiceImpl implements NeighborService{
     @Override
     public String getNeighborStatus(HashMap<String, Object> param) throws Exception {
         String status = neighborMapper.getNeighborStatus(param);
-        if(status == null) status = "NONNEIGHBOR";
+        if(status == null) status = "NOTNEIGHBOR";
         return status;
     }
 
