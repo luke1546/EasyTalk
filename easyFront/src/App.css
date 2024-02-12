@@ -31,12 +31,13 @@ a {
     /* background-color: #fad267; */
     width: 98vw;
     height: 78vh;
+    overflow: auto;
   }
 
   .Footer {
     position: fixed;
-    background-color: #f0b023;
-    /* background-color: white; */
+    /* background-color: #f0b023; */
+    background-color: white;
     width: 100vw;
     height: 12vh;
     display: flex;

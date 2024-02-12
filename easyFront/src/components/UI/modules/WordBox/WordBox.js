@@ -1,59 +1,47 @@
-// WordBox.js
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import Textbox from "../../atoms/Text/Textbox";
+import Button from "../../atoms/Button/Button";
+import "./WordBox.css";
+import WordDetailPage from "../../../pages/Common/WordDetailPage";
 
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Textbox from '../../atoms/Text/Textbox';
-import Button from '../../atoms/Button/Button';
-import './WordBox.css';
+const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
+  const [Saved, setSaved] = useState(isSaved);
 
-const WordBox = ({ word, meaning, isBookmarked, audioUrl, onBookmarkChange, ...props }) => {
-  const [bookmarked, setBookmarked] = useState(isBookmarked);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  useEffect(() => {
-    // 북마크 상태가 변경될 때마다 외부에서 제공받은 콜백 호출
-    onBookmarkChange(bookmarked);
-  }, [bookmarked, onBookmarkChange]);
-
-  const handleBookmarkClick = () => {
-    setBookmarked(!bookmarked);
+  const handleSaveClick = async () => {
+    try {
+      if (!Saved) {
+        await axios.post(`https://i10b307.p.ssafy.io/study/word`, { wordId: wordId });
+      } else {
+        await axios.delete(`https://i10b307.p.ssafy.io/study/word`, { wordId: wordId });
+      }
+      setSaved(!Saved);
+    } catch (error) {
+      console.error("Error saving or deleting:", error);
+    }
   };
 
   const handlePlayClick = () => {
-    setIsPlaying(!isPlaying);
+    const audio = new Audio(wordAudioUri);
+    audio.play();
   };
 
   return (
-    <Link to={`/word-details/${word}`} className="word-box" {...props}>
+    <Link to={WordDetailPage} state={wordId}>
       <Textbox section="singleText" context1={word} />
       <div className="divider" />
       <Textbox section="singleText" context1={meaning} />
       <div className="buttons">
-        {bookmarked ? (
-          <Button name="fBookMarkBtn" onClick={handleBookmarkClick} />
+        {isSaved ? (
+          <Button name="fBookMarkBtn" onClick={handleSaveClick} />
         ) : (
-          <Button name="bookMarkBtn" onClick={handleBookmarkClick} />
+          <Button name="bookMarkBtn" onClick={handleSaveClick} />
         )}
         <Button name="listenBtn" onClick={handlePlayClick} />
-        {/* ... 이하 생략 ... */}
       </div>
     </Link>
   );
-};
-
-WordBox.propTypes = {
-  word: PropTypes.string.isRequired,
-  meaning: PropTypes.string.isRequired,
-  isBookmarked: PropTypes.bool,
-  audioUrl: PropTypes.string,
-  onBookmarkChange: PropTypes.func, // 외부에서 북마크 상태 변경을 감지하기 위한 콜백
-};
-
-WordBox.defaultProps = {
-  isBookmarked: false,
-  audioUrl: null,
-  onBookmarkChange: () => {}, // 기본값으로 빈 함수를 전달
 };
 
 export default WordBox;

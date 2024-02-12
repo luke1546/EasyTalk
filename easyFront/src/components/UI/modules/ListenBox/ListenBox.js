@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Textbox from '../../atoms/Text/Textbox';
 import Button from '../../atoms/Button/Button';
 import './ListenBox.css'; // 필요한 CSS 파일을 import
+import SentenceSituationPage from "../../../pages/Sentence/SentenceSituationPage";
 
 const ListenBox = ({ sentence1, sentence2 }) => {
   const [bookmarked1, setBookmarked1] = useState(sentence1.isBookmarked);
@@ -36,7 +37,7 @@ const ListenBox = ({ sentence1, sentence2 }) => {
 
   return (
     <div className="listen-box">
-      <Link to={`/sentence-details/${sentence1.sentence_id}`} className="sentence-box">
+      <Link to={SentenceSituationPage} className="sentence-box">
         <div className="text-area">
           <Textbox section="singleText" context1={sentence1.sentence} />
           <Textbox section="singleText" context1={sentence1.meaning} />
@@ -49,12 +50,7 @@ const ListenBox = ({ sentence1, sentence2 }) => {
           )}
           <Button name="listenBtn" onClick={handlePlayClick1} />
         </div>
-      </Link>
-
-      {/* Divider 추가 */}
-      <div className="divider" />
-
-      <Link to={`/sentence-details/${sentence2.sentence_id}`} className="sentence-box">
+        <div className="divider" />
         <div className="text-area">
           <Textbox section="singleText" context1={sentence2.sentence} />
           <Textbox section="singleText" context1={sentence2.meaning} />

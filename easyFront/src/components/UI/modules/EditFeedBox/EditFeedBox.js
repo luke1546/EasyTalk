@@ -7,29 +7,28 @@ import Textbox from '../../atoms/Text/Textbox';
 import Button from '../../atoms/Button/Button';
 import Icon from '../../atoms/Icon/Icon';
 
-const EditFeedBox = ({ profileImg, userName, isLiked, likes, commentCount, feedId, initialContent, onCancel }) => {
+const EditFeedBox = ({ profileImageUri, target_userId, userId, isLiked, likes, heartCount, feedId, initialContent, onCancel }) => {
   const navigate = useNavigate();
   const [content, setContent] = useState(initialContent);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState(null);
 
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    // Convert FileList to array and update selectedImages state
+    setSelectedImages(Array.from(files));
   };
 
   const handleSaveClick = async () => {
     try {
       // Send a request to update the feed content
       const formData = new FormData();
-      formData.append('image', selectedImage);
-      await axios.put(`http://your-api-url/update-feed/${feedId}`, { content }, { withCredentials: true });
-
-      await axios.post('http://your-api-url/upload-image', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      for (let i = 0; i < selectedImages.length; i++) {
+        formData.append('images', selectedImages[i]);
+      }
+      formData.append('feedId', feedId);
+      formData.append('content', content);
+      await axios.put(`https://i10b307.p.ssafy.io/neighbor/feed/${feedId}`, formData);
 
       // Redirect back to the FeedBox page after saving
       navigate(`/feed/${feedId}`);
@@ -41,18 +40,22 @@ const EditFeedBox = ({ profileImg, userName, isLiked, likes, commentCount, feedI
   return (
     <div className="edit-feed-box">
       <div className="user-info">
-        <img className="profile-img" src={profileImg} alt="Profile" />
-        <Textbox section="singleText" context1={userName} />
+        <img className="profile-img" src={profileImageUri} alt="Profile" />
+        <Textbox section="singleText" context1={target_userId} />
       </div>
       <div className="like-comment-info">
         <Button name={isLiked ? 'fHeartBtn' : 'heartBtn'} />
         <Textbox section="singleText" context1={likes} />
         <Icon name="commentIcon" />
-        <Textbox section="singleText" context1={commentCount} />
+        <Textbox section="singleText" context1={heartCount} />
       </div>
-      {selectedImage && (
-      <img className="image-preview" src={URL.createObjectURL(selectedImage)} alt="Preview" />
-      )}
+      {selectedImages.length > 0 && (
+        <div>
+          {selectedImages.map((image, index) => (
+            <img key={index} className="image-preview" src={URL.createObjectURL(image)} alt={`Preview ${index}`} />
+          ))}
+        </div>
+      )};
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
@@ -60,7 +63,7 @@ const EditFeedBox = ({ profileImg, userName, isLiked, likes, commentCount, feedI
       <label htmlFor="image-upload">
         <Button name="impBtn" />
       </label>
-      <input id="image-upload" type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
+      <input id="image-upload" type="file" accept="image/*" multiple onChange={handleImageChange} style={{ display: "none" }} />
       <Button name="submitBtn" text="완료" onClick={handleSaveClick} />
       <Button name="basicBtn" text="취소" onClick={onCancel} />
     </div>

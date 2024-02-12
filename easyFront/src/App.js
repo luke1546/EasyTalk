@@ -13,10 +13,15 @@ import MyHomePage from "./components/pages/My/MyHomePage";
 import Button from "./components/UI/atoms/Button/Button";
 
 import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
+import MusicSearchPage from "./components/pages/Music/MusicSearchPage";
+import LoginHandeler from "./components/pages/Login/LoginHandeler";
+import SignupPage from "./components/pages/Login/SignupPage";
+import ArtistDetailPage from "./components/pages/Music/ArtistDetailPage";
+import StudyPage from "./components/pages/Common/StudyPage";
 
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
-
+  const code = new URL(window.location.href).searchParams.get("code");
   return (
     <BrowserRouter>
       <div className="App">
@@ -26,11 +31,17 @@ const App = () => {
             <Route path="/" exact element={<IntroPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePage />} />
-            <Route path="/study" element={<MusicHomePage />} />
+            {/* <Route path="/study" element={<MusicHomePage />} /> */}
             <Route path="/group" element={<GroupHomePage />} />
             <Route path="/place" element={<PlaceHomePage />} />
             <Route path="/my" element={<MyHomePage />} />
-            <Route path={`/study/:index`} element={<MusicDetailPage />} />
+            {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
+            {/* <Route path={`/study/search/:searchValue`} element={<MusicSearchPage />} /> */}
+            <Route path="/login/oauth/kakao" element={<LoginHandeler />} />
+            <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
+            <Route path="/signup" element={<SignupPage />} />
+            {/* <Route path="/study/artist/나훈아" element={<ArtistDetailPage />} /> */}
+            <Route path="/study/*" element={<StudyPage />} />
           </Routes>
         </div>
         <Footer className="Footer" />
