@@ -2,6 +2,7 @@ package com.ssafy.easyback.study.controller;
 
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
 import com.ssafy.easyback.study.model.dto.AnswerDto;
+import com.ssafy.easyback.study.model.dto.ArtistDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
@@ -157,6 +158,7 @@ public class StudyController {
       @RequestParam(value="page", defaultValue = "1") int page,
       @RequestParam(value="keyword", defaultValue = "") String keyword,
       @RequestParam(value="filter", defaultValue = "list") String filter,
+      @RequestParam(value="target", defaultValue = "1") int artistId,
       HttpSession session
   ) throws Exception {
     Long userId = (Long) session.getAttribute("userId");
@@ -172,7 +174,20 @@ public class StudyController {
     optionDto.setFilter(filter);
     musicDto.setUserId(userId);
     musicDto.setOptionDto(optionDto);
+    musicDto.setArtistId(artistId);
     return ResponseEntity.ok(studyService.getMusicList(musicDto));
+  }
+
+  @GetMapping("artist")
+  public ResponseEntity<List<ArtistDto>> getArtistList(
+      @RequestParam(value="keyword", defaultValue = "") String keyword,
+      @RequestParam(value="type", defaultValue = "list") String type,
+      @RequestParam(value="target", defaultValue = "1") int artistId) throws Exception {
+    HashMap<String, Object> param = new HashMap<>();
+    param.put("keyword", keyword);
+    param.put("type", type);
+    param.put("artistId", artistId);
+    return ResponseEntity.ok(studyService.getArtistList(param));
   }
 
   @GetMapping("music/detail")   // 음악 가사 정보 가져오기

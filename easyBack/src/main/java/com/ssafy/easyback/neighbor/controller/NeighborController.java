@@ -74,6 +74,7 @@ public class NeighborController {
         Long userId = (Long) session.getAttribute("userId");
         param.put("userId", userId);
         param.put("neighborId", neighborId);
+        if(userId.equals(neighborId)) return ResponseEntity.ok("MYPROFILE");
         return ResponseEntity.ok(neighborService.getNeighborStatus(param));
     }
 

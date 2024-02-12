@@ -11,13 +11,27 @@
       join music_books b on m.musicId = b.musicId
       where userId = #{userId}
     </if>
-    <if test="optionDto.filter != 'myList'">
+    <if test="optionDto.filter == 'artist'">
+      where artistId = #{artistId}
+    </if>
+    <if test="optionDto.filter == 'list'">
       where 1=1
     </if>
     and title like concat("%",#{keyword},"%")
     order by ${optionDto.order} ${optionDto.sort}
     limit ${optionDto.start},${optionDto.end}
   </select>
+
+  <select id="getArtistList" parameterType="String" resultType="artistDto">
+    select *
+    from artists
+    where artistName like concat("%",#{keyword},"%")
+    <if test="type == 'detail'">
+      and artistId = #{artistId}
+    </if>
+  </select>
+
+
 
   <select id="getMusicDetail" parameterType="int" resultType="lyricsDto">
     select *

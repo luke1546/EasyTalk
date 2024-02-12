@@ -3,6 +3,7 @@ package com.ssafy.easyback.study.model.service;
 
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
 import com.ssafy.easyback.study.model.dto.AnswerDto;
+import com.ssafy.easyback.study.model.dto.ArtistDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
@@ -50,4 +51,6 @@ public interface StudyService {
   List<RecordDto> getWordRecord(HashMap<String, Object> param) throws Exception;
 
   List<WordDto> getWordRecordDetail(HashMap<String, Object> param) throws Exception;
+
+  List<ArtistDto> getArtistList(HashMap<String, Object> param) throws Exception;
 }
