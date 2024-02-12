@@ -10,5 +10,6 @@ import lombok.*;
 public class ArtistDto {
   private int artistId;
   private String artistName;
+  private String description;
   private String artistImageUri;
 }

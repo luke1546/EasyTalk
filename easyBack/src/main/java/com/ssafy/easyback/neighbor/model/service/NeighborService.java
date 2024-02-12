@@ -26,7 +26,7 @@ public interface NeighborService {
 
     FeedDto getFeedDetail(HashMap<String, Object> param) throws Exception;
 
-    CommentDto getFeedComment(HashMap<String, Object> param) throws Exception;
+    List<CommentDto> getFeedComment(HashMap<String, Object> param) throws Exception;
 
     void writeComment(HashMap<String, Object> param) throws Exception;
 }

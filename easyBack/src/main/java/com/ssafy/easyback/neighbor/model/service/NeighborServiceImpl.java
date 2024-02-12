@@ -64,7 +64,9 @@ public class NeighborServiceImpl implements NeighborService{
 
     @Override
     public String getNeighborStatus(HashMap<String, Object> param) throws Exception {
-        return neighborMapper.getNeighborStatus(param);
+        String status = neighborMapper.getNeighborStatus(param);
+        if(status == null) status = "NOTNEIGHBOR";
+        return status;
     }
 
     @Override
@@ -93,7 +95,7 @@ public class NeighborServiceImpl implements NeighborService{
     }
 
     @Override
-    public CommentDto getFeedComment(HashMap<String, Object> param) throws Exception {
+    public List<CommentDto> getFeedComment(HashMap<String, Object> param) throws Exception {
         return neighborMapper.getFeedComment(param);
     }
 }

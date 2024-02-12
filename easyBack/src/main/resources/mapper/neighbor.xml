@@ -27,12 +27,15 @@
     <select id="getNeighborList" parameterType="map" resultType="responseUserDto">
         select *
         from users
-        where userId in(
-            select neighborId as userId
-            from neighbors
-            where userId = #{userId} and statusCode = #{status}
-        ) and nickname like concat("%",#{keyword},"%")
+        where userId != #{userId}
+        and nickname like concat("%",#{keyword},"%")
         order by #{order} #{sort}
+--         where userId in(
+--             select neighborId as userId
+--             from neighbors
+--             where userId = #{userId} and statusCode = #{status}
+--         ) and nickname like concat("%",#{keyword},"%")
+--         order by #{order} #{sort}
     </select>
 
     <select id="getNeighborStatus" parameterType="map" resultType="String">

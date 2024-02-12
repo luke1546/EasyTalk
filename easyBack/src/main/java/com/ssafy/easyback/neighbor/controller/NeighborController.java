@@ -74,6 +74,7 @@ public class NeighborController {
         Long userId = (Long) session.getAttribute("userId");
         param.put("userId", userId);
         param.put("neighborId", neighborId);
+        if(userId.equals(neighborId)) return ResponseEntity.ok("MYPROFILE");
         return ResponseEntity.ok(neighborService.getNeighborStatus(param));
     }
 
@@ -129,7 +130,7 @@ public class NeighborController {
     }
 
     @GetMapping("/feed/{feedId}/comment")       // 피드의 댓글 보기
-    public ResponseEntity<CommentDto> getFeedComment(@PathVariable("feedId") int feedId, HttpSession session) throws  Exception {
+    public ResponseEntity<Object> getFeedComment(@PathVariable("feedId") int feedId, HttpSession session) throws  Exception {
         HashMap<String, Object> param = new HashMap<>();
         Long userId = (Long) session.getAttribute("userId");
         param.put("userId", userId);

@@ -22,6 +22,10 @@ public class S3UploadService {
     metadata.setContentLength(multipartFile.getSize());
     metadata.setContentType(multipartFile.getContentType());
 
+    if (savePathUri.charAt(0) == '/') {
+      savePathUri = savePathUri.substring(1);
+    }
+
     amazonS3.putObject(bucket, savePathUri, multipartFile.getInputStream(), metadata);
     return amazonS3.getUrl(bucket, savePathUri).toString();
   }

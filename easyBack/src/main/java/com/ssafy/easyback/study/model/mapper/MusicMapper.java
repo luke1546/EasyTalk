@@ -1,6 +1,7 @@
 package com.ssafy.easyback.study.model.mapper;
 
 import com.ssafy.easyback.study.model.dto.AccuracyDto;
+import com.ssafy.easyback.study.model.dto.ArtistDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
 import java.util.HashMap;
@@ -25,4 +26,6 @@ public interface MusicMapper {
   void addToMyMusicBook(HashMap<String,Object> param) throws Exception;
 
   void deleteMyMusic(HashMap<String, Object> param) throws Exception;
+
+  List<ArtistDto> getArtistList(HashMap<String, Object> param) throws Exception;
 }

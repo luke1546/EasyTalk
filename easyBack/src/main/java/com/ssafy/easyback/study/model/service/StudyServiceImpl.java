@@ -198,4 +198,9 @@ public class StudyServiceImpl implements StudyService{
     }
     return list;
   }
+
+  @Override
+  public List<ArtistDto> getArtistList(HashMap<String, Object> param) throws Exception {
+    return musicMapper.getArtistList(param);
+  }
 }
