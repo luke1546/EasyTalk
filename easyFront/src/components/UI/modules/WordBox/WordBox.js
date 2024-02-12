@@ -9,38 +9,43 @@ import WordDetailPage from "../../../pages/Common/WordDetailPage";
 const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
   const [Saved, setSaved] = useState(isSaved);
 
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (event) => {
+    event.stopPropagation();
     try {
       if (!Saved) {
         await axios.post(`https://i10b307.p.ssafy.io:8080/study/word`, { 'wordId': wordId });
+        setSaved(true);
       } else {
-        await axios.delete(`https://i10b307.p.ssafy.io:8080/study/word`, { 'wordId': wordId });
+        await axios.delete(`https://i10b307.p.ssafy.io:8080/study/word?wordId=${wordId}`);
+        setSaved(false);
       }
-      setSaved(!Saved)
     } catch (error) {
       console.error('Error saving or deleting:', error);
     }
   };
 
-  const handlePlayClick = () => {
+  const handlePlayClick = (event) => {
+    event.stopPropagation();
     const audio = new Audio(wordAudioUri);
     audio.play();
   };
 
   return (
-    <Link to={WordDetailPage} state={wordId}>
-      <Textbox section="singleText" context1={word} />
-      <div className="divider" />
-      <Textbox section="singleText" context1={meaning} />
+    <div>
+      <Link to={`/study/word/${wordId}/detail`} state={wordId}>
+        <Textbox section="singleText" context1={word} />
+        <div className="divider" />
+        <Textbox section="singleText" context1={meaning} />
+      </Link>
       <div className="buttons">
-        {isSaved ? (
+        {Saved ? (
           <Button name="fBookMarkBtn" onClick={handleSaveClick} />
         ) : (
           <Button name="bookMarkBtn" onClick={handleSaveClick} />
         )}
         <Button name="listenBtn" onClick={handlePlayClick} />
       </div>
-    </Link>
+    </div>
   );
 };
 

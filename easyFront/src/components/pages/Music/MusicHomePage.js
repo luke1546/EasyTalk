@@ -85,68 +85,6 @@ const MusicHomePage = () => {
   const arr = ["노래 1", "노래 2", "노래 3"];
   const arr2 = ["노래 1", "노래 2", "노래 3"];
 
-  // ffffffffffff
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [recordedChunks, setRecordedChunks] = useState([]);
-  const [isRecording, setIsRecording] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  // 녹음 시작
-  const startRecording = () => {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then(function (stream) {
-        setRecordedChunks([]); // 녹음 데이터 초기화
-        const newMediaRecorder = new MediaRecorder(stream);
-        setMediaRecorder(newMediaRecorder);
-        newMediaRecorder.start();
-        setIsRecording(true);
-
-        newMediaRecorder.ondataavailable = function (e) {
-          setRecordedChunks((prev) => [...prev, e.data]);
-        };
-      })
-      .catch(function (err) {
-        console.error("녹음을 시작할 수 없습니다.", err);
-      });
-  };
-
-  // 녹음 중지
-  const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-      setIsRecording(false);
-    }
-  };
-
-  // 녹음한 오디오 재생
-  const playAudio = () => {
-    const audioBlob = new Blob(recordedChunks);
-    const audioUrl = URL.createObjectURL(audioBlob);
-    const audio = new Audio(audioUrl);
-    audio.play();
-    setIsPlaying(true);
-
-    audio.onended = () => {
-      setIsPlaying(false);
-    };
-  };
-
-  // 녹음한 오디오 서버로 전송
-  const uploadAudio = async () => {
-    const audioBlob = new Blob(recordedChunks);
-    const formData = new FormData();
-    formData.append("audio", audioBlob);
-
-    try {
-      const response = await axios.post("/your-upload-url", formData);
-      console.log(response.data);
-    } catch (error) {
-      console.error("오류가 발생했습니다:", error);
-    }
-  };
-
-  // ffffffffffff
   return (
     <div className="MusicHomePage">
       {/* <TabBar
@@ -159,7 +97,7 @@ const MusicHomePage = () => {
       <InputBar variant="searchinputbar" />
       <Textbox section="singleText" context1="지금 인기있는 노래" />
       <div>
-        {musicTitle.map((arrElements, index) => {
+        {musicTitle && musicTitle.map((arrElements, index) => {
           return (
             <Link
               to={{
@@ -178,7 +116,7 @@ const MusicHomePage = () => {
       <hr />
       <Textbox section="singleText" context1="AI가 추천하는 노래" />
       <div>
-        {arr2.map((arrElements, index) => {
+        {arr2 && arr2.map((arrElements, index) => {
           return (
             <Link to={`/study/music/${index}`}>
               <div key={index}>{arrElements}</div>
@@ -188,12 +126,6 @@ const MusicHomePage = () => {
       </div>
       <hr />
       <Textbox section="singleText" context1={`${nickname}님이 학습중인 노래`} />
-      <button onClick={startRecording}>녹음 시작</button>
-      <button onClick={stopRecording}>녹음 중지</button>
-      <button onClick={playAudio}>재생</button>
-      <button onClick={uploadAudio}>업로드</button>
-      {isRecording && <p>녹음 중...</p>}
-      {isPlaying && <p>재생 중...</p>}
     </div>
   );
 };

@@ -15,11 +15,11 @@ const WordListPage = ( ) => {
       try {
         if (level) {
           const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word?filter=list&level=${level}`);
-          console.log(response.data)
           setWords(response.data);
         }
         else {
           const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word?filter=myList`);
+          console.log(response.data)
           setWords(response.data);
         }
       } catch (error) {
@@ -33,13 +33,20 @@ const WordListPage = ( ) => {
 
   return (
     <div>
-      {level &&
-        <h2>{`${level}단계 단어 목록`}</h2>
+      {level ? (
+        <>
+          <h2>{`${level}단계 단어 목록`}</h2>
+        </>
+  ) : (
+    <>
+      <h2>저장한 단어</h2>
+    </>
+      )
       }
       
-      {words.map((word) => (
+      {words && words.map((word) => (
         <WordBox
-          key={word.wordId}
+          wordId={word.wordId}
           word={word.word}
           meaning={word.wordMeaningDto[0].meaning}
           isSaved={word.isSaved}

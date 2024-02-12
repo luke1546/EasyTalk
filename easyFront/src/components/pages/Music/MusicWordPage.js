@@ -28,6 +28,7 @@ const MusicWordPage = () => {
           wordId: item.wordId, // 단어별 번호
           word: item.word, // 영단어
           pronunciation: item.pronunciation, // 발음기호
+          isSaved: item.isSaved,
           wordMeaningDto: item.wordMeaningDto.map((meaning) => ({
             meaning: meaning.meaning,
           })), // 단어의 뜻들
@@ -51,7 +52,7 @@ const MusicWordPage = () => {
               <WordBox
                 wordId={wordItem.wordId}
                 word={wordItem.word}
-                isSaved={false}
+                isSaved={wordItem.isSaved}
                 meaning={wordItem.wordMeaningDto.map((meaningItem, subIndex) => {
                   return <div key={subIndex}>{meaningItem.meaning}</div>;
                 })}
