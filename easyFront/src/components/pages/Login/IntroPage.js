@@ -4,7 +4,7 @@ const IntroPage = () => {
   return (
     <div className="IntroPage">
       인트로페이지
-      <Link to="/tester">login</Link>
+      <Link to="/signup">login</Link>
     </div>
   );
 };
