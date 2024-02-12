@@ -13,7 +13,7 @@ const MyRecodeMusicPage = () => {
       };
 
       const response = await axios.get("/study/test/record", { params }, { withCredentials: true });
-
+        console.log("heelo");
       setmyrecodemusic(response.data)
     } catch (error) {
       console.error("Error myrecodemusic", error);
