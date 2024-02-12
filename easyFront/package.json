@@ -2,7 +2,7 @@
   "name": "easyfront",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://i10b307.p.ssafy.io/", 
+  "homepage": ".", 
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
