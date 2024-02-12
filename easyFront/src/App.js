@@ -35,7 +35,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://i10b307.p.ssafy.io:8080/test');
+        const response = await axios.get('/test');
         setData(response.data);
         console.log(response.data)
         console.log(response)
