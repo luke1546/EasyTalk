@@ -81,7 +81,7 @@ const PlaceHomePage = () => {
               // onPost={handlePost}
             />
             <div>
-            { myFeed.map((feed) => (
+            { myFeed && myFeed.map((feed) => (
             // 클릭하면 게시글 수정 페이지로 이동
                 <div onClick={() => navigate(`/neighbor/feed/${feed.feedId}`)}>
                   <FeedBox
