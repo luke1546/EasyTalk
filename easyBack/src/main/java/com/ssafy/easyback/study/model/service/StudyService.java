@@ -53,4 +53,8 @@ public interface StudyService {
   List<WordDto> getWordRecordDetail(HashMap<String, Object> param) throws Exception;
 
   List<ArtistDto> getArtistList(HashMap<String, Object> param) throws Exception;
+
+  void deleteWord(WordDto wordDto) throws Exception;
+
+  void deleteSentence(SentenceDto sentenceDto) throws Exception;
 }

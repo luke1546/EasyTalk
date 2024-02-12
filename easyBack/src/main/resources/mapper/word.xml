@@ -127,6 +127,12 @@
     values(#{userId}, #{wordId}, current_timestamp())
   </insert>
 
+    <delete id="deleteWord" parameterType="wordDto">
+        delete
+        from word_books
+        where userId = #{userId} and wordId = #{wordId}
+    </delete>
+
   <insert id="insertWord" parameterType="wordDto">
     insert into words
         (word, pronunciation, level, wordAudioUri)

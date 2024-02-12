@@ -30,4 +30,6 @@ public interface WordMapper {
   List<RecordDto> getWordRecord(HashMap<String, Object> param) throws Exception;
 
   List<WordDto> getWordRecordDetail(HashMap<String, Object> param) throws Exception;
+
+  void deleteWord(WordDto wordDto) throws Exception;
 }

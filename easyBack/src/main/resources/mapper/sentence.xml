@@ -31,4 +31,10 @@
     insert into sentence_books(userId, sentenceId, sentenceDate)
     values(#{userId}, #{sentenceId}, current_timestamp())
   </insert>
+
+  <delete id="deleteSentence" parameterType="sentenceDto">
+    delete
+    from sentence_books
+    where userId = #{userId} and sentenceId = #{sentenceId}
+  </delete>
 </mapper>

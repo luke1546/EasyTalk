@@ -9,4 +9,6 @@ public interface SentenceMapper {
   List<SentenceDto> getSentencesList(Object sentenceDto) throws Exception;
   SentenceDto getSentence(Object sentenceId) throws Exception;
   void addToMySentenceBook(SentenceDto sentenceDto) throws Exception;
+
+    void deleteSentence(SentenceDto sentenceDto) throws Exception;
 }

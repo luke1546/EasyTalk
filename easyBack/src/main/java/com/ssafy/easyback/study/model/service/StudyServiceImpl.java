@@ -42,6 +42,11 @@ public class StudyServiceImpl implements StudyService{
   }
 
   @Override
+  public void deleteWord(WordDto wordDto) throws Exception {
+    wordMapper.deleteWord(wordDto);
+  }
+
+  @Override
   public WordDto getWord(WordDto wordDto) throws Exception {    //단어 상세보기
     HashMap<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
     List<Integer> myList = wordMapper.getMyWordsList(wordDto.getUserId());
@@ -120,6 +125,11 @@ public class StudyServiceImpl implements StudyService{
   @Override
   public void addToMySentenceBook(SentenceDto sentenceDto) throws Exception {
     sentenceMapper.addToMySentenceBook(sentenceDto);
+  }
+
+  @Override
+  public void deleteSentence(SentenceDto sentenceDto) throws Exception {
+    sentenceMapper.deleteSentence(sentenceDto);
   }
 
   @Override

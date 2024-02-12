@@ -66,6 +66,15 @@ public class StudyController {
     return ResponseEntity.ok("ok");
   }
 
+  @DeleteMapping("word") //내 단어장에 단어 삭제하기
+  public ResponseEntity<String> deleteWord(@ModelAttribute WordDto wordDto ,HttpSession session) throws Exception {
+    Long userId = (Long) session.getAttribute("userId");
+    wordDto.setUserId(userId);
+    studyService.deleteWord(wordDto);
+    return ResponseEntity.ok("ok");
+  }
+
+
   @GetMapping("word/detail") //단어 상세화면
   public ResponseEntity<WordDto> getWord(@RequestParam(value="target") int wordId, HttpSession session)
       throws Exception {
@@ -133,6 +142,14 @@ public class StudyController {
     Long userId = (Long) session.getAttribute("userId");
     sentenceDto.setUserId(userId);
     studyService.addToMySentenceBook(sentenceDto);
+    return ResponseEntity.ok("ok");
+  }
+
+  @DeleteMapping("sentence") //문장 삭제하기
+  public ResponseEntity<String> deleteSentence(@ModelAttribute SentenceDto sentenceDto ,HttpSession session) throws Exception {
+    Long userId = (Long) session.getAttribute("userId");
+    sentenceDto.setUserId(userId);
+    studyService.deleteSentence(sentenceDto);
     return ResponseEntity.ok("ok");
   }
 
