@@ -37,6 +37,9 @@ const App = () => {
       try {
         const response = await axios.get('https://i10b307.p.ssafy.io:8080/test');
         setData(response.data);
+        console.log(response.data)
+        console.log(response)
+        console.log("값가져오는둥")
       } catch (error) {
         console.error('Failed to fetch data', error);
       }
@@ -56,7 +59,7 @@ const App = () => {
         {data && (
           <div>
             <p>{data.title}</p>
-            <p>{data.body}</p>
+            <p>여기나오는부분ㅇ</p>
           </div>
         )}
 
