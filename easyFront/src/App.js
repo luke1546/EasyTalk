@@ -1,4 +1,4 @@
-import "./App.css";
+import "/App.css";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Header from "./components/UI/modules/Header";
