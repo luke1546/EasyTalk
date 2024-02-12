@@ -58,7 +58,7 @@ const App = () => {
         {/* axios 요청의 결과를 출력 */}
         {data && (
           <div>
-            <p>{data.title}</p>
+            <p>{data}</p>
             <p>여기나오는부분ㅇ</p>
           </div>
         )}
