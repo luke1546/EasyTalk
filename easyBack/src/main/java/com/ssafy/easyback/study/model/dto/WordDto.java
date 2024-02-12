@@ -22,5 +22,7 @@ public class WordDto {
     String wordAudioUri;
     List<WordMeaningDto> wordMeaningDto;
     private OptionDto optionDto;
-    private boolean isSaved;
+    private Boolean isSaved;
+    private int musicId;
+    private Boolean isRight;
 }

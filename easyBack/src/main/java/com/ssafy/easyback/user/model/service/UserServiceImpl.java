@@ -1,8 +1,11 @@
 package com.ssafy.easyback.user.model.service;
 
+import com.ssafy.easyback.S3.model.service.S3UploadService;
+import com.ssafy.easyback.config.PathUri;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
 import com.ssafy.easyback.user.model.dto.RegistrationUserDTO;
+import com.ssafy.easyback.user.model.dto.UserRegistrationStatus;
 import com.ssafy.easyback.user.model.mapper.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
+  final S3UploadService s3UploadService;
   public final UserMapper userMapper;
 
   @Override
@@ -30,14 +34,19 @@ public class UserServiceImpl implements UserService {
    * @return
    */
   @Override
-  public HttpStatus checkRegisteredUser(long userId) {
+  public UserRegistrationStatus checkRegisteredUser(long userId, String phone) {
     ResponseUserDto userDto = this.getUserInfo(userId);
 
     if (userDto == null) {
-      return HttpStatus.UNAUTHORIZED;
+      return UserRegistrationStatus.UNREGISTERED;
     }
 
-    return HttpStatus.OK;
+    /** 비즈니스로직 폰 중복사용자 인지 체크하기 */
+    if (phone != null && userMapper.selectUserbyPhoneNumber(phone)) {
+      return UserRegistrationStatus.DUPLICATED;
+    }
+
+    return UserRegistrationStatus.REGISTERED;
   }
 
   /**
@@ -47,19 +56,33 @@ public class UserServiceImpl implements UserService {
    */
   @Override
   public void registerUserInfo(RegistrationUserDTO userDto) {
-    /*
-      파일서버에 저장하는 로직
-      myFileSerer.save("/user/profile/image{userDto.getUserID}.jpg");
-    */
+
+    if (userDto.getProfileImage().isEmpty()) {
+      log.info("no File");
+      userDto.setProfileImageUri(PathUri.PROFILE_IMAGE_URI + "default" + PathUri.IMAGE_EXTENSIONS);
+
+    } else {
+      userDto.setProfileImageUri(PathUri.PROFILE_IMAGE_URI + userDto.getUserId() + PathUri.IMAGE_EXTENSIONS);
+
+      try {
+        s3UploadService.saveFile(userDto.getProfileImage(), userDto.getProfileImageUri());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+
+
     userMapper.insertUserInfo(userDto);
+
   }
 
   @Override
-  public UserAttendance getAttendance(Long userId) {
+  public List<Integer> getAttendance(Long userId) {
     ResponseUserDto userDto = this.getUserInfo(userId);
     List<Integer> attendanceList = userMapper.selectAttendanceById(userId);
 
-    return new UserAttendance(userDto, attendanceList);
+    return attendanceList;
   }
 
   @Override
@@ -77,4 +100,5 @@ public class UserServiceImpl implements UserService {
     registerUserInfo(userDto);
     setAttendance(userId);
   }
+
 }

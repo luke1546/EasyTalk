@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.datamanager.study.model.mapper.MusicMapper">
+
+  <insert id="insertArtist" parameterType="artistDto">
+    insert into artists(artistName, artistImageUri)
+    values(#{artistName}, #{artistImageUri})
+  </insert>
+
+  <select id="getArtistId" parameterType="String" resultType="int">
+    select artistId
+    from artists
+    where artistName = #{artistName}
+  </select>
+
+  <insert id="insertMusic" parameterType="musicDto">
+    insert into musics(artistId, videoId, title, musicTime ,musicImageUri)
+    values(#{artistId}, #{videoId}, #{title}, #{musicTime}, #{musicImageUri})
+  </insert>
+
+  <insert id="insertLyric" parameterType="map">
+    insert into lyrics(musicId, lyric, meaning, startOffsetMs, durationMs, lyricAudioUri)
+    values(#{musicId}, #{lyric}, #{meaning}, #{startOffsetMs}, #{durationMs}, #{lyricAudioUri})
+  </insert>
+
+  <select id="getMusicId" parameterType="String" resultType="int">
+    select musicId
+    from musics
+    where videoId = #{videoId}
+  </select>
+
+  <update id="insertLyricAudioUri">
+    update lyrics
+    set lyricAudioUri = concat("/study/music/lyric/audio/",last_insert_id())
+    where lyricId = last_insert_id()
+  </update>
+
+  <select id="getMusicList" resultType="musicDto">
+    select *
+    from musics
+  </select>
+
+  <select id="getMusicDetail" parameterType="int" resultType="lyricsDto">
+    select *
+    from lyrics
+    where musicId = #{musicId}
+  </select>
+
+  <delete id="deleteLyric" parameterType="int">
+    delete
+    from lyrics
+    where lyricId = #{lyricId}
+  </delete>
+
+  <update id="updateLyric" parameterType="map">
+    update lyrics
+    set meaning = #{newValue}
+    where lyric = #{lyric}
+  </update>
+</mapper>

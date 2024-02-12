@@ -1,6 +1,5 @@
 package com.ssafy.easyback.social.model.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,7 @@ public class KakaoToken {
 
   private Long id;
 
-  
+
   private String scope;
   private int refresh_token_expires_in;
 }

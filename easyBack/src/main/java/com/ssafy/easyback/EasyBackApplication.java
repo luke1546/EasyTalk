@@ -9,11 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class EasyBackApplication {
 
 	public static void main(String[] args) {
-
-//		SpringApplication.run(EasyBackApplication.class, args);
-		SpringApplicationBuilder builder = new SpringApplicationBuilder(EasyBackApplication.class);
-		builder.headless(false);
-		ConfigurableApplicationContext context = builder.run(args);
+		SpringApplication.run(EasyBackApplication.class, args);
 	}
 
 }

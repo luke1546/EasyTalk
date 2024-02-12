@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.datamanager.study.model.mapper.WordMapper">
+
+  <insert id="insertWord" parameterType="wordDto">
+    insert into words
+        (word, pronunciation, level, wordAudioUri)
+    values
+        (#{word}, #{pronunciation}, #{level}, #{wordAudioUri})
+  </insert>
+
+  <insert id="insertMeaning" parameterType="wordMeaningDto">
+    insert into words_meaning(wordId, meaning, partOfSpeech)
+    values(
+            (
+              select wordId
+              from words
+              where word = #{word}
+            ),
+            #{meaning},
+            #{partOfSpeech}
+          )
+  </insert>
+
+  <update id="updateUri" parameterType="String">
+    update words
+    set wordAudioUri= concat("/study/word/audio/",LAST_INSERT_ID())
+    where wordId = LAST_INSERT_ID()
+  </update>
+    <select id="checkWord" resultType="int" parameterType="String">
+        select count(*)
+        from words
+        where word=#{word}
+    </select>
+
+  <select id="getWordId" parameterType="String" resultType="int">
+    select wordId
+    from words
+    where word = #{word}
+  </select>
+
+  <insert id="insertWordMusic" parameterType="map">
+    insert into word_musics(wordId, musicId)
+    values(#{wordId},#{musicId});
+  </insert>
+</mapper>

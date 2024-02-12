@@ -12,5 +12,4 @@ public class ResponseUserDto {
   String profileImageUri;
   int exp;
   String info;
-  String phone;
 }

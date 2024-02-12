@@ -20,7 +20,7 @@ public class KakaoConstants {
 
   @Value("${kakao.api_key}")
   private String tempApiKey;
-  @Value("${easy.url}${kakao.login_redirect_url}")
+  @Value("${easy.url}${kakao.login_redirect_uri}")
   private String tempLoginRedirectUrl;
 
   @PostConstruct

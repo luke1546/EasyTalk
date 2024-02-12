@@ -1,6 +1,7 @@
 package com.ssafy.easyback.study.model.mapper;
 
-import com.ssafy.easyback.study.model.dto.SentenceDto;
+import com.ssafy.easyback.study.model.dto.AnswerDto;
+import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
 import com.ssafy.easyback.study.model.dto.WordMeaningDto;
 
@@ -14,37 +15,21 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface WordMapper {
   List<WordDto> getWordsList(WordDto wordDto) throws Exception;
-  void insertWord(WordDto wordDto) throws Exception;
-
-  void insertMeaning(WordMeaningDto wordMeaningDto) throws Exception;
-
-  void updateUri() throws Exception;
-
-  int checkWord(String word) throws Exception;
-
   void addToMyWordBook(WordDto wordDto) throws Exception;
-
-  void getMyWordBookList(WordDto wordDto) throws Exception;
-
   WordDto getWord(WordDto wordDto) throws Exception;
-
   List<Integer> getMyWordsList(Long userId) throws Exception;
-
   List<WordMeaningDto> getMeaning(int wordId) throws Exception;
-
   void insertTests(Map<String, Object> param) throws Exception;
-
   int getTestId(Long userId) throws Exception;
-
   void insertWordTests(Map<String, Object> param) throws Exception;
-
   List<Map<String, String>> createWrong(int wordId) throws Exception;
-
   List<Integer> createAnswer(Object level) throws Exception;
-
   List<TestDto> getWordTest(int testId) throws Exception;
-
-  void insertAnswer(HashMap<String,Object> answer) throws Exception;
-
+  void insertAnswer(AnswerDto answer) throws Exception;
   void gradingWordTest(Object testId) throws Exception;
+  List<RecordDto> getWordRecord(HashMap<String, Object> param) throws Exception;
+
+  List<WordDto> getWordRecordDetail(HashMap<String, Object> param) throws Exception;
+
+  void deleteWord(WordDto wordDto) throws Exception;
 }

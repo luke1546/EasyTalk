@@ -90,4 +90,10 @@
     WHERE groupId = #{groupId};
   </select>
 
+  <insert id="insertMessage" parameterType="com.ssafy.easyback.group.model.dto.MessageDto">
+    INSERT INTO `messages`
+    (roomId, userId, content, messageTime)
+    VALUES (#{roomId}, #{userId}, #{content}, #{messageTime})
+  </insert>
+
 </mapper>
