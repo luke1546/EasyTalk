@@ -43,7 +43,7 @@ const WordListPage = ( ) => {
           word={word.word}
           meaning={word.wordMeaningDto[0].meaning}
           isSaved={word.isSaved}
-          audioUrl={word.wordAudioUri}
+          wordAudioUri={word.wordAudioUri}
         />
       ))}
     </div>
