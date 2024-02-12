@@ -63,6 +63,27 @@ public class NeighborServiceImpl implements NeighborService{
     }
 
     @Override
+    public void modifyFeed(HashMap<String, Object> param) throws Exception {
+        MultipartFile[] images = (MultipartFile[]) param.get("images");
+        neighborMapper.modifyFeed(param);
+        if(images != null) {
+            for (MultipartFile image : images) {
+                String fileName = image.getOriginalFilename();
+                String extension = fileName.substring(fileName.lastIndexOf("."));  // 확장자 추출
+                String newFilename = PathUri.FEED_IMAGE_URI + UUID.randomUUID().toString() + extension;  // UUID와 확장자를 조합하여 새로운 파일 이름 생성
+                s3UploadService.saveFile(image, newFilename);
+                param.put("UUID", newFilename);
+                neighborMapper.insertImageUri(param);
+            }
+        }
+    }
+
+    @Override
+    public void deleteFeed(HashMap<String, Object> param) throws Exception {
+        neighborMapper.deleteFeed(param);
+    }
+
+    @Override
     public String getNeighborStatus(HashMap<String, Object> param) throws Exception {
         String status = neighborMapper.getNeighborStatus(param);
         if(status == null) status = "NOTNEIGHBOR";
@@ -97,5 +118,15 @@ public class NeighborServiceImpl implements NeighborService{
     @Override
     public List<CommentDto> getFeedComment(HashMap<String, Object> param) throws Exception {
         return neighborMapper.getFeedComment(param);
+    }
+
+    @Override
+    public void modifyComment(HashMap<String, Object> param) throws Exception {
+        neighborMapper.modifyComment(param);
+    }
+
+    @Override
+    public void deleteComment(HashMap<String, Object> param) throws Exception {
+        neighborMapper.deleteComment(param);
     }
 }
