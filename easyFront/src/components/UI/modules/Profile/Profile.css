@@ -1,0 +1,20 @@
+/* Profile.css */
+
+/* 세로 레이아웃 */
+.user-info.vertical-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 가로 레이아웃 */
+.user-info.horizontal-layout {
+  display: flex;
+  align-items: center;
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  margin-right: 16px;
+}

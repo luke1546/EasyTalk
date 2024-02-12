@@ -1,0 +1,74 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.6.7",
+    "react": "^18.2.0",
+    "react-audio-player": "^0.17.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
+    "react-modal": "^3.16.1",
+    "react-router": "^6.21.3",
+    "react-router-dom": "^6.22.0",
+    "react-scripts": "^5.0.1",
+    "react-youtube": "^10.1.0",
+    "recoil": "^0.7.7",
+    "styled-components": "^6.1.8",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "proxy": "https://i10b307.p.ssafy.io:8080",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:storybook/recommended"
+    ],
+    "globals": {
+      "self": "writable"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.0.0-alpha.16",
+    "@storybook/addon-interactions": "^8.0.0-alpha.16",
+    "@storybook/addon-links": "^8.0.0-alpha.16",
+    "@storybook/addon-mdx-gfm": "^8.0.0-alpha.16",
+    "@storybook/addon-onboarding": "^1.0.11",
+    "@storybook/blocks": "^8.0.0-alpha.16",
+    "@storybook/preset-create-react-app": "^8.0.0-alpha.16",
+    "@storybook/react": "^8.0.0-alpha.16",
+    "@storybook/react-webpack5": "^8.0.0-alpha.16",
+    "@storybook/test": "^8.0.0-alpha.16",
+    "eslint": "^8.56.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-storybook": "^0.6.15",
+    "prop-types": "^15.8.1",
+    "react-refresh": "^0.11.0",
+    "storybook": "^8.0.0-alpha.16",
+    "webpack": "^5.90.0"
+  }
+}

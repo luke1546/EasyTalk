@@ -1,0 +1,159 @@
+import { useParams, Link, useMatch } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+const MusicTestPage = () => {
+  const navigate = useNavigate();
+
+  const match = useMatch("*"); // 현재 경로의 패턴을 가져옴
+  let url = match.pathname;
+  const tmp = url.split("/");
+  const musicId = tmp[3];
+
+  const matchRate = 72;
+
+  const [buttonTF, setButtonTF] = useState(false);
+
+  const [lyric, setLyric] = useState([]);
+
+  const [currentLyricIndex, setCurrentLyricIndex] = useState(0); // 현재 가사 인덱스
+
+  const buttonClick = () => {
+    if (buttonTF) {
+      if (currentLyricIndex < lyric.length - 1) {
+        // 가사가 끝까지 도달하지 않았다면
+        setCurrentLyricIndex(currentLyricIndex + 1); // 가사 인덱스 증가
+      } else {
+        if (matchRate >= 60) {
+          navigate("result", { state: { matchRate } });
+        } else {
+          navigate("result", { state: { matchRate } });
+        }
+      }
+      setButtonTF(false);
+      // 여기에 녹음이 종료되며 보내버려서 검증하는게 들어가야함
+      console.log("여기에 녹음이 종료되며 보내버려서 검증하는게 들어가야함");
+      stopRecording();
+      uploadAudio();
+    } else {
+      setButtonTF(true);
+      // 여기에 녹음하는 기능이 들어가야하고
+      console.log("여기에 녹음하는 기능이 들어가야하고");
+      startRecording();
+    }
+  };
+
+  // ffffffffffff
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [recordedChunks, setRecordedChunks] = useState([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // 녹음 시작
+  const startRecording = () => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(function (stream) {
+        setRecordedChunks([]); // 녹음 데이터 초기화
+        const newMediaRecorder = new MediaRecorder(stream);
+        setMediaRecorder(newMediaRecorder);
+        newMediaRecorder.start();
+        setIsRecording(true);
+
+        newMediaRecorder.ondataavailable = function (e) {
+          setRecordedChunks((prev) => [...prev, e.data]);
+        };
+      })
+      .catch(function (err) {
+        console.error("녹음을 시작할 수 없습니다.", err);
+      });
+  };
+
+  // 녹음 중지
+  const stopRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      setIsRecording(false);
+    }
+  };
+
+  // 녹음한 오디오 재생
+  const playAudio = () => {
+    const audioBlob = new Blob(recordedChunks);
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    audio.play();
+    setIsPlaying(true);
+
+    audio.onended = () => {
+      setIsPlaying(false);
+    };
+  };
+
+  // 녹음한 오디오 서버로 전송
+  const uploadAudio = async () => {
+    const audioBlob = new Blob(recordedChunks);
+    const formData = new FormData();
+    formData.append("audio", audioBlob);
+    formData.append("sentence", lyric[currentLyricIndex]?.lyric);
+
+    try {
+      console.log(lyric[currentLyricIndex]?.lyric);
+      const response = await axios.post(`/study/speech`, formData, {
+        withCredentials: true,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("오류가 발생했습니다:", error);
+    }
+  };
+
+  // ffffffffffff
+
+  useEffect(() => {
+    // musicId에 해당하는 노래를 시험 볼 때 필요한 정보 axios
+    axios
+      .get(`/study/music/test?target=${musicId}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const lyric = response.data.map((item) => ({
+          lyric: item.lyric,
+          lyricId: item.lyricId,
+          lyricAudioUri: item.lyricAudioUri,
+          durationMs: item.durationMs,
+          meaning: item.meaning,
+          musicId: item.musicId,
+          startOffsetMs: item.startOffsetMs,
+        }));
+
+        setLyric(lyric);
+      })
+      .catch((error) => {
+        console.error("시험 정보 가져옴 에러 : ", error);
+      });
+  }, []);
+
+  return (
+    <div className="MusicTestPage">
+      <div>제목 들어갈곳</div>
+      <div>{lyric[currentLyricIndex]?.lyric || "가사를 불러오는 중..."} </div>{" "}
+      {/* 가사 나올 박스 */}
+      <div>{lyric[currentLyricIndex + 1]?.lyric || ""} </div> {/* 다음에 나올 가사 */}
+      {buttonTF ? (
+        <button onClick={buttonClick}>녹음종료</button>
+      ) : (
+        <button onClick={buttonClick}>녹음하기</button>
+      )}
+      <div>녹음을 인식한 문장 나올곳</div>
+      <div>일치율 나올곳</div>
+      <div>
+        테스트용 녹음 확인 : <button onClick={playAudio}>재생</button>
+      </div>
+    </div>
+  );
+};
+
+export default MusicTestPage;
