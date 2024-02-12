@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Textbox from "../atoms/Text/Textbox";
 import Button from "../atoms/Button/Button";
+import { Link } from "react-router-dom";
 
 const StyledBtnBox = styled.div`
   padding: 2%;
@@ -10,7 +11,7 @@ const StyledBtnBox = styled.div`
   border-color: ${({ btnColor }) => btnColor || "#8382ff"}};
   `;
 
-const BtnBox = ({ text1, text2, text3, btnText, btnColor }) => {
+const BtnBox = ({ text1, text2, text3, btnText, btnColor, btnLink }) => {
   return (
     <StyledBtnBox btnColor={btnColor}>
       <div>
@@ -22,7 +23,9 @@ const BtnBox = ({ text1, text2, text3, btnText, btnColor }) => {
       <div>
         <Textbox section="singlePage" context1={text3} />
       </div>
-      <Button name="submitBtn" text={btnText} color={btnColor} />
+      <Link to={btnLink}>
+        <Button name="submitBtn" text={btnText} color={btnColor} />
+      </Link>
     </StyledBtnBox>
   );
 };

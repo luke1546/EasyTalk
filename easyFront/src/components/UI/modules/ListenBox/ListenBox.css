@@ -1,0 +1,39 @@
+/* ListenBox.css */
+
+.listen-box {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid #ddd;
+}
+
+.sentence-box {
+  display: flex;
+  text-decoration: none; /* 링크의 언더라인 없애기 */
+
+}
+
+.text-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.icons-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 16px;
+}
+
+.buttons {
+  display: flex;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}

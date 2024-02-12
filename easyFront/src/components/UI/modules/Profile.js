@@ -26,10 +26,10 @@ const StyledProfile = styled.div`
   flex-direction: row;
 `;
 
-const Profile = ({ direction, text1, text2, text3 }) => {
-  const [imageUrl, setImageUrl] = useState(
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  );
+const Profile = ({ direction, text1, text2, text3, imageUrl }) => {
+  // const [imageUrl, setImageUrl] = useState(
+  //   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  // );
   const fileInput = useRef();
 
   if (direction === "left") {
