@@ -51,7 +51,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://i10b307.p.ssafy.io:8080",
   "devDependencies": {
     "@storybook/addon-essentials": "^8.0.0-alpha.16",
     "@storybook/addon-interactions": "^8.0.0-alpha.16",
@@ -68,8 +67,8 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-storybook": "^0.6.15",
     "prop-types": "^15.8.1",
+    "react-refresh": "^0.11.0",
     "storybook": "^8.0.0-alpha.16",
     "webpack": "^5.90.0"
   }
-  
 }

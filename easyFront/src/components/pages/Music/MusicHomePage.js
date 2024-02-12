@@ -4,7 +4,6 @@ import Textbox from "../../UI/atoms/Text/Textbox";
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import InputBar from "../../UI/modules/InputBar";
-import TabBar from "../../UI/modules/Tapbar/TabBar";
 
 const MusicHomePage = () => {
   const [musicId, setMusicId] = useState([]);

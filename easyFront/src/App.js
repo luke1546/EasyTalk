@@ -10,12 +10,19 @@ import StudyPage from "./components/pages/Common/StudyPage";
 import GroupHomePage from "./components/pages/Group/GroupHomePage";
 import PlaceHomePage from "./components/pages/Place/PlaceHomePage";
 import MyHomePage from "./components/pages/My/MyHomePage";
-import Button from "./components/UI/atoms/Button/Button";
-import MusicSearchPage from "./components/pages/Music/MusicSearchPage";
 import LoginHandeler from "./components/pages/Login/LoginHandeler";
 import SignupPage from "./components/pages/Login/SignupPage";
-import ArtistDetailPage from "./components/pages/Music/ArtistDetailPage";
-import StudyPage from "./components/pages/Common/StudyPage";
+import MyEditPage from "./components/pages/My/MyEditPage";
+import MyMusicPage from "./components/pages/My/MyMusicPage";
+import MyRecodeMusicPage from "./components/pages/My/MyRecodeMusicPage";
+import MyRecodeWordPage from "./components/pages/My/MyRecodeWordPage";
+import MyFeedPage from "./components/pages/My/MyFeedPage";
+import MyGroupPage from "./components/pages/My/MyGroupPage";
+import MyNeighborPage from "./components/pages/My/MyNeighborPage";
+import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
+import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
+import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
+
 
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
@@ -48,7 +55,7 @@ const App = () => {
             <Route path="/myreceive" element={<MyNeighborReceivePage />} />
             <Route path="/mysend" element={<MyNeighborSendPage />} />
             <Route path="/mygroup" element={<MyGroupPage />} />
-            <Route path={`/study/:index`} element={<MusicDetailPage />} />
+            {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
           </Routes>
         </div>
         <Footer className="Footer" /> 

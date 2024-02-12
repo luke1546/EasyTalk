@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
-import TabBar from "../../UI/modules/Tapbar/TabBar";
+import TabBar from "../../UI/modules/TabBar/TabBar";
 import WordHomePage from "../Word/WordHomePage";
 import MusicHomePage from "../Music/MusicHomePage";
 import SentenceHomePage from "../Sentence/SentenceHomePage";
@@ -21,6 +21,7 @@ import TestResultPage from "../Music/TestResultPage";
 //Word pages import
 import WordTestPage from "../Word/WordTestPage";
 import WordListPage from "../Word/WordListPage";
+import WordStagePage from "../Word/WordStagePage";
 
 const StudyPage = () => {
   return (
