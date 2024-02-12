@@ -1,5 +1,6 @@
 import "./App.css";
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Header from "./components/UI/modules/Header";
 import Footer from "./components/UI/modules/Footer";
@@ -27,10 +28,38 @@ import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
   const code = new URL(window.location.href).searchParams.get("code");
+
+  // axios 요청을 위한 상태 변수를 추가
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://i10b307.p.ssafy.io:8080/test');
+        setData(response.data);
+      } catch (error) {
+        console.error('Failed to fetch data', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
   return (
     <BrowserRouter>
       <div className="App">
         <Header className="Header" />
+
+
+        {/* axios 요청의 결과를 출력 */}
+        {data && (
+          <div>
+            <p>{data.title}</p>
+            <p>{data.body}</p>
+          </div>
+        )}
+
         <div className="MainContens">
           <Routes>
             <Route path="/" exact element={<IntroPage />} />
