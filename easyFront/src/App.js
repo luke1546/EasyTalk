@@ -11,8 +11,6 @@ import GroupHomePage from "./components/pages/Group/GroupHomePage";
 import PlaceHomePage from "./components/pages/Place/PlaceHomePage";
 import MyHomePage from "./components/pages/My/MyHomePage";
 import Button from "./components/UI/atoms/Button/Button";
-
-import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
 import MusicSearchPage from "./components/pages/Music/MusicSearchPage";
 import LoginHandeler from "./components/pages/Login/LoginHandeler";
 import SignupPage from "./components/pages/Login/SignupPage";
@@ -35,16 +33,25 @@ const App = () => {
             <Route path="/group" element={<GroupHomePage />} />
             <Route path="/place" element={<PlaceHomePage />} />
             <Route path="/my" element={<MyHomePage />} />
-            {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
             {/* <Route path={`/study/search/:searchValue`} element={<MusicSearchPage />} /> */}
             <Route path="/login/oauth/kakao" element={<LoginHandeler />} />
             <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
             <Route path="/signup" element={<SignupPage />} />
             {/* <Route path="/study/artist/나훈아" element={<ArtistDetailPage />} /> */}
             <Route path="/study/*" element={<StudyPage />} />
+            <Route path="/myedit" element={<MyEditPage />} />
+            <Route path="/mymusic" element={<MyMusicPage />} />
+            <Route path="/myrecodemusic" element={<MyRecodeMusicPage />} />
+            <Route path="/myrecodeword" element={<MyRecodeWordPage />} />
+            <Route path="/myfeed" element={<MyFeedPage />} />
+            <Route path="/myneighbor" element={<MyNeighborPage />} />
+            <Route path="/myreceive" element={<MyNeighborReceivePage />} />
+            <Route path="/mysend" element={<MyNeighborSendPage />} />
+            <Route path="/mygroup" element={<MyGroupPage />} />
+            <Route path={`/study/:index`} element={<MusicDetailPage />} />
           </Routes>
         </div>
-        <Footer className="Footer" />
+        <Footer className="Footer" /> 
       </div>
     </BrowserRouter>
   );

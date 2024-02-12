@@ -7,8 +7,25 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
   var sec = musicTime % 60;
   var min = Math.floor(musicTime / 60);
   const time = `${min}:${sec < 10 ? "0" : ""}${sec}`;
+  const REDIRECT_URI =
+  process.env.REACT_APP_EASYTALK_URL +
+  process.env.REACT_APP_FRONT_PORT
+
   return (
-    <Link to={`http://localhost:3000/study/music/${musicId}/${videoId}`} state={musicId}>
+    <div>
+    { videoId ? (
+        <Link to={`${REDIRECT_URI}/study/music/${musicId}/${videoId}`} state={musicId}>
+          <div className="music-box">
+            <img src={musicImageUrl} alt="Album Cover" />
+            <div className="music-details">
+              <p className="music-title">{title}</p>
+              <p className="music-artist">{artistName}</p>
+              <p className="music-time">{time}</p>
+            </div>
+          </div>
+        </Link>
+    ) : (
+      <Link to={`${REDIRECT_URI}/study/music/${musicId}`} state = { musicId } >
       <div className="music-box">
         <img src={musicImageUrl} alt="Album Cover" />
         <div className="music-details">
@@ -18,6 +35,9 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
         </div>
       </div>
     </Link>
+    )
+  }
+  </div>
   );
 };
 
