@@ -25,7 +25,7 @@ const PlaceHomePage = () => {
 
         const response = await axios.get("/neighbor/feed", { params }, { withCredentials: true });
 
-        setmyFeed(response.data);
+        setmyFeed(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.log("Error myFeed", error);
       }
