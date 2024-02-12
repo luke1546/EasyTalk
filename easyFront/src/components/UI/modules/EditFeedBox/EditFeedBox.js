@@ -7,7 +7,7 @@ import Textbox from '../../atoms/Text/Textbox';
 import Button from '../../atoms/Button/Button';
 import Icon from '../../atoms/Icon/Icon';
 
-const EditFeedBox = ({ profileImageUri, target_userId, userId, isLiked, likes, heartCount, feedId, initialContent, onCancel }) => {
+const EditFeedBox = ({ profileImageUri, target_userId, isLiked, likes, heartCount, feedId, initialContent}) => {
   const navigate = useNavigate();
   const [content, setContent] = useState(initialContent);
   const [selectedImages, setSelectedImages] = useState(null);
@@ -65,9 +65,21 @@ const EditFeedBox = ({ profileImageUri, target_userId, userId, isLiked, likes, h
       </label>
       <input id="image-upload" type="file" accept="image/*" multiple onChange={handleImageChange} style={{ display: "none" }} />
       <Button name="submitBtn" text="완료" onClick={handleSaveClick} />
-      <Button name="basicBtn" text="취소" onClick={onCancel} />
     </div>
   );
 };
 
 export default EditFeedBox;
+
+
+
+{/* <EditFeedBox
+          feedId={feedId}
+          initialContent={content}
+          isLiked={isLiked}
+          likes={likes}
+          commentCount={commentCount}
+          nickname={nickname}
+          profileImgageUri={profileImgageUri}
+          feedImageUris={feedImageUris}
+        /> */}

@@ -1,8 +1,7 @@
 // WordStagePage.js
 
 import React from 'react';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import WordListPage from './WordListPage';
+import { useNavigate } from 'react-router-dom';
 import Textbox from "../../UI/atoms/Text/Textbox";
 
 const WordStagePage = () => {
@@ -19,8 +18,8 @@ const WordStagePage = () => {
     { id: 7, label: '7단계' },
   ];
 
-  const handleLevelClick = (levelId) => {
-    navigate(`/study/word/stage/${levelId}`);
+  const handleLevelClick = (level) => {
+    navigate(`${level}`);
   };
 
   return (
@@ -31,12 +30,6 @@ const WordStagePage = () => {
           <Textbox section="singlePage" context1={level.label} />
         </div>
       ))}
-
-      <Routes>
-        {levels.map((level) => (
-          <Route key={level.id} path={`/study/word/stage/${level.id}`} element={<WordListPage level={level.id} />} />
-        ))}
-      </Routes>
     </div>
   );
 };

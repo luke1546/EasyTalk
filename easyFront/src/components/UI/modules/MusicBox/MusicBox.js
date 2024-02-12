@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import MusicDetailPage from "../../../pages/Music/MusicDetailPage";
 import "./MusicBox.css";
 
 const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoId }) => {
@@ -25,7 +24,7 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
           </div>
         </Link>
     ) : (
-      <Link to={`${REDIRECT_URI}/study/music/${musicId}`} state = { musicId } >
+    <Link to={`${REDIRECT_URI}/study/music/${musicId}`} state = { musicId } >
       <div className="music-box">
         <img src={musicImageUrl} alt="Album Cover" />
         <div className="music-details">
@@ -35,9 +34,8 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
         </div>
       </div>
     </Link>
-    )
-  }
-  </div>
+    )};
+    </div>
   );
 };
 

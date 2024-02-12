@@ -1,23 +1,29 @@
 // WordListPage.js
 
-import React, { useEffect, useState } from "react";
-import WordBox from "../../UI/modules/WordBox/WordBox";
+import React, { useEffect, useState } from 'react';
+import WordBox from '../../UI/modules/WordBox/WordBox';
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-const WordListPage = ({ level }) => {
+const WordListPage = ( ) => {
   const [words, setWords] = useState([]);
+  const { level } = useParams();
 
   useEffect(() => {
-    // 단계 정보를 기반으로 해당 단계의 단어 목록을 가져오는 비동기 함수 호출
+    
     const fetchWordsByLevel = async () => {
       try {
-        // 예시: 서버에서 해당 단계의 단어 목록을 가져오는 API 호출
-        const response = await fetch(`/api/words?level=${level}`);
-        const data = await response.json();
-
-        // 가져온 데이터를 상태에 업데이트
-        setWords(data);
+        if (level) {
+          const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word?filter=list&level=${level}`);
+          console.log(response.data)
+          setWords(response.data);
+        }
+        else {
+          const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word?filter=myList`);
+          setWords(response.data);
+        }
       } catch (error) {
-        console.error("단어 목록을 가져오는 중 에러 발생:", error);
+        console.error('단어 목록을 가져오는 중 에러 발생:', error);
       }
     };
 
@@ -27,21 +33,17 @@ const WordListPage = ({ level }) => {
 
   return (
     <div>
-      <h2>{`${level}단계 단어 목록`}</h2>
+      {level &&
+        <h2>{`${level}단계 단어 목록`}</h2>
+      }
+      
       {words.map((word) => (
         <WordBox
-          key={word.id}
+          key={word.wordId}
           word={word.word}
-          meaning={word.meaning}
-          isBookmarked={word.isBookmarked}
-          audioUrl={word.audioUrl}
-          onBookmarkChange={(bookmarked) => {
-            // 북마크 상태가 변경될 때 실행되는 콜백
-            // 해당 단어의 북마크 상태를 업데이트하는 로직을 여기에 추가
-            console.log(
-              `단어 ${word.word}의 북마크 상태가 변경되었습니다. 새로운 상태: ${bookmarked}`
-            );
-          }}
+          meaning={word.wordMeaningDto[0].meaning}
+          isSaved={word.isSaved}
+          wordAudioUri={word.wordAudioUri}
         />
       ))}
     </div>

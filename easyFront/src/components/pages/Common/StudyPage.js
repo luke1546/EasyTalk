@@ -18,6 +18,10 @@ import MusicTestPage from "../Music/MusicTestPage";
 import SentenceDetailPage from "../Music/SentenceDetailPage";
 import TestResultPage from "../Music/TestResultPage";
 
+//Word pages import
+import WordTestPage from "../Word/WordTestPage";
+import WordListPage from "../Word/WordListPage";
+
 const StudyPage = () => {
   return (
     <div>
@@ -44,6 +48,14 @@ const StudyPage = () => {
         <Route path={`/music/:index/:videoId/test`} element={<MusicTestPage />} />
         <Route path={`/music/:index/:videoId/test/result`} element={<TestResultPage />} />
         <Route path={`/music/:index/:videoId/sentence/:lyricId`} element={<SentenceDetailPage />} />
+        
+        {/* Word Route */}
+        <Route path="word/stage" element={<WordStagePage />} />
+        <Route path={`word/stage/:level`} element={<WordListPage />} />
+        <Route path="word/my" element={<WordListPage />} />
+        <Route path="word/stagetest" element={<WordStagePage />} />
+        <Route path={`word/stagetest/:level`} element={<WordTestPage />} />
+        {/* <Route path="word/musictest" element={<MusicSearchPage />} /> */}
       </Routes>
     </div>
   );

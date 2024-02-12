@@ -6,7 +6,7 @@ import Footer from "./components/UI/modules/Footer";
 import IntroPage from "./components/pages/Login/IntroPage";
 import LoginPage from "./components/pages/Login/LoginPage";
 import HomePage from "./components/pages/Login/HomePage";
-import MusicHomePage from "./components/pages/Music/MusicHomePage";
+import StudyPage from "./components/pages/Common/StudyPage";
 import GroupHomePage from "./components/pages/Group/GroupHomePage";
 import PlaceHomePage from "./components/pages/Place/PlaceHomePage";
 import MyHomePage from "./components/pages/My/MyHomePage";
