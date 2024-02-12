@@ -32,7 +32,7 @@ const HeaderDiv = styled.div`
   background-color: white;
   width: 100vw;
   height: 10vh;
-  display: flex;
+  display: fixed;
   justify-content: space-evenly;
 `;
 
@@ -54,17 +54,27 @@ const StyledDiv = styled.div`
   }
 `;
 
+const AppDiv = styled.div`
+  text-align: center;
+`;
+
+const MainContents = styled.div`
+  padding-top: 10vh;
+  height: 82vh;
+  overflow: auto;
+`;
+
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
   const code = new URL(window.location.href).searchParams.get("code");
   return (
     <React.Fragment>
       <BrowserRouter>
-        <div className="App">
+        <AppDiv>
           <HeaderDiv>
             <Header className="Header" />
           </HeaderDiv>
-          <StyledDiv className="MainContens">
+          <StyledDiv as={MainContents}>
             <Routes>
               <Route path="/" exact element={<IntroPage />} />
               <Route path="/login" element={<LoginPage />} />
@@ -90,11 +100,11 @@ const App = () => {
               <Route path="/mygroup" element={<MyGroupPage />} />
               {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
             </Routes>
-          </StyledDiv>
+            </StyledDiv>
           <FooterDiv>
             <Footer className="Footer" /> 
           </FooterDiv>
-        </div>
+        </AppDiv>
       </BrowserRouter>
     </React.Fragment>
   );

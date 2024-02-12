@@ -23,6 +23,7 @@ const StyledSubmitBtn = styled.button`
   background: #8382ff;
   border-radius: 50px;
   padding: 2px 15px 4px;
+  margin: 20px;
   box-shadow: 0px 4px 2px -2px #121212;
   border: none;
   color: white;

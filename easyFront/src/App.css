@@ -1,19 +1,19 @@
-.App {
+/* .App {
   text-align: center;
-  /* background-color: yellow; */
-}
+  background-color: yellow;
+} */
 
 a {
   text-decoration: none;
   color: #8382ff;
 }
 
-.MainContens {
+/* .MainContens {
   padding-top: 10vh;
-  /* background-color: #fad267; */
+  background-color: #fad267;
   height: 82vh;
   overflow: auto;
-}
+} */
 
 /* .App-logo {
   height: 40vmin;
