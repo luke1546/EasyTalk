@@ -69,7 +69,6 @@ const MainContents = styled.div`
 `;
 
 const App = () => {
-  const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
   const code = new URL(window.location.href).searchParams.get("code");
   return (
   <React.Fragment>
