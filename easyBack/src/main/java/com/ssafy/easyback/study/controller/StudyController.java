@@ -212,6 +212,11 @@ public class StudyController {
     return ResponseEntity.ok(studyService.getMusicDetail(musicId));
   }
 
+  @GetMapping("music/title")   // 음악 제목 정보 가져오기
+  public ResponseEntity<String> getMusicTitle(@RequestParam("target") int musicId) throws Exception{
+    return ResponseEntity.ok(studyService.getMusicTitle(musicId));
+  }
+
   @GetMapping("music/test")   // 음악 시험 시작하기 (노래 전체 따라부르기 시험)
   public ResponseEntity<List<LyricsDto>> getMusicTest(@RequestParam("target") int musicId, HttpSession session) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
