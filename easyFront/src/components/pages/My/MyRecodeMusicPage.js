@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import TabBar from '../../UI/modules/TabBar/TabBar';
 import Button from "../../UI/atoms/Button/Button";
+import Input from "../../UI/atoms/Input/Input";
 
 const MyRecodeMusicPage = () => {
   const [myrecodemusic, setmyrecodemusic] = useState([]);
@@ -15,6 +16,7 @@ const MyRecodeMusicPage = () => {
       const response = await axios.get("/study/test/record", { params }, { withCredentials: true });
 
       setmyrecodemusic(response.data)
+      // console.log(response.data)
     } catch (error) {
       console.error("Error myrecodemusic", error);
     }
@@ -37,25 +39,31 @@ const MyRecodeMusicPage = () => {
    };
  
 
-  // return (
-  //   <>
-  //     <TabBar tabs={RecodeTabs} />
-  //     <div onClick={() => handleSaveClick()}>
-  //       <Button
-  //         name="submitBtn"
-  //         text={issaving? '저장완료' : '저장'}
-  //         color={issaving ? 'red' : 'blue'}
-  //         />
-  //     </div>
-  //     <div>
-  //       {myrecodemusic.map((remusic, index) => (
-  //         <div key={index}>
-            
-  //       ))}
-  //     </div>
-
-  //   </>
-  // )
+  return (
+    <>
+      <TabBar tabs={RecodeTabs} />
+      <div onClick={() => handleSaveClick()}>
+        <Button
+          name="submitBtn"
+          text={issaving? '저장완료' : '저장'}
+          color={issaving ? 'red' : 'blue'}
+          />
+      </div>
+      <div>
+        {myrecodemusic.map((remusic, index) => (
+          <div key={index}>
+            <Input 
+              name="singleInput"
+              value={`${remusic.testTitle},
+                      ${remusic.startTime},
+                      ${remusic.score}/100`}
+                      readOnly    // 사용자가 수정하지못하게 함
+            />
+          </div>
+        ))}
+      </div>
+    </>
+  )
 };
 
 export default MyRecodeMusicPage;
