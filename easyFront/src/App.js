@@ -24,6 +24,7 @@ import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
 import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
 import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
 
+axios.defaults.baseURL = 'https://i10b307.p.ssafy.io:8080';
 
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
@@ -35,7 +36,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://i10b307.p.ssafy.io:8080/test');
+        const response = await axios.get('/test');
         setData(response.data);
         console.log(response.data)
         console.log(response)
