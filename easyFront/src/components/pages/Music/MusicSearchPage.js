@@ -12,8 +12,8 @@ const MusicSearchPage = () => {
   const imageUrl = "https://www.upinews.kr/data/upi/image/2020/10/01/upi202010010001.680.0.jpg";
 
   const StyledImg = styled.img`
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
   `;
 
@@ -93,7 +93,7 @@ const MusicSearchPage = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 export default MusicSearchPage;

@@ -17,9 +17,9 @@ const Emoticons = {
   commentIcon: FaCommentDots,
 };
 
-const Icon = ({ name, color }) => {
+const Icon = ({ name, color, size }) => {
   const Emoticon = Emoticons[name];
-  return Emoticon ? <Emoticon color={color} /> : null;
+  return Emoticon ? <Emoticon color={color} size={size}/> : null;
 };
 
 export default Icon;

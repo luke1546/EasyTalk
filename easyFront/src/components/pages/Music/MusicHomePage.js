@@ -1,14 +1,24 @@
 import { Link } from "react-router-dom";
 import Textbox from "../../UI/atoms/Text/Textbox";
+import MusicBox from "../../UI/modules/MusicBox/MusicBox";
+import Line from "../../UI/atoms/Line/Line";
 
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import InputBar from "../../UI/modules/InputBar";
+import styled from "styled-components";
+
+const LeftDiv = styled.div`
+    text-align: left; 
+    padding: 20px 0 20px 40px;
+  `;
 
 const MusicHomePage = () => {
   const [musicId, setMusicId] = useState([]);
   const [musicTitle, setMusicTitle] = useState([]);
   const [videoId, setVideoId] = useState([]);
+  const [artistId, setartistId ] = useState([]);
+  const [artistName, setArtistName] = useState([]);
 
   useEffect(() => {
     // 조회수순 정렬하여 음악 리스트 제공
@@ -25,10 +35,26 @@ const MusicHomePage = () => {
         const musicId = response.data.map((music) => music.musicId).slice(0, 5);
         const musicTitle = response.data.map((music) => music.title).slice(0, 5);
         const videoId = response.data.map((music) => music.videoId).slice(0, 5);
+        const artistId = response.data.map((music) => music.artistId).slice(0, 5);
 
         setMusicId(musicId);
         setMusicTitle(musicTitle);
         setVideoId(videoId);
+        setartistId(artistId);
+
+         // artistId를 이용하여 artistName 데이터를 받아옴
+         axios
+         .get(`/study/music?filter=artist&target=${artistId}`, {
+           withCredentials: true,
+         })
+         .then((response) => {
+           console.log(response.data);
+           const artistName = response.data.map((artist) => artist.name);
+           setArtistName(artistName);
+         })
+         .catch((error) => {
+           console.error("artistName 데이터를 받아오는 중 에러 발생: ", error);
+         });
       })
       .catch((error) => {
         console.error("음악 리스트 에러 : ", error);
@@ -37,6 +63,8 @@ const MusicHomePage = () => {
     // AI 추천순 정렬하여 음악 리스트 제공 (백엔드 로직 필요)
     // 미구현
   }, []);
+
+
 
   // 내 음악 리스트 제공
   // axios
@@ -146,7 +174,8 @@ const MusicHomePage = () => {
     }
   };
 
-  // ffffffffffff
+  
+
   return (
     <div className="MusicHomePage">
       {/* <TabBar
@@ -157,43 +186,52 @@ const MusicHomePage = () => {
         ]}
       /> */}
       <InputBar variant="searchinputbar" />
-      <Textbox section="singleText" context1="지금 인기있는 노래" />
-      <div>
-        {musicTitle.map((arrElements, index) => {
-          return (
-            <Link
-              to={{
-                pathname: `/study/music/${musicId[index]}/${videoId[index]}`,
-                state: { videoId: videoId[index] },
-              }}
-            >
-              <div key={musicId[index]}>{arrElements}</div>
-            </Link>
-            // <Link to={`/study/${musicId[index]}`}>
-            //   <div key={musicId[index]}>{arrElements}</div>
-            // </Link>
-          );
-        })}
-      </div>
-      <hr />
-      <Textbox section="singleText" context1="AI가 추천하는 노래" />
-      <div>
-        {arr2.map((arrElements, index) => {
-          return (
-            <Link to={`/study/music/${index}`}>
-              <div key={index}>{arrElements}</div>
-            </Link>
-          );
-        })}
-      </div>
-      <hr />
-      <Textbox section="singleText" context1={`${nickname}님이 학습중인 노래`} />
-      <button onClick={startRecording}>녹음 시작</button>
-      <button onClick={stopRecording}>녹음 중지</button>
-      <button onClick={playAudio}>재생</button>
-      <button onClick={uploadAudio}>업로드</button>
-      {isRecording && <p>녹음 중...</p>}
-      {isPlaying && <p>재생 중...</p>}
+      <LeftDiv>
+        <Textbox section="singleText" context1="지금 인기있는 노래" />
+        <div>
+          {musicTitle.map((arrElements, index) => {
+            return (
+              <Link
+                to={{
+                  pathname: `/study/music/${musicId[index]}/${videoId[index]}`,
+                  state: { videoId: videoId[index] },
+                }}
+              >
+                <div key={musicId[index]}>{arrElements}</div>
+              </Link>
+              // <Link to={`/study/${musicId[index]}`}>
+              //   <div key={musicId[index]}>{arrElements}</div>
+              // </Link>
+            );
+          })}
+        </div>
+      </LeftDiv>
+
+        {/* <MusicBox musicId={musicId} title={musicTitle} artistName={artistName} /> */}
+
+      <Line />
+      <LeftDiv>
+        <Textbox section="singleText" context1="AI가 추천하는 노래" />
+        <div>
+          {arr2.map((arrElements, index) => {
+            return (
+              <Link to={`/study/music/${index}`}>
+                <div key={index}>{arrElements}</div>
+              </Link>
+            );
+          })}
+        </div>
+      </LeftDiv>
+      <Line />
+      <LeftDiv>
+        <Textbox section="singleText" context1={`${nickname}님이 학습중인 노래`} />
+        <button onClick={startRecording}>녹음 시작</button>
+        <button onClick={stopRecording}>녹음 중지</button>
+        <button onClick={playAudio}>재생</button>
+        <button onClick={uploadAudio}>업로드</button>
+        {isRecording && <p>녹음 중...</p>}
+        {isPlaying && <p>재생 중...</p>}
+      </LeftDiv>
     </div>
   );
 };

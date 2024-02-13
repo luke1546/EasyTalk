@@ -13,6 +13,7 @@ import { LuCopyPlus, LuImagePlus } from "react-icons/lu";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import { BsMusicNoteList } from "react-icons/bs";
+import { AiOutlineEnter } from "react-icons/ai";
 
 import { MdOutlineFileDownload } from "react-icons/md";
 import { MdOutlineDownloading } from "react-icons/md";
@@ -76,6 +77,7 @@ const components = {
   shareBtn: FiShare2,
   listenBtn: PiSpeakerHighBold,
   xBtn: IoCloseCircleSharp,
+  enterBtn: AiOutlineEnter,
   dropBtn: FaAngleDown,
   editBtn: FaRegEdit,
   delBtn: HiMiniMinusCircle,
