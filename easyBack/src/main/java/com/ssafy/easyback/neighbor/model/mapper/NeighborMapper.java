@@ -37,4 +37,12 @@ public interface NeighborMapper {
     List<CommentDto> getFeedComment(HashMap<String, Object> param) throws Exception;
 
     void writeComment(HashMap<String, Object> param) throws Exception;
+
+    void modifyFeed(HashMap<String, Object> param) throws Exception;
+
+    void deleteFeed(HashMap<String, Object> param) throws Exception;
+
+    void modifyComment(HashMap<String, Object> param) throws Exception;
+
+    void deleteComment(HashMap<String, Object> param) throws Exception;
 }
