@@ -213,4 +213,9 @@ public class StudyServiceImpl implements StudyService{
   public List<ArtistDto> getArtistList(HashMap<String, Object> param) throws Exception {
     return musicMapper.getArtistList(param);
   }
+
+  @Override
+  public String getMusicTitle(int musicId) throws Exception {
+    return musicMapper.getMusicTitle(musicId);
+  }
 }

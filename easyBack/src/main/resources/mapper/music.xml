@@ -22,6 +22,12 @@
     limit ${optionDto.start},${optionDto.end}
   </select>
 
+  <select id="getMusicTitle" parameterType="int" resultType="String">
+    select title
+    from musics
+    where musicId = #{musicId}
+  </select>
+
   <select id="getArtistList" parameterType="String" resultType="artistDto">
     select *
     from artists
