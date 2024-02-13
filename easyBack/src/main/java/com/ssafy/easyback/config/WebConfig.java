@@ -34,7 +34,7 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedOriginPatterns("*") // '*'를 사용하는 대신 이렇게 변경
         .allowedMethods("*")
         .allowedHeaders("*")
-//        .allowCredentials(true)
+        .allowCredentials(true)
         .maxAge(3600);
   }
 }

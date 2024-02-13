@@ -13,13 +13,12 @@ const ImageUpload = () => {
 
         const formData = new FormData();
 
-        selectedImages.forEach((image) => {
-            formData.append("images", image);
-        });
-        formData.append("content", "1231231241355");
+        
+        formData.append("profileImage",selectedImages[0])
+        formData.append("info", "좋은아침 입니다.");
 
         try {
-            const response = await axios.post('http://localhost:8080/neighbor/feed', formData, {
+            const response = await axios.put('http://localhost:8080/user', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

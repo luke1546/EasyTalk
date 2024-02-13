@@ -8,6 +8,18 @@
         values(#{userId}, #{content});
     </insert>
 
+    <update id="modifyFeed" parameterType="map">
+        update feeds
+        set content = #{content}
+        where feedId = #{feedId}
+    </update>
+
+    <delete id="deleteFeed" parameterType="map">
+        delete
+        from feeds
+        where feedId = #{feedId}
+    </delete>
+
     <select id="getFeedId" resultType="int">
         select last_insert_id()
     </select>
@@ -72,7 +84,7 @@
     </select>
 
     <select id="getFeedComment" parameterType="map" resultType="commentDto">
-        select nickname, profileImageUri, content, registrationDate
+        select commentId, nickname, profileImageUri, content, IF(c.userId = #{userId},true,false) as "myFeed", registrationDate
         from comments c
         join users u
         on u.userId = c.userId
@@ -84,4 +96,15 @@
         values(#{feedId},#{userId},#{content});
     </insert>
 
+    <update id="modifyComment" parameterType="map">
+        update comments
+        set content=#{content}
+        where commentId = #{commentId}
+    </update>
+
+    <delete id="deleteComment" parameterType="map">
+        delete
+        from comments
+        where commentId = #{commentId}
+    </delete>
 </mapper>

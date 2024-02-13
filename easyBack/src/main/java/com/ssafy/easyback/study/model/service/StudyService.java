@@ -49,5 +49,6 @@ public interface StudyService {
 
   void deleteSentence(SentenceDto sentenceDto) throws Exception;
 
+  String getMusicTitle(int musicId) throws Exception;
     TodayDto getTodaySentence() throws Exception;
 }
