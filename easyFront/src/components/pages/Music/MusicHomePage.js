@@ -22,9 +22,9 @@ const MusicHomePage = () => {
       })
       .then((response) => {
         console.log(response.data);
-        const musicId = response.data.map((music) => music.musicId);
-        const musicTitle = response.data.map((music) => music.title);
-        const videoId = response.data.map((music) => music.videoId);
+        const musicId = response.data.map((music) => music.musicId).slice(0, 5);
+        const musicTitle = response.data.map((music) => music.title).slice(0, 5);
+        const videoId = response.data.map((music) => music.videoId).slice(0, 5);
 
         setMusicId(musicId);
         setMusicTitle(musicTitle);

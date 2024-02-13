@@ -6,6 +6,9 @@ import './Profile.css';
 
 const Profile = ({ target_userId, profileImageUri, pageType }) => {
   const navigate = useNavigate();
+  console.log(target_userId)
+  console.log(profileImageUri)
+  console.log()
 
   const handleUserClick = () => {
     navigate(`/user/${target_userId}`);
