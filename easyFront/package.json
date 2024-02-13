@@ -2,6 +2,7 @@
   "name": "front",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://i10b307.p.ssafy.io",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -13,7 +14,7 @@
     "react-icons": "^5.0.1",
     "react-modal": "^3.16.1",
     "react-router": "^6.21.3",
-    "react-router-dom": "^6.22.0",
+    "react-router-dom": "^5.22.0",
     "react-scripts": "^5.0.1",
     "react-youtube": "^10.1.0",
     "recoil": "^0.7.7",
