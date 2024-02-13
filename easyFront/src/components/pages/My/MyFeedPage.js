@@ -31,7 +31,6 @@ const MyFeedPage = () => {
       { myFeed.map((feed) => (
         // 클릭하면 게시글 수정 페이지로 이동
         <div onClick={() => navigate(`/neighbor/feed/${feed.feedId}`)}>
-          <h3>{feed.nickname}</h3>
           <FeedBox
             key={feed.feedId}
             userId={feed.userId} // userId가 있다고 가정합니다.
