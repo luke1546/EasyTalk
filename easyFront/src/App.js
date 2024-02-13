@@ -27,6 +27,10 @@ import MyNeighborPage from "./components/pages/My/MyNeighborPage";
 import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
 import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
 import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
+import PlaceSearchPage from "./components/pages/Place/PlaceSearchPage";
+import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
+import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
+import PlaceNeighborPage from "./components/pages/Place/PlaceNeighborPage";
 
 const HeaderDiv = styled.div`
   position: fixed !important;
@@ -64,15 +68,6 @@ const MainContents = styled.div`
   height: 82vh;
   overflow: auto;
 `;
-
-
-import PlaceSearchPage from "./components/pages/Place/PlaceSearchPage";
-import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
-import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
-import PlaceNeighborPage from "./components/pages/Place/PlaceNeighborPage";
-
-
-
 
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
