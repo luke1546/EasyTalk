@@ -17,4 +17,6 @@ public interface UserMapper {
   void insertTodayAttendance(Long userID);
 
   boolean selectUserbyPhoneNumber(String phone);
+
+  void modifyUserInfo(RegistrationUserDTO userDto);
 }

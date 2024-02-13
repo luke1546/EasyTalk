@@ -52,4 +52,11 @@
                       AND userId = #{userId}), 1, 0
            );
   </select>
+
+  <update id="modifyUserInfo" parameterType="registrationUserDTO">
+    update users
+    set info = #{info},
+        profileImageUri = #{profileImageUri}
+    where userId = #{userId}
+  </update>
 </mapper>

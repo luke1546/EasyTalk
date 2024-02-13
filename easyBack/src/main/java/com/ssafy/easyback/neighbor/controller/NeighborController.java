@@ -51,7 +51,7 @@ public class NeighborController {
 
     @GetMapping("")     // 이웃 리스트 보기
     public ResponseEntity<List<ResponseUserDto>> getNeighborList(
-        @RequestParam(value = "status") String status,
+        @RequestParam(value = "status", defaultValue = "") String status,
         @RequestParam(value = "order", defaultValue = "neighborId") String order,
         @RequestParam(value = "sort", defaultValue = "asc") String sort,
         @RequestParam(value = "keyword", defaultValue = "") String keyword,
