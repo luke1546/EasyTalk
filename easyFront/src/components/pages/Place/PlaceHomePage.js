@@ -40,7 +40,7 @@ const PlaceHomePage = () => {
         {/* 이웃이 있는지 여부에 따라 다른 내용을 렌더링 */}
         {hasNeighbors ? (
           <>
-            <InputBar variant="searchinputbar" />
+            <InputBar variant="searchinputbar" uri="/neighbor/search/" />
             <SNSInputBox
               type="post"
               // onContentChange={(value) => setContent(value)}
@@ -72,7 +72,7 @@ const PlaceHomePage = () => {
             <br />
             <Icon name="warningIcon" />
             <p>아직 내 이웃이 없습니다! 내 이웃을 추가해주세요.</p>
-            <InputBar variant="searchinputbar" />
+            <InputBar variant="searchinputbar" uri="/neighbor/search/" />
             <SNSInputBox
               type="post"
               // userId={userId}

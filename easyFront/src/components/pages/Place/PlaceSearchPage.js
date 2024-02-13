@@ -32,7 +32,7 @@ const PlaceSearchPage = () => {
   return (
     <div className="PlaceSearchPage">
       <h1>검색 결과</h1>
-      <InputBar variant="searchinputbar" />
+      <InputBar variant="searchinputbar" uri="/neighbor/search/" />
       {searchResult.map((user) => (
         <div key={user.userId}>
           <Profile
