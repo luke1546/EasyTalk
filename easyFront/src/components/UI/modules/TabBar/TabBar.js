@@ -1,9 +1,38 @@
-// TabBar.js
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tab from './Tab';
-import './TabBar.css';
+import styled from 'styled-components';
+
+const TabBarContainer = styled.div`
+  display: flex;
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 20px;
+  padding: 10px 20px 0 20px; 
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    border-bottom: 3px solid #8382ff;
+  }
+`;
+
+const StyledTab = styled(Tab)`
+  padding: 5px 30px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #121212;
+
+  &.active {
+    background-color: #8382ff;
+    color: white;
+    border-radius: 20px 20px 0px 0px;
+  }
+`;
 
 const TabBar = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -13,9 +42,9 @@ const TabBar = ({ tabs }) => {
   };
 
   return (
-    <div className="molecule-tab-bar">
+    <TabBarContainer>
       {tabs.map((tab, index) => (
-        <Tab
+        <StyledTab
           key={index}
           label={tab.label}
           to={tab.to}
@@ -23,7 +52,7 @@ const TabBar = ({ tabs }) => {
           className={activeTab === index ? 'active' : ''}
         />
       ))}
-    </div>
+    </TabBarContainer>
   );
 };
 
