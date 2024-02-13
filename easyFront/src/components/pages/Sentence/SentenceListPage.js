@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import WordBox from '../../UI/modules/WordBox/WordBox';
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import ListenBox from "../../UI/modules/ListenBox/ListenBox";
 
 const SentenceListPage = ( ) => {
   const [sentences, setSentences] = useState([]);
@@ -17,7 +18,7 @@ const SentenceListPage = ( ) => {
     const fetchSentencesByType = async () => {
       try {
         if (type) {
-          const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/sentence?type=${type}`);
+          const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/sentence?filter=${type}`);
           console.log(response.data)
           setSentences(response.data);
           setSituation(label[type]);
@@ -39,13 +40,14 @@ const SentenceListPage = ( ) => {
       {type ? (
         <>
           <h2>{situation}</h2>
-          {/* {sentences && sentences.map((sentence) => (
-            
-          ))} */}
+          {sentences && sentences.map((sentence) => (
+            <ListenBox
+            />
+          ))}
         </>
   ) : (
     <>
-      <h2>저장한 단어</h2>
+      <h2>저장한 문장</h2>
     </>
       )
       }

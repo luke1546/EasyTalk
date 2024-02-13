@@ -68,7 +68,6 @@ const StudyPage = () => {
         <Route path="sentence/situation" element={<SentenceSituationPage />} />
         <Route path={`sentence/my`} element={<SentenceListPage />} />
         <Route path={`sentence/situation/:type`} element={<SentenceListPage />} />
-
       </Routes>
     </div>
   );
