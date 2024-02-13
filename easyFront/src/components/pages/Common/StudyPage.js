@@ -24,6 +24,10 @@ import WordListPage from "../Word/WordListPage";
 import WordStagePage from "../Word/WordStagePage";
 import WordDetailPage from "./WordDetailPage";
 
+//Sentence pages import
+import SentenceSituationPage from "../Sentence/SentenceSituationPage";
+import SentenceListPage from "../Sentence/SentenceListPage";
+
 const StudyPage = () => {
   return (
     <div>
@@ -59,6 +63,12 @@ const StudyPage = () => {
         <Route path={`word/stagetest/:level`} element={<WordTestPage />} />
         <Route path={`word/:wordId/detail`} element={<WordDetailPage />} />
         {/* <Route path="word/musictest" element={<MusicSearchPage />} /> */}
+
+        {/* Sentence Route */}
+        <Route path="sentence/situation" element={<SentenceSituationPage />} />
+        <Route path={`sentence/my`} element={<SentenceListPage />} />
+        <Route path={`sentence/situation/:type`} element={<SentenceListPage />} />
+
       </Routes>
     </div>
   );
