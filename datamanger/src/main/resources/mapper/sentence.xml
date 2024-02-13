@@ -14,4 +14,15 @@
     SET sentenceAudioUri=concat("/study/sentence/audio/",LAST_INSERT_ID())
     where sentenceId = LAST_INSERT_ID()
   </update>
+
+  <select id="getSentenceList" resultType="sentenceDto">
+    select *
+    from sentences
+  </select>
+
+  <update id="setSentenceType" parameterType="map">
+    update sentences
+    set sentenceType = #{type}
+    where sentenceId = #{sentenceId}
+  </update>
 </mapper>

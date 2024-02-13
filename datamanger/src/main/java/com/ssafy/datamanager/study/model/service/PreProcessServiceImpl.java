@@ -1,6 +1,7 @@
 package com.ssafy.datamanager.study.model.service;
 
 import com.ssafy.datamanager.study.model.dto.LyricsDto;
+import com.ssafy.datamanager.study.model.dto.SentenceDto;
 import com.ssafy.datamanager.study.model.dto.WordDto;
 import com.ssafy.datamanager.study.model.dto.WordMeaningDto;
 import com.ssafy.datamanager.study.model.mapper.MusicMapper;
@@ -237,5 +238,15 @@ public class PreProcessServiceImpl implements PreProcessService {
   private void insertSentenceDB(HashMap<String, Object> param) throws Exception {
     sentenceMapper.insertSentence(param);
     sentenceMapper.updateUri();
+  }
+
+  @Override
+  public List<SentenceDto> getSentenceList() throws Exception {
+    return sentenceMapper.getSentenceList();
+  }
+
+  @Override
+  public void setSentenceType(HashMap<String, Object> param) throws Exception {
+    sentenceMapper.setSentenceType(param);
   }
 }

@@ -1,6 +1,10 @@
 package com.ssafy.datamanager.study.model.service;
 
+import com.ssafy.datamanager.study.model.dto.MusicDto;
+import com.ssafy.datamanager.study.model.dto.SentenceDto;
+
 import java.util.HashMap;
+import java.util.List;
 
 public interface PreProcessService {
 
@@ -10,4 +14,8 @@ public interface PreProcessService {
   void getDictionary(String url, String filePath) throws Exception;
 
   void insertMusicWord(int musicId) throws Exception;
+
+    List<SentenceDto> getSentenceList() throws Exception;
+
+  void setSentenceType(HashMap<String, Object> param) throws Exception;
 }

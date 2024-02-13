@@ -15,4 +15,5 @@ public interface MusicService {
   void deleteLyric(int lyricId) throws Exception;
 
   void updateLyric(HashMap<String, Object> param) throws Exception;
+
 }
