@@ -218,6 +218,7 @@ public class StudyController {
     Long userId = (Long) session.getAttribute("userId");
     param.put("musicId", musicId);
     param.put("userId", userId);
+    param.put("testType", "music");
     return ResponseEntity.ok(studyService.getMusicTest(param));
   }
 

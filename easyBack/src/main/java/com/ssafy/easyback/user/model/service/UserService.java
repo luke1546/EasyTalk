@@ -19,4 +19,6 @@ public interface UserService {
   void setAttendance(Long userId);
 
   void registerUserAndSetAttendance(RegistrationUserDTO userDto, Long userId);
+
+  void modifyUserInfo(RegistrationUserDTO userDto);
 }

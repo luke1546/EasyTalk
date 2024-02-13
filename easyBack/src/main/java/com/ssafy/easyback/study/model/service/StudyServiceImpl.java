@@ -156,12 +156,12 @@ public class StudyServiceImpl implements StudyService{
   public List<LyricsDto> getMusicTest(HashMap<String, Object> param) throws Exception {
     int musicId = (int) param.get("musicId");
     Long userId = (Long) param.get("userId");
+    String title = musicMapper.getMusicInfo(musicId).getTitle();
+    param.put("testTitle", title);
     wordMapper.insertTests(param);
     int testId = wordMapper.getTestId(userId); // 테스트ID 받아오기
     param.put("testId", testId);                // 테스트ID param에 셋팅
-
     musicMapper.insertMusicTest(param);
-
     return musicMapper.getMusicDetail(musicId);
   }
 

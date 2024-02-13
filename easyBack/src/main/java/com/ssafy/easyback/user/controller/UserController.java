@@ -1,5 +1,6 @@
 package com.ssafy.easyback.user.controller;
 
+import com.google.api.Http;
 import com.ssafy.easyback.social.model.service.KakaoService;
 import com.ssafy.easyback.user.model.dto.ResponseUserDto;
 import com.ssafy.easyback.user.model.dto.UserAttendance;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,6 +62,16 @@ public class UserController {
 
     return ResponseEntity.status(HttpStatus.OK).body(userInfo);
   }
+
+  @PutMapping
+  public ResponseEntity<?> modifyUserInfo(@ModelAttribute RegistrationUserDTO userDto, HttpSession session) throws Exception{
+    System.out.println(userDto);
+    Long userId = (Long) session.getAttribute("userId");
+    userDto.setUserId(userId);
+    userService.modifyUserInfo(userDto);
+    return ResponseEntity.ok(HttpStatus.OK);
+  }
+
 
 }
 

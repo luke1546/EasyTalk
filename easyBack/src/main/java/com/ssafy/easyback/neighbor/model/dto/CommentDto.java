@@ -8,8 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class CommentDto {
+    private Integer commentId;
     private String nickname;
     private String profileImageUri;
     private String content;
+    private Boolean myFeed;
     private String registrationDate;
 }

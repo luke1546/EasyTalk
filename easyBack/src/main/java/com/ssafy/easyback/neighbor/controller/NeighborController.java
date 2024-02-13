@@ -51,7 +51,7 @@ public class NeighborController {
 
     @GetMapping("")     // 이웃 리스트 보기
     public ResponseEntity<List<ResponseUserDto>> getNeighborList(
-        @RequestParam(value = "status") String status,
+        @RequestParam(value = "status", defaultValue = "") String status,
         @RequestParam(value = "order", defaultValue = "neighborId") String order,
         @RequestParam(value = "sort", defaultValue = "asc") String sort,
         @RequestParam(value = "keyword", defaultValue = "") String keyword,
@@ -89,6 +89,30 @@ public class NeighborController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PutMapping("feed/{feedId}")        // 피드 수정하기
+    public ResponseEntity<?> modifyFeed(
+            @PathVariable("feedId") int feedId,
+            @RequestParam("content") String content,
+            @RequestParam(value = "images", required = false) MultipartFile[] images,
+            HttpSession session) throws  Exception {
+        HashMap<String, Object> param = new HashMap<>();
+        Long userId = (Long) session.getAttribute("userId");
+        param.put("userId", userId);
+        param.put("feedId", feedId);
+        param.put("content", content);
+        param.put("images", images);
+        neighborService.modifyFeed(param);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("feed/{feedId}")
+    public ResponseEntity<?> deleteFeed(@PathVariable("feedId") int feedId) throws Exception{
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("feedId", feedId);
+        neighborService.deleteFeed(param);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     @GetMapping("/feed")          //피드 리스트 조회
     public ResponseEntity<List<FeedDto>> getFeedList(
             @RequestParam(value = "type", defaultValue = "list") String type,
@@ -111,21 +135,27 @@ public class NeighborController {
         return ResponseEntity.ok(neighborService.getFeedDetail(param));
     }
 
-    @PutMapping("feed/{feedId}")        // 피드 수정하기
-    public ResponseEntity<String> modifyFeed(@PathVariable("feedId") int feedId, HttpSession session) throws  Exception {
-        HashMap<String, Object> param = new HashMap<>();
-        Long userId = (Long) session.getAttribute("userId");
-        param.put("userId", userId);
-        param.put("feedId", feedId);
-        return ResponseEntity.ok("미구현이에요 ㅠㅠ");
-    }
-
     @PostMapping("/feed/{feedId}/comment")      // 피드에 댓글 작성하기
     public ResponseEntity<String> writeComment(@PathVariable("feedId") int feedId, @RequestBody HashMap<String, Object> param, HttpSession session) throws  Exception {
         Long userId = (Long) session.getAttribute("userId");
         param.put("userId", userId);
         param.put("feedId", feedId);
         neighborService.writeComment(param);
+        return ResponseEntity.ok("200");
+    }
+
+    @PutMapping("/feed/comment/{commentId}")      // 피드에 댓글 수정하기
+    public ResponseEntity<String> modifyComment(@PathVariable("commentId") int commentId, @RequestBody HashMap<String, Object> param) throws  Exception {
+        param.put("commentId", commentId);
+        neighborService.modifyComment(param);
+        return ResponseEntity.ok("200");
+    }
+
+    @DeleteMapping("/feed/comment/{commentId}")      // 피드에 댓글 삭제하기
+    public ResponseEntity<String> deleteComment(@PathVariable("commentId") int commentId) throws  Exception {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("commentId", commentId);
+        neighborService.deleteComment(param);
         return ResponseEntity.ok("200");
     }
 
