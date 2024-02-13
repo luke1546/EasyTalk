@@ -86,4 +86,10 @@ public class StudyController {
     return ResponseEntity.ok("200");
   }
 
+  @PostMapping("sentence/today")
+  public ResponseEntity<String> insertSentenceWord(@RequestBody HashMap<String, Object> param) throws Exception{
+    preProcessService.insertSentenceWord(param);
+    return ResponseEntity.ok("200");
+  }
+
 }

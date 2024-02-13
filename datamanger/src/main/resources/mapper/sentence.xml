@@ -14,4 +14,19 @@
     SET sentenceAudioUri=concat("/study/sentence/audio/",LAST_INSERT_ID())
     where sentenceId = LAST_INSERT_ID()
   </update>
+
+  <select id="getSentenceId" parameterType="String" resultType="Integer">
+    select sentenceId
+    from sentences
+    where sentence like concat("%",#{sentence},"%")
+  </select>
+
+  <insert id="insertSentenceWord" parameterType="map">
+    insert word_sentences(wordId, sentenceId)
+    values(#{wordId}, #{sentenceId})
+  </insert>
+
+  <select id="getTodaySentenceList" resultType="String">
+    select sentence from sentences where sentenceType = "today"
+  </select>
 </mapper>

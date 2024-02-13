@@ -35,7 +35,7 @@
         where word=#{word}
     </select>
 
-  <select id="getWordId" parameterType="String" resultType="int">
+  <select id="getWordId" parameterType="String" resultType="Integer">
     select wordId
     from words
     where word = #{word}
