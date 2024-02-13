@@ -10,4 +10,6 @@ public interface PreProcessService {
   void getDictionary(String url, String filePath) throws Exception;
 
   void insertMusicWord(int musicId) throws Exception;
+
+  void insertSentenceWord(HashMap<String, Object> param) throws Exception;
 }

@@ -4,6 +4,9 @@ import com.ssafy.easyback.study.model.dto.*;
 import com.ssafy.easyback.study.model.mapper.MusicMapper;
 import com.ssafy.easyback.study.model.mapper.SentenceMapper;
 import com.ssafy.easyback.study.model.mapper.WordMapper;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,7 +120,7 @@ public class StudyServiceImpl implements StudyService{
     for(int key : myList) mySentenceMap.put(key,true);
     for(SentenceDto sentence : list)  {
       if(mySentenceMap.containsKey(sentence.getSentenceId()))
-        sentence.setSaved(true);
+        sentence.setIsSaved(true);
     }
     return list;
   }
@@ -138,7 +141,7 @@ public class StudyServiceImpl implements StudyService{
     List<Integer> myList = sentenceMapper.getMySentencesList(param.get("userId"));
     SentenceDto sentence = sentenceMapper.getSentence(param.get("sentenceId"));
     for(int key : myList) hm.put(key,true);
-    if(hm.containsKey(sentence.getSentenceId())) sentence.setSaved(true);
+    if(hm.containsKey(sentence.getSentenceId())) sentence.setIsSaved(true);
     return sentence;
   }
 
@@ -218,4 +221,30 @@ public class StudyServiceImpl implements StudyService{
   public String getMusicTitle(int musicId) throws Exception {
     return musicMapper.getMusicTitle(musicId);
   }
+  public TodayDto getTodaySentence() throws Exception {
+    TodayDto todayDto = new TodayDto();
+    List<WordDto> words = new ArrayList<WordDto>();
+    Integer sentenceSize = sentenceMapper.getTodaySentenceSize();
+    LocalDate today = LocalDate.now();
+    int sentenceHash = Math.abs(today.hashCode()) % sentenceSize;
+    int sentenceId = sentenceMapper.getTodaySentenceId(sentenceHash);
+    Integer wordSize = sentenceMapper.getTodayWordSize(sentenceId);
+    List<Integer> wordIds = new ArrayList<>();
+    wordIds.add(Math.abs(today.hashCode()) % wordSize + 1);
+    wordIds.add((Math.abs(today.hashCode()) / 10) % wordSize + 1);
+    wordIds.add((Math.abs(today.hashCode()) / 100) % wordSize + 1);
+
+    for(int i=0; i<3; i++) {
+      WordDto word = new WordDto();
+      word.setWordId(wordIds.get(i));
+      word = wordMapper.getWord(word);
+      List<WordMeaningDto> meaning = wordMapper.getMeaning(word.getWordId());
+      word.setWordMeaningDto(meaning);
+      words.add(word);
+    }
+    todayDto.setSentence(sentenceMapper.getSentence(sentenceId));
+    todayDto.setWords(words);
+    return todayDto;
+  }
+
 }
