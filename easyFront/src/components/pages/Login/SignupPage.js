@@ -9,8 +9,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const StyledImg = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
 `;
 
