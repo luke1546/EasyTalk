@@ -28,4 +28,6 @@ public interface MusicMapper {
   void deleteMyMusic(HashMap<String, Object> param) throws Exception;
 
   List<ArtistDto> getArtistList(HashMap<String, Object> param) throws Exception;
+
+  String getMusicTitle(int musicId) throws Exception;
 }
