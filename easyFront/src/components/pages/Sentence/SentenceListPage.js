@@ -1,7 +1,6 @@
 // SentenceListPage.js
 
 import React, { useEffect, useState } from 'react';
-import WordBox from '../../UI/modules/WordBox/WordBox';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ListenBox from "../../UI/modules/ListenBox/ListenBox";
@@ -24,7 +23,7 @@ const SentenceListPage = ( ) => {
           setSituation(label[type]);
         }
         else {
-          const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/sentence?filter=myList&order=name&sort=asc`);
+          const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/sentence?filter=myList`);
           setSentences(response.data);
         }
       } catch (error) {
@@ -38,21 +37,15 @@ const SentenceListPage = ( ) => {
   return (
     <div>
       {type ? (
-        <>
           <h2>{situation}</h2>
-          {sentences && sentences.map((sentence) => (
-            <ListenBox
-            />
-          ))}
-        </>
-  ) : (
-    <>
-      <h2>저장한 문장</h2>
-    </>
-      )
-      }
-      
-
+      ) : (
+          <h2>저장한 문장</h2>
+      )}
+      {sentences && sentences.map((sentence) => (
+        <ListenBox
+          sentence={sentence}
+        />
+      ))}
     </div>
   );
 };

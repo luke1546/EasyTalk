@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Textbox from '../../atoms/Text/Textbox';
 import Button from '../../atoms/Button/Button';
 import './WordBox.css';
-import WordDetailPage from "../../../pages/Common/WordDetailPage";
 
 const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
   const [Saved, setSaved] = useState(isSaved);
