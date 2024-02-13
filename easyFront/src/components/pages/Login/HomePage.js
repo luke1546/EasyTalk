@@ -66,18 +66,6 @@ const HomePage = () => {
     padding: 20px 40px;
   `;
 
-  const WelcomeDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  `;
-
-  const DayDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  `;
-
   const LeftDiv = styled.div`
     display: flex;
     justify-content: left;
@@ -111,60 +99,30 @@ const HomePage = () => {
     padding: 0 40px 0px;
   `;
 
-  const WordBox = styled.div`
-    border: 2px solid #8382ff;
-    border-radius: 10px;
-    width: 100px;
-    padding: 10px;
-    margin: 0px 5px;
-  `;
-
-  const WordBoxes = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 0 40px 0px;
-  `;
-
   return (
     <>
       <ChaDiv>
-        <WelcomeDiv>
-          <Textbox section="singleText" fontWeight="bold" context1={[`${nickname}님`]} />
-          <Textbox section="singleText" fontWeight="bold" context1={[`안녕하세요!`]} />
-        </WelcomeDiv>
-        {/* <img src={yourImage} alt="description" /> */}
-        <DayDiv>
+        <div>
+          <Textbox section="singleText" fontWeight="bold" context1={`${nickname}님 안녕하세요 !`} />
+        </div>
+          {/* <img src={yourImage} alt="description" /> */}
+        <div>
           <br />
+          <Textbox section="singleText" context1="기분 좋은 오후에요." />
           <br />
-          <Textbox section="singleText" context1="오늘도 멋진 하루네요." />
-          {/* <br /> */}
-          <Textbox section="singleText" context1="영어 공부를 시작해볼까요?" />
-        </DayDiv>
+          <Textbox section="singleText" context1="식사는 하셨나요 ?" />
+        </div>
       </ChaDiv>
       <Line />
       <LeftDiv>
           <Textbox section="singleText" context1="오늘의 쉽게말하는 영어" fontWeight="bold" />
       </LeftDiv>
       <RandomDiv>
-        <WordBoxes>
-          <WordBox>
-            Apple
-            <br />
-            사과
-          </WordBox>
-          <WordBox>
-            Apple
-            <br />
-            사과
-          </WordBox>
-          <WordBox>
-            Apple
-            <br />
-            사과
-          </WordBox>
-        </WordBoxes>
-        <br />
-        <div>문장박스1</div>
+          <div>단어박스1 | </div>
+          <div>단어박스2 | </div>
+          <div>단어박스2</div>
+          <br />
+          <div>문장박스1</div>
       </RandomDiv>
       <Line />
       <LeftDiv>

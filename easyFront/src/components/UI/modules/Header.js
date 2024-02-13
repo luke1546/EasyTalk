@@ -24,11 +24,11 @@ const BellBtn = styled(Button)`
 const HeaderContainer = styled.div`
   padding: 10px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   box-sizing: border-box;
   background-color: white;
-  width: auto;
+  width: 100%;
 
   margin: 0 20%;
 
@@ -45,6 +45,7 @@ const LeftLogo = styled.div`
 const RightButton = styled.div`
   flex: 1;
   text-align: right;
+  
 `;
 
 const Header = () => {
