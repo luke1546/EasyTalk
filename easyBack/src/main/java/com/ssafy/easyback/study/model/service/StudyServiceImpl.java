@@ -172,7 +172,7 @@ public class StudyServiceImpl implements StudyService{
     List<LyricsDto> lyricList = musicMapper.getMusicDetail(musicId);
     StringBuilder sb = new StringBuilder();
     for(LyricsDto lyric : lyricList)  sb.append(lyric.getLyric());
-    AccuracyDto accuracyDto = speechToText.getAccuracy(audioFile, sb.toString());
+    AccuracyDto accuracyDto = speechToText.getLongText(audioFile, sb.toString());
     param.put("score", accuracyDto.getScore());
     param.put("recognize", accuracyDto.getRecognize());
     musicMapper.submitMusicTest(param);

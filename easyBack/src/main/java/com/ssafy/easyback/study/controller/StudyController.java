@@ -153,7 +153,7 @@ public class StudyController {
     return ResponseEntity.ok("ok");
   }
 
-  @GetMapping("sentence/detail") //단어 상세화면
+  @GetMapping("sentence/detail") //문장 상세화면
   public ResponseEntity<SentenceDto> getSentence(@RequestParam(value="target") int sentenceId, HttpSession session) throws Exception {
     SentenceDto sentenceDto = new SentenceDto();
     Long userId = (Long) session.getAttribute("userId");
@@ -165,7 +165,7 @@ public class StudyController {
 
   @PostMapping("speech")
   public ResponseEntity<AccuracyDto> SpeechToText(@RequestParam("audio") MultipartFile audioFile, @RequestParam("sentence") String sentence)  throws Exception {
-    return ResponseEntity.ok(speechToText.getText(audioFile, sentence));
+    return ResponseEntity.ok(speechToText.getLongText(audioFile, sentence));
   }
 //don't cry snowman not in front of me
   @GetMapping("music")    // 음악 리스트 가져오기
