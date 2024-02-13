@@ -10,6 +10,45 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+const ChaDiv = styled.div`
+display: flex;
+justify-content: space-between;
+padding: 20px 40px;
+`;
+
+const LeftDiv = styled.div`
+display: flex;
+justify-content: left;
+align-items: center;
+padding: 20px 40px;
+`;
+
+const RandomDiv = styled.div`
+// display: flex;
+align-items: center;
+justify-content: center;
+padding: 0 20px 20px;
+`;
+
+const ExpDiv = styled.div`
+display: flex;
+justify-content: flex-end;
+padding: 20px 40px 0 20px;
+`;
+
+const InnerDiv = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+`;
+
+const InnerRightDiv = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0 40px 0px;
+`;
+
 const HomePage = () => {
 
   const [nickname, setNickname] = useState("");
@@ -21,8 +60,6 @@ const HomePage = () => {
 
   const needExp = 100 - (exp % 100);
   const lv = Math.floor(exp / 100 + 1);
-
-  console.log("11");
 
   useEffect(() => {
     // 명세서 나의 유저데이터
@@ -59,45 +96,6 @@ const HomePage = () => {
         console.error("출석부 에러 : ", error);
       });
   }, []);
-
-  const ChaDiv = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 40px;
-  `;
-
-  const LeftDiv = styled.div`
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    padding: 20px 40px;
-  `;
-
-  const RandomDiv = styled.div`
-    // display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px 20px;
-  `;
-
-  const ExpDiv = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px 40px 0 20px;
-  `;
-
-  const InnerDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  `;
-
-  const InnerRightDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0 40px 0px;
-  `;
 
   return (
     <>

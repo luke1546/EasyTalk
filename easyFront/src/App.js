@@ -4,7 +4,6 @@ import React from "react";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import styled from "styled-components";
-
 import Header from "./components/UI/modules/Header";
 import Footer from "./components/UI/modules/Footer";
 import IntroPage from "./components/pages/Login/IntroPage";
@@ -73,13 +72,13 @@ const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
   const code = new URL(window.location.href).searchParams.get("code");
   return (
-<React.Fragment>
-<BrowserRouter>
-  <AppDiv>
-    <HeaderDiv>
-      <Header className="Header" />
-    </HeaderDiv>
-    <StyledDiv as={MainContents}>
+  <React.Fragment>
+    <BrowserRouter>
+      <AppDiv>
+        <HeaderDiv>
+          <Header className="Header" />
+        </HeaderDiv>
+        <StyledDiv as={MainContents}>
           <Routes>
             <Route path="/" exact element={<IntroPage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -89,7 +88,6 @@ const App = () => {
             <Route path="/place" element={<PlaceHomePage />} />
             <Route path="/my" element={<MyHomePage />} />
             {/* <Route path={`/study/search/:searchValue`} element={<MusicSearchPage />} /> */}
-            <Route path="/login/oauth/kakao" element={<LoginHandeler />} />
             <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
             <Route path="/signup" element={<SignupPage />} />
             {/* <Route path="/study/artist/나훈아" element={<ArtistDetailPage />} /> */}
@@ -104,24 +102,18 @@ const App = () => {
             <Route path="/myreceive" element={<MyNeighborReceivePage />} />
             <Route path="/mysend" element={<MyNeighborSendPage />} />
             <Route path="/mygroup" element={<MyGroupPage />} />
-
-
             <Route path={`/neighbor/search/:searchValue`} element={<PlaceSearchPage />} />
             <Route path={`/neighbor/feed/:feedId`} element={<PlaceDetailPage />} />
             <Route path={`/neighbor/feed/:feedId`} element={<PlaceEditPage />}/>
             <Route path={`/neighbor/user/:targetUserId`} element={<PlaceNeighborPage />}/>
-
-            
-
-            {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
           </Routes>
-          </StyledDiv>
-          <FooterDiv>
-            <Footer className="Footer" /> 
-          </FooterDiv>
-        </AppDiv>
-      </BrowserRouter>
-    </React.Fragment>
+        </StyledDiv>
+        <FooterDiv>
+          <Footer className="Footer" /> 
+        </FooterDiv>
+      </AppDiv>
+    </BrowserRouter>
+  </React.Fragment>
   );
 };
 
