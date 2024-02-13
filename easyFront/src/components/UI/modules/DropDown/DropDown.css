@@ -1,0 +1,73 @@
+/* DropDown.css */
+
+.dropdown {
+  position: relative;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+.selected-option {
+  margin-top: 10px;
+  color: #666;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.selected-option {
+  cursor: pointer; /* 이 부분을 추가하여 손가락 커서로 설정 */
+  /* ... (나머지 스타일) */
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer; /* 이 부분을 추가하여 손가락 커서로 설정 */
+}
+
+.option {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option:hover {
+  background-color: #f5f5f5;
+  cursor: pointer; /* 이 부분을 추가하여 손가락 커서로 설정 */
+}

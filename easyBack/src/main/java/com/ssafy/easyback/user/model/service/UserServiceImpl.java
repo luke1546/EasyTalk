@@ -101,4 +101,18 @@ public class UserServiceImpl implements UserService {
     setAttendance(userId);
   }
 
+  @Override
+  public void modifyUserInfo(RegistrationUserDTO userDto) {
+    if (userDto.getProfileImage().isEmpty()) {
+      log.info("no File");
+    } else {
+      userDto.setProfileImageUri(PathUri.PROFILE_IMAGE_URI + userDto.getUserId() + PathUri.IMAGE_EXTENSIONS);
+      try {
+        s3UploadService.saveFile(userDto.getProfileImage(), userDto.getProfileImageUri());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    userMapper.modifyUserInfo(userDto);
+  }
 }

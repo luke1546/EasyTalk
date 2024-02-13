@@ -1,0 +1,70 @@
+/* FeedBox.css */
+
+.feed-box {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.feed-box:hover {
+  background-color: #f9f9f9;
+}
+
+.feed-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.singleText {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.like-comment-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.like-comment-info span {
+  margin-right: 10px;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 14px;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Move the edit button to the right */
+.button-container {
+  margin-left: auto;
+}
