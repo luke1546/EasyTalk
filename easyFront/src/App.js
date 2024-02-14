@@ -32,6 +32,7 @@ import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
 
 
 axios.defaults.baseURL = 'https://i10b307.p.ssafy.io:8080';
+axios.defaults.withCredentials = true;
 
 const HeaderDiv = styled.div`
   z-index: 10;
