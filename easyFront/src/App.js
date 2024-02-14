@@ -94,6 +94,7 @@ const App = () => {
             <Route path="/place" element={<PlaceHomePage />} />
             <Route path="/my" element={<MyHomePage />} />
             <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
+            <Route path="/login/oauth/kakao" element={<LoginHandeler />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/study/*" element={<StudyPage />} />
             <Route path="/myedit" element={<MyEditPage />} />
