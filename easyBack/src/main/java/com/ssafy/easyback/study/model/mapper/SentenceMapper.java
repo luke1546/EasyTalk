@@ -1,8 +1,6 @@
 package com.ssafy.easyback.study.model.mapper;
 
 import com.ssafy.easyback.study.model.dto.SentenceDto;
-import com.ssafy.easyback.study.model.dto.TodayDto;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,11 +10,5 @@ public interface SentenceMapper {
   SentenceDto getSentence(Object sentenceId) throws Exception;
   void addToMySentenceBook(SentenceDto sentenceDto) throws Exception;
 
-  void deleteSentence(SentenceDto sentenceDto) throws Exception;
-
-  Integer getTodaySentenceSize() throws Exception;
-
-  Integer getTodayWordSize(int sentenceId) throws Exception;
-
-  Integer getTodaySentenceId(int sentenceHash) throws Exception;
+    void deleteSentence(SentenceDto sentenceDto) throws Exception;
 }

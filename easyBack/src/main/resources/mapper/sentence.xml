@@ -12,19 +12,11 @@
   <select id="getSentencesList" parameterType="sentenceDto" resultType="sentenceDto">
     select s.sentenceId, sentence, meaning, sentenceType, sentenceAudioUri
     from sentences s
-    <choose>
-      <when test="optionDto.filter == 'myList'">
-        join sentence_books b
-        on s.sentenceId = b.sentenceId
-        where userId = #{userId}
-      </when>
-      <when test="optionDto.filter == 'list'">
-        where 1=1
-      </when>
-      <otherwise>
-        where sentenceType = #{optionDto.filter}
-      </otherwise>
-    </choose>
+    <if test="optionDto.filter == 'myList'">
+      join sentence_books b
+      on s.sentenceId = b.sentenceId
+      where userId = #{userId}
+    </if>
     order by ${optionDto.order} ${optionDto.sort}
     limit ${optionDto.start},${optionDto.end}
   </select>
@@ -45,24 +37,4 @@
     from sentence_books
     where userId = #{userId} and sentenceId = #{sentenceId}
   </delete>
-
-  <select id="getTodaySentenceSize" resultType="Integer">
-    select count(*)
-    from sentences
-    where sentenceType = "today"
-  </select>
-
-  <select id="getTodayWordSize" parameterType="Integer" resultType="Integer">
-    select count(*)
-    from word_sentences
-    where sentenceId = #{sentenceId}
-  </select>
-
-  <select id="getTodaySentenceId" parameterType="Integer" resultType="Integer">
-    SELECT sentenceId
-    FROM sentences
-    WHERE sentenceType = 'today'
-    ORDER BY sentenceId
-    LIMIT 1 OFFSET #{sentenceHash}
-  </select>
 </mapper>

@@ -1,6 +1,15 @@
 package com.ssafy.easyback.study.controller;
 
-import com.ssafy.easyback.study.model.dto.*;
+import com.ssafy.easyback.study.model.dto.AccuracyDto;
+import com.ssafy.easyback.study.model.dto.AnswerDto;
+import com.ssafy.easyback.study.model.dto.ArtistDto;
+import com.ssafy.easyback.study.model.dto.LyricsDto;
+import com.ssafy.easyback.study.model.dto.MusicDto;
+import com.ssafy.easyback.study.model.dto.OptionDto;
+import com.ssafy.easyback.study.model.dto.RecordDto;
+import com.ssafy.easyback.study.model.dto.SentenceDto;
+import com.ssafy.easyback.study.model.dto.TestDto;
+import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.service.StudyService;
 import com.ssafy.easyback.study.stt.SpeechToText;
 import jakarta.servlet.http.HttpSession;
@@ -118,7 +127,6 @@ public class StudyController {
     OptionDto optionDto = new OptionDto();
     int start = page*PAGE_SIZE-20;
     int end = start+PAGE_SIZE-1;
-    System.out.println(filter);
     optionDto.setFilter(filter);
     optionDto.setOrder(order);
     optionDto.setSort(sort);
@@ -145,7 +153,7 @@ public class StudyController {
     return ResponseEntity.ok("ok");
   }
 
-  @GetMapping("sentence/detail") //단어 상세화면
+  @GetMapping("sentence/detail") //문장 상세화면
   public ResponseEntity<SentenceDto> getSentence(@RequestParam(value="target") int sentenceId, HttpSession session) throws Exception {
     SentenceDto sentenceDto = new SentenceDto();
     Long userId = (Long) session.getAttribute("userId");
@@ -157,7 +165,7 @@ public class StudyController {
 
   @PostMapping("speech")
   public ResponseEntity<AccuracyDto> SpeechToText(@RequestParam("audio") MultipartFile audioFile, @RequestParam("sentence") String sentence)  throws Exception {
-    return ResponseEntity.ok(speechToText.getText(audioFile, sentence));
+    return ResponseEntity.ok(speechToText.getLongText(audioFile, sentence));
   }
 //don't cry snowman not in front of me
   @GetMapping("music")    // 음악 리스트 가져오기
@@ -274,10 +282,4 @@ public class StudyController {
     param.put("testId", testId);
     return ResponseEntity.ok(studyService.getWordRecordDetail(param));
   }
-
-  @GetMapping("sentence/today")
-  public ResponseEntity<TodayDto> getTodaySentence() throws Exception {
-    return ResponseEntity.ok(studyService.getTodaySentence());
-  }
-
 }

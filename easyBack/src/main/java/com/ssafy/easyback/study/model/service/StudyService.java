@@ -1,7 +1,16 @@
 package com.ssafy.easyback.study.model.service;
 
 
-import com.ssafy.easyback.study.model.dto.*;
+import com.ssafy.easyback.study.model.dto.AccuracyDto;
+import com.ssafy.easyback.study.model.dto.AnswerDto;
+import com.ssafy.easyback.study.model.dto.ArtistDto;
+import com.ssafy.easyback.study.model.dto.LyricsDto;
+import com.ssafy.easyback.study.model.dto.MusicDto;
+import com.ssafy.easyback.study.model.dto.OptionDto;
+import com.ssafy.easyback.study.model.dto.RecordDto;
+import com.ssafy.easyback.study.model.dto.SentenceDto;
+import com.ssafy.easyback.study.model.dto.TestDto;
+import com.ssafy.easyback.study.model.dto.WordDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,5 +59,4 @@ public interface StudyService {
   void deleteSentence(SentenceDto sentenceDto) throws Exception;
 
   String getMusicTitle(int musicId) throws Exception;
-    TodayDto getTodaySentence() throws Exception;
 }
