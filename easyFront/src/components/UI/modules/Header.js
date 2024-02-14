@@ -7,7 +7,7 @@ import styled from "styled-components";
 const LogoTextbox = styled(Textbox)`
   color: #8382ff;
   font-weight: bold;
-  font-size: 35px;
+  font-size: 35px !important;
 
   @media (max-width: 768px) {
     font-size: 30px;

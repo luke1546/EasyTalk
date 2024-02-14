@@ -8,7 +8,7 @@ const SearchInput = styled.div`
   padding: 0 20px; // 상하 0, 좌우 20px
   height: 32px;
   width: 50%;
-  font-size: 20x;
+  font-size: 20px;
   margin: 0 5px;
 `;
 
