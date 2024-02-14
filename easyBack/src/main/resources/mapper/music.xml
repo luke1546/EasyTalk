@@ -5,11 +5,11 @@
 <mapper namespace="com.ssafy.easyback.study.model.mapper.MusicMapper">
 
   <select id="getMusicList" parameterType="musicDto" resultType="musicDto">
-    select m.musicId, artistName, m.artistId, videoId, title, musicTime, hit, musicImageUri, artistImageUri
+    select distinct m.musicId, artistName, m.artistId, videoId, title, musicTime, hit, musicImageUri, artistImageUri
     from musics m
     join artists a on a.artistId = m.artistId
     <if test="optionDto.filter == 'myList'">
-      join music_books b on m.musicId = b.musicId
+      join tests t on m.musicId = t.musicId
       where userId = #{userId}
     </if>
     <if test="optionDto.filter == 'artist'">
