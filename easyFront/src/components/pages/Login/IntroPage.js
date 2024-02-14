@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import InputBar from "../../UI/modules/InputBar";
 import MusicBox from "../../UI/modules/MusicBox/MusicBox";
 import YouTube from "react-youtube";
@@ -7,10 +10,10 @@ import WordBox from '../../UI/modules/WordBox/WordBox';
 import Button from "../../UI/atoms/Button/Button";
 
 const IntroPage = () => {
+
   return (
     <>
     <div className="IntroPage">
-    
 
     <div>
       <span>
@@ -66,7 +69,8 @@ const IntroPage = () => {
   </div>
   
   <div>
-    <YouTube/>
+  <YouTube
+  />
   </div>
       
   <p>아래로 스크롤</p>

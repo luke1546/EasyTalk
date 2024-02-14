@@ -1,7 +1,7 @@
+// PlaceNeighborPage.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
-
 import FeedBox from "../../UI/modules/FeedBox/FeedBox";
 import Profile from "../../UI/modules/Profile";
 import Button from "../../UI/atoms/Button/Button";
@@ -99,9 +99,10 @@ const PlaceNeighborPage = () => {
           likeCount={feed.heartCount}
           commentCount={feed.commentCount}
           content={feed.content}
-            createdDate={feed.registerDate}
-            feedImageUris={feed.feedImageUris[feed.feedImageUris.length-1]}
-        />
+          createdDate={feed.registerDate}
+          feedImageUris={feed.feedImageUris[feed.feedImageUris.length-1]}
+          editMode={false}
+          />
       </div>
       ))}
     </>

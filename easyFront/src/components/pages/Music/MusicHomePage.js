@@ -14,7 +14,7 @@ const LeftDiv = styled.div`
 `;
 
 const BoxDiv = styled.div`
-  // border: 1px solid #8382ff;
+  // border: 1px solid s#8382ff;
 `;
 
 const MusicHomePage = () => {
@@ -35,7 +35,7 @@ const MusicHomePage = () => {
         withCredentials: true,
       })
       .then((response) => {
-        const musicList = response.data.map((item) => ({
+        const musicList = response.data.slice(0, 5).map((item) => ({
           musicId: item.musicId,
           title: item.title,
           artistName: item.artistName,
@@ -97,6 +97,7 @@ const MusicHomePage = () => {
       <InputBar variant="searchinputbar" />
       <LeftDiv>
         <Textbox section="singleText" context1="지금 인기있는 노래" />
+      </LeftDiv>
         <div>
           {musicList &&
             musicList.map((item, index) => {
@@ -121,7 +122,7 @@ const MusicHomePage = () => {
               );
             })}
         </div>
-      </LeftDiv>
+      
       <Line />
       <LeftDiv>
         <Textbox section="singleText" context1="AI가 추천하는 노래" />
