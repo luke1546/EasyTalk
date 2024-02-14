@@ -22,7 +22,7 @@ const Input = (props) => {
   if (props.name === "searchInput") {
     return (
       <div className="searchInput">
-        <Input id="searchInput" type="text" {...props} />
+        <input id="searchInput" type="text" {...props} />
       </div>
     );
   }
@@ -30,7 +30,7 @@ const Input = (props) => {
   if (props.name === "singleInput") {
     return (
       <span className="singleInput">
-        <SingleInput id="singleInput" type="text" {...props} />
+        <input id="singleInput" type="text" {...props} />
       </span>
     );
   }
