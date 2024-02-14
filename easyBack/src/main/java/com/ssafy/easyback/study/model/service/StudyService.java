@@ -10,6 +10,7 @@ import com.ssafy.easyback.study.model.dto.OptionDto;
 import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.SentenceDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
+import com.ssafy.easyback.study.model.dto.TodayDto;
 import com.ssafy.easyback.study.model.dto.WordDto;
 
 import java.util.HashMap;
@@ -59,4 +60,6 @@ public interface StudyService {
   void deleteSentence(SentenceDto sentenceDto) throws Exception;
 
   String getMusicTitle(int musicId) throws Exception;
+
+  TodayDto getTodaySentence() throws Exception;
 }

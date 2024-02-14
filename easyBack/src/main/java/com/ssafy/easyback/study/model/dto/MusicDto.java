@@ -15,6 +15,7 @@ public class MusicDto {
     private Long userId;
     private int musicId;
     private int artistId;
+    private String artistName;
     private String videoId;
     private String title;
     private int musicTime;
