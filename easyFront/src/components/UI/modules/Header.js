@@ -7,7 +7,7 @@ import styled from "styled-components";
 const LogoTextbox = styled(Textbox)`
   color: #8382ff;
   font-weight: bold;
-  font-size: 35px;
+  font-size: 35px !important;
 
   @media (max-width: 768px) {
     font-size: 30px;
@@ -28,12 +28,12 @@ const HeaderContainer = styled.div`
   align-items: center;
   box-sizing: border-box;
   background-color: white;
-  width: 100%;
-
+  width: 60%;
   margin: 0 20%;
 
   @media (max-width: 768px) {
     margin: 0;
+    width: 100%;
   }
 `;
 
@@ -45,7 +45,6 @@ const LeftLogo = styled.div`
 const RightButton = styled.div`
   flex: 1;
   text-align: right;
-  
 `;
 
 const Header = () => {

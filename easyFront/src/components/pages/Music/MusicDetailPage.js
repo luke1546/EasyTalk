@@ -9,6 +9,31 @@ const MusicDetailPage = () => {
 
   const [lyric, setLyric] = useState([]);
 
+  // youtube 창 크기
+  const [youtubeWidth, setYoutubeWidth] = useState(0);
+  const [youtubeHeight, setYoutubeHeight] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setYoutubeWidth(window.innerWidth * 0.8);
+        setYoutubeHeight(window.innerWidth * 0.8 * 9 / 16);
+      } else {
+        setYoutubeWidth(window.innerWidth * 0.4);
+        setYoutubeHeight(window.innerWidth * 0.4 * 9 / 16);
+      }
+    };
+  
+    handleResize(); // 컴포넌트가 처음 렌더링될 때 크기를 설정하기 위해 호출
+  
+    window.addEventListener("resize", handleResize); // 창 크기가 변경될 때마다 크기를 다시 설정
+  
+    return () => {
+      window.removeEventListener("resize", handleResize); // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    };
+  }, []);
+  
+
   // MusicHomePage같은 페이지들에서 넘어올 때 musicId를 props해서 보내주자
   const musicId = index;
 
@@ -151,14 +176,15 @@ const MusicDetailPage = () => {
       {/* 제목의 경우 유튜브 api 가져오면서 해당 제목을 파싱 */}
       <div>{title}</div>
       <div>
-        <YouTube
-          videoId={videoId}
-          onStateChange={onStateChange}
-          opts={{
-            height: "200",
-            width: "300",
-          }}
-        />
+      <YouTube
+      videoId={videoId}
+      onStateChange={onStateChange}
+      opts={{
+        width: youtubeWidth.toString(),
+        height: youtubeHeight.toString(),
+      }}
+    />
+
       </div>
       {!hideFont && <div style={{ color: "gray" }}>영상을 클릭하면 자막이 나옵니다.</div>}
       <div id="lyric" style={{ color: color }}>
