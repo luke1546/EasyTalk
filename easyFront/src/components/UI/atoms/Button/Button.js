@@ -48,6 +48,17 @@ const StyledNoneBtn = styled.button`
   font-size: ${({ size }) => size || "18px"}};
 `;
 
+const FooterBtn = styled.button`
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  
+  &:hover {
+    font-weight: bold;
+  }
+
+`;
+
 const logBtn  = ({ text, color }) => {
   return <StyledlogBtn color={color}>{text}</StyledlogBtn>;
 };
@@ -59,6 +70,11 @@ const submitBtn = ({ text, color }) => {
 const basicBtn = ({ text, size }) => {
   return <StyledNoneBtn size={size}>{text}</StyledNoneBtn>;
 };
+
+const footerBtn = ({ text, size }) => {
+  return <FooterBtn size={size}>{text}</FooterBtn>;
+};
+
 
 const attendBtn = ({ text }) => {
   return (
@@ -98,6 +114,7 @@ const components = {
   submitBtn: submitBtn,
   basicBtn: basicBtn,
   attendBtn: attendBtn,
+  footerBtn: footerBtn
 };
 
 const Button = ({ name, color, size, ...props }) => {

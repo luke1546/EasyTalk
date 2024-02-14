@@ -13,7 +13,6 @@ const StyledFooter = styled.div`
   width: 100%;
   margin: 0 20%;
   box-shadow: 0px -4px 2px -2px #8382ff;
-  // background-color: #cfcfff;
 
   @media (max-width: 768px) {
     margin: 0;
@@ -28,19 +27,19 @@ const Footer = () => {
   return (
     <StyledFooter className="Footer">
       <Link to="/study">
-        <Button name="basicBtn" text="학습" size="20px"/>
+        <Button name="footerBtn" text="학습" size="20px"/>
       </Link>{" "}
       <Link to="/group">
-        <Button name="basicBtn" text="그룹" size="20px"/>
+        <Button name="footerBtn" text="그룹" size="20px"/>
       </Link>{" "}
       <Link to="/home">
-        <Button name="homeBtn" size="40" color="white"/>
+        <Button name="homeBtn" size="40"/>
       </Link>{" "}
       <Link to="/place">
-        <Button name="basicBtn" text="광장" size="20px"/>
+        <Button name="footerBtn" text="광장" size="20px"/>
       </Link>{" "}
       <Link to="/my">
-        <Button name="basicBtn" text="마이" size="20px"/>
+        <Button name="footerBtn" text="마이" size="20px"/>
       </Link>
     </StyledFooter>
   );
