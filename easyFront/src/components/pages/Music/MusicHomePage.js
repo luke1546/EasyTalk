@@ -36,11 +36,12 @@ const MusicHomePage = () => {
         const musicTitle = response.data.map((music) => music.title).slice(0, 5);
         const videoId = response.data.map((music) => music.videoId).slice(0, 5);
         const artistId = response.data.map((music) => music.artistId).slice(0, 5);
+        const artistName = response.data.map((music) => music.artistId).slice(0, 5);
 
         setMusicId(musicId);
         setMusicTitle(musicTitle);
         setVideoId(videoId);
-        setartistName(artistName);
+        setArtistName(artistName);
       })
       .catch((error) => {
         console.error("음악 리스트 에러 : ", error);
