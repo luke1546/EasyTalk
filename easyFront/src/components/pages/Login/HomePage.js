@@ -10,19 +10,125 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const HomePage = () => {
+const ChaDiv = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 0px;
+  align-items: center;
+`;
 
+const ProfileImgDiv = styled.img`
+  display: flex;
+  margin-left: auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid black;
+`;
+
+const AtenDiv = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 40px;
+  align-items: center;
+`;
+
+
+const LeftDiv = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 20px 40px;
+`;
+
+const RandomDiv = styled.div`
+  // display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px 20px;
+`;
+
+const ExpDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 40px 0 20px;
+`;
+
+const InnerDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  overflow-wrap: anywhere;
+`;
+
+const WordBox = styled.div`
+  border: 2px solid #8382ff;
+  border-radius: 10px;
+  width: 30%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const WordBoxes = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin: 20px 40px 0px;
+`;
+
+const SenBox = styled.div`
+  border: 2px solid #8382ff;
+  border-radius: 10px;
+  margin: 10px 40px 20px;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  `;
+
+const DayDiv = styled.div`
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+`;
+
+const DayCircle = styled.div`
+  width: 10vw;
+  height: 10vw;
+  max-width: 60px;
+  max-height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => (props.isAttend ? "#8382ff" : "transparent")};
+  color: ${(props) => (props.isAttend ? "white" : "black")};
+  margin: 4px;
+  border: 1px solid #8382ff;
+  font-size: 20px;
+  `;
+
+const PointText = styled.div`
+  color: gray;
+  font-size: 15px;
+  text-align: center;
+`;
+
+const HomePage = () => {
   const [nickname, setNickname] = useState("");
   const [exp, setExp] = useState("");
   const [info, setInfo] = useState("");
   const [profileImageUri, setProfileImageUri] = useState("");
 
-  const [attendanceList, setAttendanceList] = useState("");
+  const days = ["월", "화", "수", "목", "금", "토", "일"];
+  const [attendanceList, setAttendanceList] = useState([]);
 
   const needExp = 100 - (exp % 100);
   const lv = Math.floor(exp / 100 + 1);
-
-  console.log("11");
 
   useEffect(() => {
     // 명세서 나의 유저데이터
@@ -39,10 +145,26 @@ const HomePage = () => {
         setExp(exp);
         setInfo(info);
         setProfileImageUri(profileImageUri);
-
       })
       .catch((error) => {
         console.error("유저 데이터 에러 : ", error);
+        console.dir(error);
+      });
+
+    // 문장 데이터 (오늘의 단어)
+    axios
+      .get("/study/sentence/today", { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        // const sentenceData = response.data.sentence;
+        // const wordsData = response.data.word;
+
+        // // 이후에 sentenceData와 wordsData를 이용하여 원하는 작업을 수행하면 됩니다.
+        // console.log(sentenceData);
+        // console.log(wordsData);
+      })
+      .catch((error) => {
+        console.error("문장 데이터 에러 : ", error);
         console.dir(error);
       });
 
@@ -54,75 +176,50 @@ const HomePage = () => {
         const userAttendance = response.data;
 
         setAttendanceList(userAttendance);
+
+        setAttendanceList([1, 2]);
       })
       .catch((error) => {
         console.error("출석부 에러 : ", error);
       });
   }, []);
 
-  const ChaDiv = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 40px;
-  `;
-
-  const LeftDiv = styled.div`
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    padding: 20px 40px;
-  `;
-
-  const RandomDiv = styled.div`
-    // display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px 20px;
-  `;
-
-  const ExpDiv = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px 40px 0 20px;
-  `;
-
-  const InnerDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  `;
-
-  const InnerRightDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0 40px 0px;
-  `;
-
   return (
     <>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 40px' }}>
       <ChaDiv>
         <div>
-          <Textbox section="singleText" fontWeight="bold" context1={`${nickname}님 안녕하세요 !`} />
-        </div>
-          {/* <img src={yourImage} alt="description" /> */}
-        <div>
-          <br />
+          <Textbox section="singleText" fontWeight="bold" context1={`${nickname}님 안녕하세요 !`} /> 
+        <br />
           <Textbox section="singleText" context1="기분 좋은 오후에요." />
-          <br />
           <Textbox section="singleText" context1="식사는 하셨나요 ?" />
         </div>
       </ChaDiv>
+        <ProfileImgDiv src={profileImageUri} />
+      </div>
       <Line />
       <LeftDiv>
-          <Textbox section="singleText" context1="오늘의 쉽게말하는 영어" fontWeight="bold" />
+        <Textbox section="singleText" context1="오늘의 쉽게말하는 영어" fontWeight="bold" />
       </LeftDiv>
       <RandomDiv>
-          <div>단어박스1 | </div>
-          <div>단어박스2 | </div>
-          <div>단어박스2</div>
-          <br />
-          <div>문장박스1</div>
+        <WordBoxes>
+          <WordBox>
+            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
+            <Textbox section="singleText" context1="사과" />
+          </WordBox>
+          <WordBox>
+            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
+            <Textbox section="singleText" context1="사과" />
+          </WordBox>
+          <WordBox>
+            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
+            <Textbox section="singleText" context1="사과" />
+          </WordBox>
+        </WordBoxes>
+        <SenBox>
+          <Textbox section="singleText" fontWeight="bold" context1="Do you like apple?" />
+          <Textbox section="singleText" context1="너는 사과를 좋아하니 ?" />
+        </SenBox>
       </RandomDiv>
       <Line />
       <LeftDiv>
@@ -132,9 +229,13 @@ const HomePage = () => {
       <ExpDiv>
         <InnerDiv>
           <Textbox section="singleText" context1={`${nickname}님 대단해요 !`} />
-            <br />
-          <Textbox section="singleText" context1={`${needExp} 경험치 더 받으면`} context2={`${lv}레벨이 돼요.`} />
-          <Textbox section="singleText" context1={`${lv}레벨을 달성할 수 있어요.`} />
+          <br />
+          <Textbox
+            section="singleText"
+            context1={`${needExp} 경험치 더 받으면`}
+            context2={`${lv}레벨이 돼요.`}
+          />
+          <Textbox section="singleText" context1={`${lv + 1}레벨을 달성할 수 있어요.`} />
         </InnerDiv>
       </ExpDiv>
       <Link to="/study">
@@ -143,16 +244,26 @@ const HomePage = () => {
 
       <Line />
       <LeftDiv>
-        <Textbox section="singleText" context1="출석체크" fontWeight="bold"/>
+        <Textbox section="singleText" context1="출석체크" fontWeight="bold" />
       </LeftDiv>
-      <InnerRightDiv>
-        <Textbox section="singleText" context1={`출석체크하고 경험치 받아가세요 !`} />
-        <Textbox section="singleText" context1={`일주일 연속 출석체크 시 30 경험치 포인트 !`} />
-      <div>출석 리스트 들어가야할 곳 {`${attendanceList}`}</div>
-      </InnerRightDiv>
-      <br />
-      <br />
-      <br />
+      <AtenDiv>
+        <div>
+          <Textbox section="singleText" context1={`출석하고 경험치 받아가세요!`} />
+          <Textbox section="singleText" context1={`일주일 연속 출석 시 30 경험치 추가!`} />
+        </div>
+      </AtenDiv>
+      <DayDiv>
+        <div style={{ display: "flex" }}>
+          {days.map((day, index) => (
+            <div key={index}>
+              <DayCircle key={index} isAttend={attendanceList.includes(index)}>
+                {day}
+              </DayCircle>
+              {attendanceList.includes(index) && <PointText>+10</PointText>}
+            </div>
+          ))}
+        </div>
+      </DayDiv>
     </>
   );
 };

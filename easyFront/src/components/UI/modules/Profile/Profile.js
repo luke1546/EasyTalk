@@ -2,7 +2,6 @@
 
 import Textbox from '../../atoms/Text/Textbox';
 import { useNavigate } from 'react-router-dom';
-import './Profile.css';
 
 const Profile = ({ target_userId, profileImageUri, pageType }) => {
   const navigate = useNavigate();

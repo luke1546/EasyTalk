@@ -6,16 +6,31 @@ import { useState, useEffect } from "react";
 
 import Textbox from "../../UI/atoms/Text/Textbox";
 import MusicBox from "../../UI/modules/MusicBox/MusicBox";
+import Line from "../../UI/atoms/Line/Line";
+
+const TextDiv = styled.div`
+  padding: 20px 40px;
+`;
+
+const CenterDib = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+`;
+
+const StyledImg = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+`;
+
+const MusicDiv = styled.div`
+  margin: 0 20px;
+`;
 
 const MusicSearchPage = () => {
   const { searchValue } = useParams();
   const imageUrl = "https://www.upinews.kr/data/upi/image/2020/10/01/upi202010010001.680.0.jpg";
-
-  const StyledImg = styled.img`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  `;
 
   const [artists, setArtists] = useState([]);
   useEffect(() => {
@@ -29,6 +44,7 @@ const MusicSearchPage = () => {
       .then((response) => {
         const artists = response.data.map((item) => ({
           artistId: item.artistId,
+          artistName: item.artistName,
           hit: item.hit,
           keyword: item.keyword,
           musicId: item.musicId,
@@ -50,9 +66,13 @@ const MusicSearchPage = () => {
 
   return (
     <div className="MusicSearchPage">
-      <Textbox context1={`${searchValue}검색결과`} />
-      <hr />
-      <Textbox context1="가수" />
+      <TextDiv>
+        <Textbox context1={`${searchValue} 검색결과`} fontWeight='bold'/>
+      </TextDiv>
+      <Line />
+      <TextDiv>
+        <Textbox context1="가수" fontWeight='bold' />
+      </TextDiv>
       {artists.length === 0 ? (
         <div>검색결과가 없습니다.</div>
       ) : (
@@ -64,33 +84,37 @@ const MusicSearchPage = () => {
                 {/* 지금 나훈아 이미지만 나오지만 호성님이 artistsUrl 추가해주시면 해당 값으로 변경하여 적용 */}
                 <StyledImg src={imageUrl} />
                 {/* 마찬가지로 이름도 임시로 artistId로 했지만 추후 변경 */}
-                {item.artistId}
+                <CenterDib>
+                  <Textbox context1={`${item.artistName}`} />
+                </CenterDib>
               </Link>
             </div>
           ))}
         </div>
       )}
 
-      <hr />
-      <Textbox context1="노래" />
+      <Line />
+      <TextDiv>
+        <Textbox context1="노래" fontWeight='bold' />
+      </TextDiv>
 
       {artists.length === 0 ? (
         <div>검색결과가 없습니다.</div>
       ) : (
-        <div>
+        <MusicDiv>
           {artists.map((item, index) => (
             <div key={index}>
               <MusicBox
                 musicId={item.musicId}
                 title={item.title}
-                artistName={item.artistId} // artistName 핑료합니다..
+                artistName={item.artistName} 
                 musicTime={item.musicTime}
                 musicImageUrl={item.musicImageUri}
                 videoId={item.videoId}
               />
             </div>
           ))}
-        </div>
+        </MusicDiv>
       )}
     </div>
   );
