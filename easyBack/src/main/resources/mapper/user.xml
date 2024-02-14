@@ -22,12 +22,12 @@
 
   <select id="selectAttendanceById" parameterType="java.lang.Long"
     resultType="java.lang.Integer">
-    SELECT DAYOFWEEK(attendanceDate)
+    SELECT (DAYOFWEEK(attendanceDate) + 5) % 7
     FROM attendances
     WHERE userId = #{userId}
       AND YEARWEEK(attendanceDate
-            , 1) = YEARWEEK(CURDATE()
-            , 1)
+        , 1) = YEARWEEK(CURDATE()
+        , 1)
     order by DAYOFWEEK(attendanceDate)
   </select>
 
