@@ -46,18 +46,15 @@ const SignupPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const data = {
-      nickname: nickname,
-      info: info,
-      profileImageUri: profileImageUri,
-      // phone: phone,
-    };
+    const formData = new FormData();
+    formData.append("nickname", nickname);
+    formData.append("info", info);
+    formData.append("profileImage", profileImageUri); // Assuming profileImageUri is a File or Blob object
 
     const config = { "Content-Type": "multipart/form-data" };
 
-    axios
-      .post(`/user/register`, data, config, { withCredentials: true })
-      // .post(`https://i10b307.p.ssafy.io:8080/user/register`, data, config)
+      axios
+      .post(`/user/register`, formData, { ...config, withCredentials: true })
       .then((response) => {
         console.log(response);
         navigate("/home");
@@ -74,11 +71,14 @@ const SignupPage = () => {
     const reader = new FileReader();
     if (uploadFile) {
       reader.readAsDataURL(uploadFile);
+      
+      setProfileImageUri(uploadFile);
     }
 
-    reader.onloadend = () => {
-      setProfileImageUri(reader.result);
-    };
+    // ★ ★★★★★★★★★★★★★ 확인해주세요
+    // reader.onloadend = () => {
+    //   setProfileImageUri(reader.result);
+    // };
   };
 
   return (
