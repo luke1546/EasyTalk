@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.group.model.mapper.GroupMapper">
+  <select id="selectGroupList" parameterType="map"
+    resultType="com.ssafy.easyback.group.model.dto.GetGroupDto">
+    SELECT G.groupId,
+    G.groupName,
+    count(*) as currentCount,
+    G.limitCount,
+    U.nickname as leader,
+    G.description,
+    G.targetCycle,
+    G.targetTime,
+    G.groupDate
+    FROM groups AS G
+    LEFT JOIN group_relationships GR ON G.groupId = GR.groupId
+    LEFT JOIN rooms R ON G.groupId = R.groupId
+    LEFT JOIN users U ON R.userId = U.userId
+    <where>
+      <choose>
+        <when test="keyword == null">
+          GR.userId = #{userId}
+        </when>
+
+        <when test="keyword != null">
+          LOWER(G.groupName) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+          OR LOWER(U.nickname) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+          OR LOWER(G.description) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        </when>
+      </choose>
+    </where>
+    GROUP BY G.groupId;
+  </select>
+
+  <insert id="insertGroupMember" parameterType="map">
+    INSERT INTO `group_relationships`
+      (userId, groupId, role)
+    VALUES (#{userId}, #{groupId}, #{role})
+  </insert>
+
+  <select id="selectGroupPassword" parameterType="int">
+    SELECT password
+    FROM `groups`
+    WHERE groupId = #{groupId}
+  </select>
+
+  <insert id="insertGroup" parameterType="com.ssafy.easyback.group.model.dto.CreateGroupDto"
+    useGeneratedKeys="true" keyProperty="groupId">
+    INSERT INTO `groups`
+    (password, groupName, limitCount, description, targetCycle, targetTime)
+    VALUES (#{password}, #{groupName}, #{limitCount}, #{description}, #{targetCycle}, #{targetTime})
+  </insert>
+
+  <insert id="insertGroupRelationship" parameterType="map">
+    INSERT INTO `group_relationships`
+      (userId, groupId, role)
+    VALUES (#{userId}, #{groupId}, #{role})
+  </insert>
+
+  <insert id="insertRoom" parameterType="map" useGeneratedKeys="true" keyProperty="roomId">
+    INSERT INTO `rooms`
+      (roomName, userId, notice, groupId)
+    VALUES (#{roomName}, #{userId}, #{notice}, #{groupId})
+  </insert>
+
+  <insert id="insertUserRoom" parameterType="map">
+    INSERT INTO `user_rooms`
+      (userId, roomId)
+    VALUES (#{userId}, #{roomId})
+  </insert>
+
+  <select id="findGroupMemberInfo" resultType="com.ssafy.easyback.user.model.dto.ResponseUserDto">
+    SELECT u.userId, u.nickname, u.profileImageUri
+    FROM users u
+           JOIN group_relationships g ON u.userId = g.userId
+    WHERE g.groupId = #{groupId}
+  </select>
+
+  <select id="selectGroupDescription" parameterType="int" resultType="com.ssafy.easyback.group.model.dto.DescriptionDto">
+    SELECT description
+    FROM `groups`
+    WHERE groupId = #{groupId};
+  </select>
+
+  <select id="selectIsGroupLeader" parameterType="map" resultType="com.ssafy.easyback.group.model.dto.IsLeaderDto">
+    SELECT IF(userId = #{userId}, 1, 0) AS isLeader, IF(userId = #{userId}, 1, 0) AS isTrue
+    FROM `rooms`
+    WHERE groupId = #{groupId};
+  </select>
+
+  <insert id="insertMessage" parameterType="com.ssafy.easyback.group.model.dto.MessageDto">
+    INSERT INTO `messages`
+    (roomId, userId, content, messageTime)
+    VALUES (#{roomId}, #{userId}, #{content}, #{messageTime})
+  </insert>
+
+</mapper>

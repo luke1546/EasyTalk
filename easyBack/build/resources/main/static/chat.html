@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Chat Room</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    .chat-container {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      margin-top: 100px;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+    #chatMessageList {
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    #chatMessageInput {
+      width: 85%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    #chatSendMessageButton {
+      width: 10%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #chatSendMessageButton:hover {
+      background-color: #0056b3;
+    }
+    .chat-message {
+      background-color: #007BFF;
+      color: #ffffff;
+      padding: 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin: 5px 0;
+    }
+  </style>
+
+</head>
+<body>
+<div id="chatPage" class="container">
+  <div class="chat-container">
+    <div id="chatMessageList" class="chat-message-list" overflow="auto">
+      <!-- Messages will be added by JavaScript -->
+      <p>33333</p>
+    </div>
+    <input type="text" id="chatMessageInput" placeholder="Type a message...">
+    <button id="chatSendMessageButton">Send</button>
+  </div>
+</div>
+
+<script src="../js/chat.js"></script>
+</body>
+</html>
