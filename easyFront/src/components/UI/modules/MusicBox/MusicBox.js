@@ -48,7 +48,7 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
 
   return (
     <div>
-    { videoId ? (
+      {videoId ? (
         <Link to={`${REDIRECT_URI}/study/music/${musicId}/${videoId}`} state={musicId}>
           <MusicBoxWrapper>
           <MusicImage>

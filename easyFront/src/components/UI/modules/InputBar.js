@@ -13,6 +13,7 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 40px 0 20px 0;
+  margin: 40px 0 20px 0;
 `;
 
 const InputBar = ({ variant }) => {

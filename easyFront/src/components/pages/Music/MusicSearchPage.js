@@ -117,7 +117,7 @@ const MusicSearchPage = () => {
         </MusicDiv>
       )}
     </div>
-  );
-};
+  )
+}
 
 export default MusicSearchPage;
