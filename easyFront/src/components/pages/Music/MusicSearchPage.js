@@ -28,17 +28,9 @@ const MusicDiv = styled.div`
   margin: 0 20px;
 `;
 
-<<<<<<< HEAD
-  const StyledImg = styled.img`
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-  `;
-=======
 const MusicSearchPage = () => {
   const { searchValue } = useParams();
   const imageUrl = "https://www.upinews.kr/data/upi/image/2020/10/01/upi202010010001.680.0.jpg";
->>>>>>> feature-css
 
   const [artists, setArtists] = useState([]);
   const [musicList, setMusicList] = useState([]);
@@ -82,8 +74,6 @@ const MusicSearchPage = () => {
         withCredentials: true,
       })
       .then((response) => {
-<<<<<<< HEAD
-=======
         const artists = response.data.map((item) => ({
           artistId: item.artistId,
           artistName: item.artistName,
@@ -97,7 +87,6 @@ const MusicSearchPage = () => {
           videoId: item.videoId,
         }));
 
->>>>>>> feature-css
         console.log(response.data);
 
         const musicList = response.data.map((item) => ({
@@ -132,17 +121,6 @@ const MusicSearchPage = () => {
       ) : (
         <div>
           {/* artistDto와 musicDto가 구분이 안돼서 파싱이 불가. 일단 주소 매핑 위해 임의로 제작 */}
-<<<<<<< HEAD
-          {artists &&
-            artists.map((item, index) => (
-              <div key={index}>
-                <Link to={`/study/music/artist/${item.artistId}`}>
-                  <StyledImg src={item.artistImageUri} />
-                  {item.artistName}
-                </Link>
-              </div>
-            ))}
-=======
           {artists.map((item, index) => (
             <div key={index}>
               <Link to={`/study/music/artist/${item.artistId}`}>
@@ -155,7 +133,6 @@ const MusicSearchPage = () => {
               </Link>
             </div>
           ))}
->>>>>>> feature-css
         </div>
       )}
 
@@ -167,23 +144,6 @@ const MusicSearchPage = () => {
       {musicList.length === 0 ? (
         <div>검색결과가 없습니다.</div>
       ) : (
-<<<<<<< HEAD
-        <div>
-          {musicList &&
-            musicList.map((item, index) => (
-              <div key={index}>
-                <MusicBox
-                  musicId={item.musicId}
-                  title={item.title}
-                  artistName={item.artistName}
-                  musicTime={item.musicTime}
-                  musicImageUrl={item.musicImageUri}
-                  videoId={item.videoId}
-                />
-              </div>
-            ))}
-        </div>
-=======
         <MusicDiv>
           {artists.map((item, index) => (
             <div key={index}>
@@ -198,7 +158,6 @@ const MusicSearchPage = () => {
             </div>
           ))}
         </MusicDiv>
->>>>>>> feature-css
       )}
     </div>
   )
