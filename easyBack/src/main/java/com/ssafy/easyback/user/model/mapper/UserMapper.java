@@ -19,4 +19,6 @@ public interface UserMapper {
   boolean selectUserbyPhoneNumber(String phone);
 
   void modifyUserInfo(RegistrationUserDTO userDto);
+
+    void addExp(Long userId);
 }

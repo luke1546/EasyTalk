@@ -99,6 +99,7 @@ public class UserServiceImpl implements UserService {
   public void registerUserAndSetAttendance(RegistrationUserDTO userDto, Long userId) {
     registerUserInfo(userDto);
     setAttendance(userId);
+    userMapper.addExp(userId);
   }
 
   @Override

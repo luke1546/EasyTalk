@@ -107,8 +107,9 @@ public class StudyServiceImpl implements StudyService{
     Long userId = (Long) param.get("userId");
     for(AnswerDto answer : answerList) wordMapper.insertAnswer(answer);
     int testId = wordMapper.getTestId((Long)param.get("userId"));
-    System.out.println(testId);
+    param.put("testId", testId);
     wordMapper.gradingWordTest(testId);
+    wordMapper.getExp(param);
   }
 
   @Override
@@ -192,6 +193,7 @@ public class StudyServiceImpl implements StudyService{
     int score = speechToText.calculateScore(recognize,sb.toString());
     param.put("score", score);
     musicMapper.endMusicTest(param);
+    wordMapper.getExp(param);
   }
 
   @Override
