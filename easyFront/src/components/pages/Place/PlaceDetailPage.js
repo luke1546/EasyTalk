@@ -22,6 +22,7 @@ const PlaceDetailPage = () => {
         setFeedData(response.data);
         // const userResponse = await axios.get(`/neighbor/user/${response.data.userId}`);
         // setUser(userResponse.data);
+        console.log(response.data)
         console.log(feedData)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -45,13 +46,13 @@ const PlaceDetailPage = () => {
             userId={feedData.userId}
             feedId={feedData.feedId}
             profileImg={feedData.profileImageUri}
-            nickname={feedData.nickname}
+            userName={feedData.nickname}
             isLiked={false}
             likeCount={feedData.heartCount}
             commentCount={feedData.commentCount}
             content={feedData.content}
-          createdDate={feedData.registerDate}
-          feedImageUris={feedData.feedImageUris[feedData.feedImageUris.length-1]}
+            createdDate={feedData.registerDate}
+            feedImageUris={feedData.feedImageUris}  // 변경된 부분
           />}
         
           <SNSInputBox feedId={feedData.feedId} />
