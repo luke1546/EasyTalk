@@ -86,10 +86,8 @@ const App = () => {
             <Route path="/group" element={<GroupHomePage />} />
             <Route path="/place" element={<PlaceHomePage />} />
             <Route path="/my" element={<MyHomePage />} />
-            {/* <Route path={`/study/search/:searchValue`} element={<MusicSearchPage />} /> */}
             <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
             <Route path="/signup" element={<SignupPage />} />
-            {/* <Route path="/study/artist/나훈아" element={<ArtistDetailPage />} /> */}
             <Route path="/study/*" element={<StudyPage />} />
             <Route path="/myedit" element={<MyEditPage />} />
             <Route path="/mymusic" element={<MyMusicPage />} />
