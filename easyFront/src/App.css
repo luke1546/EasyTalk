@@ -1,49 +1,43 @@
-.App {
+/* .App {
   text-align: center;
-}
+  background-color: yellow;
+} */
 
 a {
   text-decoration: none;
   color: #8382ff;
 }
 
-.App-logo {
+/* .MainContens {
+  padding-top: 10vh;
+  background-color: #fad267;
+  height: 82vh;
+  overflow: auto;
+} */
+
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
-@media screen and (max-width: 768px) {
-  .App {
-    /* background-color: yellow; */
-    margin: 0 auto;
-    height: 500px;
-  }
-  
-  .Header {
-    position: fixed;
-    background-color: #fee6a6;
-    width: 100vw;
-    height: 10vh;
-  }
+.Header {
+  position: fixed !important;
+  background-color: white;
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  justify-content: space-evenly;
+}
 
-  .MainContens {
-    padding-top: 10vh;
-    /* background-color: #fad267; */
-    width: 98vw;
-    height: 78vh;
-    overflow: auto;
-  }
-
-  .Footer {
-    position: fixed;
-    /* background-color: #f0b023; */
-    background-color: white;
-    width: 100vw;
-    height: 12vh;
-    display: flex;
-    justify-content: space-evenly;
-  }
-
+.Footer {
+  position: fixed !important;
+  background-color: white;
+  width: 100vw;
+  height: 4vh;
+  display: flex;
+  justify-content: space-evenly;
+  bottom: 0;  
+  margin-bottom: 15px;  
 }
 
 @media screen and (min-width: 769px) {
@@ -58,21 +52,10 @@ a {
   }
 }
 
-/* @media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-} */
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -86,4 +69,4 @@ a {
   to {
     transform: rotate(360deg);
   }
-}
+} */

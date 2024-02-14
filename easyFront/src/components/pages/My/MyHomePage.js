@@ -8,17 +8,20 @@ import ListBox from "../../UI/modules/ListBox";
 // import customAxios from '../../../api/customAxios';
 import axios from 'axios';
 
-
+const Homediv = styled.div`
+`;
 const StyledprofileBox = styled.div`
-  padding: 2%;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 10%;
+
+  border-radius: 30px;
+  border: 2px solid #8382ff;
+  padding: 30px 20px;
+  margin: 20px;
 `;
 
 const MyHomePage = () => {
   // 유저 프로필 데이터 저장할 변수
   const [userData, setuserData] = useState(null);
+  console.log(userData)
   // targetUserId 상태 추가 
   // 로그인한 사용자의 ID를 setTargetUserId에 설정해줘야되나?
   const [targetUserId, setTargetUserId] = useState();
@@ -56,7 +59,7 @@ const MyHomePage = () => {
   ]
 
   return (
-    <div className="MyHomePage">
+    <Homediv className="MyHomePage">
       <StyledprofileBox>
         <Profile {...userData} />
         <Link to="/myedit">
@@ -71,7 +74,7 @@ const MyHomePage = () => {
       ))} />
 
       <ListBox textArray={mylist2} />
-    </div>
+    </Homediv>
     );
   };
   

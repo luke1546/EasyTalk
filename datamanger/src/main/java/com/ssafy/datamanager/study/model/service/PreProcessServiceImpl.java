@@ -1,7 +1,6 @@
 package com.ssafy.datamanager.study.model.service;
 
 import com.ssafy.datamanager.study.model.dto.LyricsDto;
-import com.ssafy.datamanager.study.model.dto.SentenceDto;
 import com.ssafy.datamanager.study.model.dto.WordDto;
 import com.ssafy.datamanager.study.model.dto.WordMeaningDto;
 import com.ssafy.datamanager.study.model.mapper.MusicMapper;
@@ -241,12 +240,30 @@ public class PreProcessServiceImpl implements PreProcessService {
   }
 
   @Override
-  public List<SentenceDto> getSentenceList() throws Exception {
-    return sentenceMapper.getSentenceList();
-  }
+  public void insertSentenceWord(HashMap<String, Object> param) throws Exception {
+    List<String> sentences = sentenceMapper.getTodaySentenceList();
 
-  @Override
-  public void setSentenceType(HashMap<String, Object> param) throws Exception {
-    sentenceMapper.setSentenceType(param);
+    for(String sentence : sentences) {
+      System.out.println(sentence);
+      sentence = sentence.toLowerCase();
+      Integer sentenceId = sentenceMapper.getSentenceId(sentence);
+      System.out.println(sentenceId);
+      StringTokenizer st = new StringTokenizer(sentence, " ");
+      while (st.hasMoreTokens()) {
+        String word = st.nextToken();
+        Integer wordId = wordMapper.getWordId(word);
+        if (wordId != null) {
+          System.out.println("하나 입력완료" + wordId);
+          param.put("wordId", wordId);
+          param.put("sentenceId", sentenceId);
+          try {
+            sentenceMapper.insertSentenceWord(param);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+
   }
 }

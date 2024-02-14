@@ -2,7 +2,6 @@ package com.ssafy.datamanager.study.controller;
 
 import com.ssafy.datamanager.study.model.dto.LyricsDto;
 import com.ssafy.datamanager.study.model.dto.MusicDto;
-import com.ssafy.datamanager.study.model.dto.SentenceDto;
 import com.ssafy.datamanager.study.model.service.MusicService;
 import com.ssafy.datamanager.study.model.service.PreProcessService;
 import com.ssafy.datamanager.study.model.dto.ArtistDto;
@@ -87,14 +86,10 @@ public class StudyController {
     return ResponseEntity.ok("200");
   }
 
-  @GetMapping("sentence/list")
-  public ResponseEntity<List<SentenceDto>> getSentenceList() throws Exception {
-    return ResponseEntity.ok(preProcessService.getSentenceList());
+  @PostMapping("sentence/today")
+  public ResponseEntity<String> insertSentenceWord(@RequestBody HashMap<String, Object> param) throws Exception{
+    preProcessService.insertSentenceWord(param);
+    return ResponseEntity.ok("200");
   }
 
-  @PutMapping("sentence/update")
-  public ResponseEntity<String> setSentenceType(@RequestBody HashMap<String, Object> param) throws Exception {
-    preProcessService.setSentenceType(param);
-    return ResponseEntity.ok("ok");
-  }
 }

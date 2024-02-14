@@ -20,24 +20,43 @@ import { MdOutlineFileDownloadDone } from "react-icons/md";
 import styled from "styled-components";
 
 const StyledSubmitBtn = styled.button`
-  // background: #8382ff;
-  border-radius: 10px;
+  background: #8382ff;
+  border-radius: 50px;
+  padding: 2px 15px 4px;
+  margin: 20px;
+  box-shadow: 0px 4px 2px -2px #121212;
   border: none;
   color: white;
+  font-size: 18px;
+  background: ${({ color }) => color || "#8382ff"}};
+`;
+
+const StyledlogBtn = styled.button`
+  background: #8382ff;
+  border-radius: 50px;
+  padding: 2px 15px 4px;
+  border: none;
+  color: white;
+  font-size: 18px;
   background: ${({ color }) => color || "#8382ff"}};
 `;
 
 const StyledNoneBtn = styled.button`
   background: transparent;
   border: none;
+  font-size: ${({ size }) => size || "18px"}};
 `;
+
+const logBtn  = ({ text, color }) => {
+  return <StyledlogBtn color={color}>{text}</StyledlogBtn>;
+};
 
 const submitBtn = ({ text, color }) => {
   return <StyledSubmitBtn color={color}>{text}</StyledSubmitBtn>;
 };
 
-const basicBtn = ({ text }) => {
-  return <StyledNoneBtn>{text}</StyledNoneBtn>;
+const basicBtn = ({ text, size }) => {
+  return <StyledNoneBtn size={size}>{text}</StyledNoneBtn>;
 };
 
 const attendBtn = ({ text }) => {
@@ -73,6 +92,7 @@ const components = {
   sDownloadBtn: MdOutlineFileDownload,
   DownloadBtn: MdOutlineDownloading,
   eDownloadBtn: MdOutlineFileDownloadDone,
+  logBtn: logBtn,
   submitBtn: submitBtn,
   basicBtn: basicBtn,
   attendBtn: attendBtn,

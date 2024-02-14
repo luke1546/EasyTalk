@@ -1,5 +1,7 @@
 import Button from "../../UI/atoms/Button/Button";
 import Input from "../../UI/atoms/Input/Input";
+import Line from "../../UI/atoms/Line/Line";
+import Textbox from "../../UI/atoms/Text/Textbox";
 import styled from "styled-components";
 
 import axios from "axios";
@@ -7,9 +9,28 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const StyledImg = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
+`;
+
+const StyledInputFile = styled.input`
+  // &[type='file'] {
+  //   border: 2px solid #8382ff;
+  // }
+  padding: 10px 20px;
+  margin: 20px;
+  border-radius: 50px;
+  font-size: 18px;
+`;
+
+const TextDiv = styled.div`
+  color: #8382ff;
+  padding: 20px;
+`;
+
+const InputDiv = styled.div`
+  margin: 20px;
 `;
 
 const SignupPage = () => {
@@ -66,19 +87,24 @@ const SignupPage = () => {
         <div>
           <StyledImg src={profileImageUri} />
           <div>
-            <input type="file" accept="image/*" onChange={onChangeImg} />
+            <StyledInputFile type="file" accept="image/*" onChange={onChangeImg} />
           </div>
         </div>
-        <hr />
-        <div>닉네임을 설정해주세요</div>
-        <Input name="singleInput" onChange={(event) => setNickname(event.target.value)} />
-        <hr />
-        <Input
-          name="singleInput"
-          placeholder="자기소개를 설정해주세요"
-          onChange={(event) => setInfo(event.target.value)}
-        />
-        <hr />
+        <Line />
+        <TextDiv>
+          <Textbox section="singleText" fontWeight="bold" fontSize="20px" context1="개인정보를 설정해주세요." />
+        </TextDiv>
+        <InputDiv>
+          <Input name="singleInput" placeholder="닉네임을 적어주세요." onChange={(event) => setNickname(event.target.value)} />
+        </InputDiv>
+        <InputDiv>
+          <Input
+            name="singleInput"
+            placeholder="자기소개를 적어주세요."
+            onChange={(event) => setInfo(event.target.value)}
+          />
+        </InputDiv>
+        <br />
         {/* <Input
           name="singleInput"
           placeholder="임시 폰 번호"

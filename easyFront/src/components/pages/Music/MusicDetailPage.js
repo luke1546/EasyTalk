@@ -1,4 +1,4 @@
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import YouTube from "react-youtube";
@@ -6,7 +6,6 @@ import React from "react";
 
 const MusicDetailPage = () => {
   const { index, videoId } = useParams();
-  const location = useLocation();
 
   const [lyric, setLyric] = useState([]);
 
@@ -19,12 +18,6 @@ const MusicDetailPage = () => {
 
   // 유튜브 api 관련 변수
   const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
-  // const videoId = location.state.videoId;
-
-  // 임시로 스노우맨으로 지정해놨음ㅁ
-  // props이나 location으로 이전 페이지에서 할당받는게 맞는 방식일까?
-  // 직접 접근하면 videoId가 null이라 페이지 오류 발생하는데,,,
-  // const videoId = "gset79KMmt0";
 
   const [title, setTitle] = useState("");
 
@@ -176,7 +169,17 @@ const MusicDetailPage = () => {
       {/* <button onClick={youtubePlay}>자막 실행</button> */}
       <hr />
       <div>
-        <Link to="word">단어</Link> | <Link to="sentence">문장</Link>
+        {title && (
+          <Link
+            to={{
+              pathname: "word",
+              state: { title: title },
+            }}
+          >
+            단어
+          </Link>
+        )}
+        | <Link to="sentence">문장</Link>
       </div>
       <div>
         {saveChecker ? <span>제거하기</span> : <span onClick={saveMusic}>등록하기</span>}|{" "}

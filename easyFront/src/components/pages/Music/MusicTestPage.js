@@ -1,4 +1,4 @@
-import { useParams, Link, useMatch } from "react-router-dom";
+import { useMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
@@ -12,13 +12,25 @@ const MusicTestPage = () => {
   const tmp = url.split("/");
   const musicId = tmp[3];
 
-  const matchRate = 72;
+  const [recognize, setRecognize] = useState("");
+  const [score, setScore] = useState();
 
   const [buttonTF, setButtonTF] = useState(false);
 
   const [lyric, setLyric] = useState([]);
 
   const [currentLyricIndex, setCurrentLyricIndex] = useState(0); // 현재 가사 인덱스
+
+  const [totalScore, setTotalScore] = useState(0);
+  const [recordingCount, setRecordingCount] = useState(0);
+
+  useEffect(() => {
+    if (score) {
+      setTotalScore((prevScore) => prevScore + score);
+    }
+  }, [score]);
+
+  const matchRate = recordingCount > 0 ? totalScore / recordingCount : 0;
 
   const buttonClick = () => {
     if (buttonTF) {
@@ -36,12 +48,12 @@ const MusicTestPage = () => {
       // 여기에 녹음이 종료되며 보내버려서 검증하는게 들어가야함
       console.log("여기에 녹음이 종료되며 보내버려서 검증하는게 들어가야함");
       stopRecording();
-      uploadAudio();
     } else {
       setButtonTF(true);
       // 여기에 녹음하는 기능이 들어가야하고
       console.log("여기에 녹음하는 기능이 들어가야하고");
       startRecording();
+      setRecordingCount((prevCount) => prevCount + 1);
     }
   };
 
@@ -73,11 +85,27 @@ const MusicTestPage = () => {
 
   // 녹음 중지
   const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-      setIsRecording(false);
-    }
+    return new Promise((resolve, reject) => {
+      if (mediaRecorder) {
+        mediaRecorder.addEventListener(
+          "stop",
+          () => {
+            setIsRecording(false);
+            resolve();
+          },
+          { once: true }
+        );
+        mediaRecorder.stop();
+      } else {
+        reject("MediaRecorder not available");
+      }
+    });
   };
+  //   if (mediaRecorder) {
+  //     mediaRecorder.stop();
+  //     setIsRecording(false);
+  //   }
+  // };
 
   // 녹음한 오디오 재생
   const playAudio = () => {
@@ -94,23 +122,43 @@ const MusicTestPage = () => {
 
   // 녹음한 오디오 서버로 전송
   const uploadAudio = async () => {
+    // await stopRecording();
+
+    console.log(mediaRecorder);
+    console.log(recordedChunks);
+
     const audioBlob = new Blob(recordedChunks);
     const formData = new FormData();
     formData.append("audio", audioBlob);
-    formData.append("sentence", lyric[currentLyricIndex]?.lyric);
+    formData.append("sentence", lyric[currentLyricIndex - 1]?.lyric);
+
+    console.log(audioBlob);
+    console.log(formData.get("audio"));
+    console.log(formData.get("sentence"));
 
     try {
       console.log(lyric[currentLyricIndex]?.lyric);
-      const response = await axios.post(`/study/speech`, formData, {
+      const response = await axios.post("/study/speech", formData, {
         withCredentials: true,
       });
       console.log(response.data);
+      console.log(response.data.recognize);
+      console.log(response.data.score);
+
+      setRecognize(response.data.recognize);
+      setScore(response.data.score);
     } catch (error) {
       console.error("오류가 발생했습니다:", error);
     }
   };
 
   // ffffffffffff
+
+  useEffect(() => {
+    if (!isRecording && recordedChunks.length > 0) {
+      uploadAudio();
+    }
+  }, [recordedChunks, isRecording]);
 
   useEffect(() => {
     // musicId에 해당하는 노래를 시험 볼 때 필요한 정보 axios
@@ -147,8 +195,8 @@ const MusicTestPage = () => {
       ) : (
         <button onClick={buttonClick}>녹음하기</button>
       )}
-      <div>녹음을 인식한 문장 나올곳</div>
-      <div>일치율 나올곳</div>
+      <div>{recognize}</div>
+      <div>{score}% 일치</div>
       <div>
         테스트용 녹음 확인 : <button onClick={playAudio}>재생</button>
       </div>

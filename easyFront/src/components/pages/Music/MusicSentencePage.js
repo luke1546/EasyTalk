@@ -1,8 +1,6 @@
-import { useLocation, useParams, Link, useMatch } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-import ListenBox from "../../UI/modules/ListenBox/ListenBox";
 
 const MusicSentencePage = () => {
   const [lyric, setLyric] = useState([]);
@@ -12,7 +10,21 @@ const MusicSentencePage = () => {
   const tmp = url.split("/");
   const musicId = tmp[3];
 
+  const [title, setTitle] = useState("");
+
   useEffect(() => {
+    // 제목 가져오는 axios
+    axios
+      .get(`/study/music/title?target=${musicId}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setTitle(response.data);
+      })
+      .catch((error) => {
+        console.error("제목 에러 : ", error);
+      });
+
     // musicId에 해당하는 노래의 문장들 정보 axios
     axios
       .get(`/study/music/detail?target=${musicId}`, {
@@ -40,19 +52,18 @@ const MusicSentencePage = () => {
 
   return (
     <div className="MusicSentencePage">
-      {/* 제목 들어가는 백엔드 axios 필요 */}
-      <div>제목 들어가야할 위치</div>
-      <div>반복문으로 문장과 그 번역 들어갈곳</div>
-      {lyric.map((item, index) => (
-        <div key={index}>
-          <div style={{ border: "1px solid black" }}>
-            <Link to={`${item.lyricId}`}>
-              <div>{item.lyric}</div>
-              <div>{item.meaning}</div>
-            </Link>
-          </div>
-          <br />
-          {/* <ListenBox
+      <div>{title}</div>
+      {lyric &&
+        lyric.map((item, index) => (
+          <div key={index}>
+            <div style={{ border: "1px solid black" }}>
+              <Link to={`${item.lyricId}`}>
+                <div>{item.lyric}</div>
+                <div>{item.meaning}</div>
+              </Link>
+            </div>
+            <br />
+            {/* <ListenBox
             key={index}
             sentence1={{
               sentence: item.lyric,
@@ -69,8 +80,8 @@ const MusicSentencePage = () => {
               audioUrl: item.lyricAudioUri,
             }}
           /> */}
-        </div>
-      ))}
+          </div>
+        ))}
     </div>
   );
 };

@@ -1,20 +1,19 @@
+
+//InputBar.js
 import * as React from "react";
 import styled from "styled-components";
 import Button from "../atoms/Button/Button";
 import Icon from "../atoms/Icon/Icon";
 import Input from "../atoms/Input/Input";
 import Label from "../atoms/Label/Label";
-
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
 const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
-
-const InputBar = ({ variant }) => {
+const InputBar = ({ variant, uri }) => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const handleInputClick = () => {
@@ -22,10 +21,10 @@ const InputBar = ({ variant }) => {
     if (searchValue === "") {
       alert("검색어를 입력해주세요!");
     } else {
-      navigate(`/study/music/search/${searchValue}`);
+      navigate( uri + `${searchValue}`);
+      // navigate(`/neighbor/search/${searchValue}`);
     }
   };
-
   return (
     <StyledContainer>
       {/* 검색어를 입력하세요 */}
@@ -39,14 +38,13 @@ const InputBar = ({ variant }) => {
             onChange={(event) => setSearchValue(event.target.value)}
             onKeyPress={(event) => {
               if (event.key === "Enter") {
-                handleInputClick();
+                handleInputClick(uri);
               }
             }}
           />
           <Button name="xBtn" onClick={handleInputClick} />
         </>
       )}
-
       {variant === "chatinputbar" && (
         <>
           <Icon name="commentIcon" />
@@ -57,5 +55,4 @@ const InputBar = ({ variant }) => {
     </StyledContainer>
   );
 };
-
 export default InputBar;
