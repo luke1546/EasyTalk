@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df46a86d-5140-44c2-bb4a-a76f7a14d237" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/easyBack/src/main/java/com/ssafy/easyback/study/stt/GoogleStt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easyBack/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/easyBack/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easyBack/src/main/java/com/ssafy/easyback/config/PathUri.java" beforeDir="false" afterPath="$PROJECT_DIR$/easyBack/src/main/java/com/ssafy/easyback/config/PathUri.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/AudioRecorder.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/AudioRecorder.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="df46a86d-5140-44c2-bb4a-a76f7a14d237" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,17 +21,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature-studyWord&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/SSAFY/workspaces/2semester/S10P12B307/easyBack&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "develop-BE",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/SSAFY/workspaces/2semester/S10P12B307/easyBack",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -47,6 +42,7 @@
       <updated>1706100524393</updated>
       <workItem from="1706258864543" duration="1000" />
       <workItem from="1707547383547" duration="4000" />
+      <workItem from="1707875861259" duration="7000" />
     </task>
     <servers />
   </component>

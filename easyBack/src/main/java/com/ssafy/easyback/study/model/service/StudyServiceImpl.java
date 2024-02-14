@@ -151,11 +151,12 @@ public class StudyServiceImpl implements StudyService{
 
   @Override
   public List<LyricsDto> getMusicDetail(int musicId) throws Exception {
+    musicMapper.addMusicHit(musicId);
     return musicMapper.getMusicDetail(musicId);
   }
 
   @Override
-  public List<LyricsDto> getMusicTest(HashMap<String, Object> param) throws Exception {
+  public MusicTestDto getMusicTest(HashMap<String, Object> param) throws Exception {
     int musicId = (int) param.get("musicId");
     Long userId = (Long) param.get("userId");
     String title = musicMapper.getMusicInfo(musicId).getTitle();
@@ -164,21 +165,33 @@ public class StudyServiceImpl implements StudyService{
     int testId = wordMapper.getTestId(userId); // 테스트ID 받아오기
     param.put("testId", testId);                // 테스트ID param에 셋팅
     musicMapper.insertMusicTest(param);
-    return musicMapper.getMusicDetail(musicId);
+    List<LyricsDto> lyrics = musicMapper.getMusicDetail(musicId);
+    MusicTestDto musicTest = new MusicTestDto();
+    musicTest.setLyrics(lyrics);
+    musicTest.setTestId((Integer) param.get("testId"));
+    return musicTest;
   }
 
   @Override
   public void submitMusicTest(Map<String, Object> param, MultipartFile audioFile) throws Exception {
     int testId = (int) param.get("testId");
-    int musicId = musicMapper.getMusicId(testId);
-    List<LyricsDto> lyricList = musicMapper.getMusicDetail(musicId);
-    StringBuilder sb = new StringBuilder();
-    for(LyricsDto lyric : lyricList)  sb.append(lyric.getLyric());
-    AccuracyDto accuracyDto = speechToText.getLongText(audioFile, sb.toString());
+    AccuracyDto accuracyDto = speechToText.getLongText(audioFile, "");
     param.put("score", accuracyDto.getScore());
     param.put("recognize", accuracyDto.getRecognize());
     musicMapper.submitMusicTest(param);
-    musicMapper.submitMusicTest2(param);
+  }
+
+  @Override
+  public void endMusicTest(HashMap<String, Object> param) throws Exception {
+    int testId = (int) param.get("testId");
+    int musicId = musicMapper.getMusicId(testId);
+    StringBuilder sb = new StringBuilder();
+    List<LyricsDto> lyricList = musicMapper.getMusicDetail(musicId);
+    for(LyricsDto lyric : lyricList)  sb.append(lyric.getLyric());
+    String recognize = musicMapper.getRecognize(testId);
+    int score = speechToText.calculateScore(recognize,sb.toString());
+    param.put("score", score);
+    musicMapper.endMusicTest(param);
   }
 
   @Override
@@ -247,4 +260,5 @@ public class StudyServiceImpl implements StudyService{
 
     return todayDto;
   }
+
 }

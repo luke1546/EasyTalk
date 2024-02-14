@@ -22,5 +22,6 @@ public class MusicDto {
     private int hit;
     private String keyword;
     private String musicImageUri;
+    private String artistImageUri;
     private OptionDto optionDto;
 }

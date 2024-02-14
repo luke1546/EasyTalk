@@ -21,8 +21,6 @@ public interface MusicMapper {
 
   void submitMusicTest(Map<String, Object> param) throws Exception;
 
-  void submitMusicTest2(Map<String, Object> param) throws Exception;
-
   void addToMyMusicBook(HashMap<String,Object> param) throws Exception;
 
   void deleteMyMusic(HashMap<String, Object> param) throws Exception;
@@ -30,4 +28,10 @@ public interface MusicMapper {
   List<ArtistDto> getArtistList(HashMap<String, Object> param) throws Exception;
 
   String getMusicTitle(int musicId) throws Exception;
+
+  void addMusicHit(int musicId) throws Exception;
+
+  void endMusicTest(HashMap<String, Object> param) throws Exception;
+
+  String getRecognize(int testId) throws Exception;
 }

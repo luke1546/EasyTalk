@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.easyback.study.model.mapper.MusicMapper">
 
   <select id="getMusicList" parameterType="musicDto" resultType="musicDto">
-    select m.musicId, artistName, m.artistId, videoId, title, musicTime, hit, musicImageUri
+    select m.musicId, artistName, m.artistId, videoId, title, musicTime, hit, musicImageUri, artistImageUri
     from musics m
     join artists a on a.artistId = m.artistId
     <if test="optionDto.filter == 'myList'">
@@ -38,7 +38,11 @@
     </if>
   </select>
 
-
+  <update id="addMusicHit" parameterType="int">
+    update musics
+    set hit = hit + 1
+    where musicId = #{musicId}
+  </update>
 
   <select id="getMusicDetail" parameterType="int" resultType="lyricsDto">
     select *
@@ -57,22 +61,28 @@
     values(#{testId}, #{musicId}, #{artistId})
   </insert>
 
+  <select id="getRecognize" parameterType="int">
+    select input
+    from music_tests
+    where testId = #{testId}
+  </select>
+
   <select id="getMusicId" parameterType="int" resultType="int">
     select musicId
     from tests
     where testId = #{testId}
   </select>
 
-  <update id="submitMusicTest" parameterType="map">
+  <update id="endMusicTest" parameterType="map">
     update tests
     set score = #{score}
     where testId = #{testId}
   </update>
 
-  <update id="submitMusicTest2" parameterType="map">
-    update music_tests
-    set input = #{recognize}
-    where testId = #{testId}
+  <update id="submitMusicTest" parameterType="map">
+    UPDATE music_tests
+    SET input = IFNULL(CONCAT(input, #{recognize}), #{recognize})
+    WHERE testId = #{testId}
   </update>
 
   <insert id="addToMyMusicBook" parameterType="map">

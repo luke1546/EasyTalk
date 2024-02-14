@@ -5,6 +5,7 @@ import com.ssafy.easyback.study.model.dto.AnswerDto;
 import com.ssafy.easyback.study.model.dto.ArtistDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
+import com.ssafy.easyback.study.model.dto.MusicTestDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
 import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.SentenceDto;
@@ -219,9 +220,10 @@ public class StudyController {
   }
 
   @GetMapping("music/test")   // 음악 시험 시작하기 (노래 전체 따라부르기 시험)
-  public ResponseEntity<List<LyricsDto>> getMusicTest(@RequestParam("target") int musicId, HttpSession session) throws Exception{
+  public ResponseEntity<MusicTestDto> getMusicTest(@RequestParam("target") int musicId, HttpSession session) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
+    userId = Long.parseLong("3300642563"); //지우기
     param.put("musicId", musicId);
     param.put("userId", userId);
     param.put("testType", "music");
@@ -232,11 +234,23 @@ public class StudyController {
   public ResponseEntity<String> submitMusicTest(@RequestParam("audio") MultipartFile audioFile, @RequestParam("target") int testId, HttpSession session) throws Exception{
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
+    userId = Long.parseLong("3300642563"); //지우기
     param.put("userId", userId);
     param.put("testId", testId);
     studyService.submitMusicTest(param, audioFile);
     return ResponseEntity.ok("200");
   }
+
+  @PostMapping("music/test")
+  public ResponseEntity<String> endMusicTest(@RequestBody HashMap<String, Object> param, HttpSession session) throws Exception{
+    Long userId = (Long) session.getAttribute("userId");
+    userId = Long.parseLong("3300642563"); //지우기
+    param.put("userId", userId);
+    studyService.endMusicTest(param);
+    return ResponseEntity.ok("200");
+  }
+
+
 
   @PostMapping("music") // 음악 자장하기
   public ResponseEntity<String> addToMyMusicBook(@RequestBody HashMap<String,Object> param, HttpSession session) throws Exception {

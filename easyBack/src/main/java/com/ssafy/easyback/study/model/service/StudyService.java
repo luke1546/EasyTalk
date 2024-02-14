@@ -6,6 +6,7 @@ import com.ssafy.easyback.study.model.dto.AnswerDto;
 import com.ssafy.easyback.study.model.dto.ArtistDto;
 import com.ssafy.easyback.study.model.dto.LyricsDto;
 import com.ssafy.easyback.study.model.dto.MusicDto;
+import com.ssafy.easyback.study.model.dto.MusicTestDto;
 import com.ssafy.easyback.study.model.dto.OptionDto;
 import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.SentenceDto;
@@ -41,7 +42,7 @@ public interface StudyService {
 
   List<LyricsDto> getMusicDetail(int musicId) throws Exception;
 
-  List<LyricsDto> getMusicTest(HashMap<String, Object> param) throws Exception;
+  MusicTestDto getMusicTest(HashMap<String, Object> param) throws Exception;
 
   void submitMusicTest(Map<String, Object> param, MultipartFile audioFile) throws Exception;
 
@@ -62,4 +63,6 @@ public interface StudyService {
   String getMusicTitle(int musicId) throws Exception;
 
   TodayDto getTodaySentence() throws Exception;
+
+  void endMusicTest(HashMap<String, Object> param) throws Exception;
 }

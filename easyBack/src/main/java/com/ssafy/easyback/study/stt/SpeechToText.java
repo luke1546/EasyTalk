@@ -106,7 +106,6 @@ public class SpeechToText {
 
     System.out.println("audio size: " + audio.getContent().size());
 
-
     try (SpeechClient speechClient = SpeechClient.create()) {
       // Speech-to-Text 변환 요청. longRunningRecognizeAsync 메서드를 사용하여 비동기식으로 처리합니다.
       OperationFuture<LongRunningRecognizeResponse, LongRunningRecognizeMetadata> response =
@@ -115,9 +114,8 @@ public class SpeechToText {
       // 처리가 완료될 때까지 기다립니다.
       while (!response.isDone()) {
         System.out.println("Waiting for response...");
-        Thread.sleep(10000);
+        Thread.sleep(5000);
       }
-
 
       // 변환 결과를 가져옵니다. 결과는 비동기적으로 처리되므로 get 메서드를 사용하여 가져옵니다.
       List<SpeechRecognitionResult> results = response.get().getResultsList();
