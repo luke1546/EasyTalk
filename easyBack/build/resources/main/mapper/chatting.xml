@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.chatting.model.mapper.ChattingMapper">
+    <select id="selectRoomId" parameterType="map" resultType="int">
+        SELECT roomId
+        FROM user_rooms
+        WHERE chatType = 'PERSONAL' AND roomId IN (
+            SELECT roomId
+            FROM user_rooms
+            WHERE chatType = 'PERSONAL' AND userId = #{userId}
+        ) AND userId = #{targetId}
+    </select>
+
+    <insert id="insertChatRoom" parameterType="map">
+        INSERT INTO rooms (userId)
+        VALUES (#{userId})
+        <selectKey resultType="int" order="AFTER" keyProperty="roomId">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertChatRoomRelation" parameterType="map">
+        INSERT INTO user_rooms (roomId, userId, chatType)
+        <foreach collection="userIdList" item="userId" separator="UNION ALL">
+            SELECT #{roomId}, #{userId}, #{chatType}
+        </foreach>
+    </insert>
+
+    <select id="selectPreviousMessages" parameterType="int" resultType="com.ssafy.easyback.chatting.model.dto.ResponseMessageDto">
+        SELECT roomId, userId, content, messageTime
+        FROM messages
+        WHERE roomId = #{roomId}
+    </select>
+
+</mapper>
