@@ -14,8 +14,18 @@ public class LoggingInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
     HttpSession session = request.getSession();
-    session.setAttribute("userId", (Long) Long.valueOf("3300642563"));
+    if (session.getAttribute("userId") == null) {
+      log.info("userId={}",session.getAttribute("userId"));
+      session.setAttribute("userId", Long.valueOf("3300642563"));
+    }
     log.info("Request {} {} received at {}", request.getMethod(), request.getRequestURI(), LocalDateTime.now());
     return true;
+  }
+
+  @Override
+  public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+      Object handler, Exception ex) throws Exception {
+
+    log.info("Request {} {} completed at {}", request.getMethod(), request.getRequestURI(), LocalDateTime.now());
   }
 }
