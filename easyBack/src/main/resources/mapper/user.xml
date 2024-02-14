@@ -59,4 +59,10 @@
         profileImageUri = #{profileImageUri}
     where userId = #{userId}
   </update>
+
+    <update id="addExp" parameterType="Long">
+        update users
+        set exp = 100
+        where userId = #{userId}
+    </update>
 </mapper>

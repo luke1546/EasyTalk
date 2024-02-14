@@ -122,6 +122,17 @@
         where testId = #{testId}
     </update>
 
+    <update id="getExp" parameterType="map">
+        update users
+        set exp = exp +
+        (
+        select score
+        from tests
+        where testId = #{testId}
+        )
+        where userId = #{userId}
+    </update>
+
   <insert id="addToMyWordBook" parameterType="wordDto">
     insert into word_books(userId, wordId, wordDate)
     values(#{userId}, #{wordId}, current_timestamp())

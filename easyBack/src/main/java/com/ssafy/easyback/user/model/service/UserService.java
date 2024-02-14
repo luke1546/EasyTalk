@@ -21,4 +21,5 @@ public interface UserService {
   void registerUserAndSetAttendance(RegistrationUserDTO userDto, Long userId);
 
   void modifyUserInfo(RegistrationUserDTO userDto);
+
 }
