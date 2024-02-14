@@ -33,10 +33,10 @@ const MyRecodeWordPage = () => {
 
   return (
     <>
-      <TabBar tabs={RecodeTabs} initialTab={1} />
+      <TabBar tabs={RecodeTabs} initialTab={2} />
       <div>
         {myrecodeword.map((reword, index) => (
-          <Link to={`/study/test/record/detail?target=${reword.testId}`}
+          <Link to={`/myrecodeword/test/record/detail?target=${reword.testId}`}
                 key={index}>
             <div>
               <Input 

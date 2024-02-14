@@ -6,10 +6,12 @@ import { useEffect } from "react";
 
 const CLIENT_ID = process.env.REACT_APP_KAKAO_REST_API_KEY;
 const REDIRECT_URI =
-   process.env.REACT_APP_EASYTALK_URL + process.env.REACT_APP_KAKAO_REDIRECT_URL;
+  // process.env.REACT_APP_EASYTALK_URL +
+  "http://localhost" + process.env.REACT_APP_FRONT_PORT + process.env.REACT_APP_KAKAO_REDIRECT_URL;
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 const LoginPage = () => {
+  console.log(CLIENT_ID);
   console.log(REDIRECT_URI);
   return (
     <div className="LoginPage">

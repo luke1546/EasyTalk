@@ -113,16 +113,14 @@ const App = () => {
               <Route path="/mymusic" element={<MyMusicPage />} />
               <Route path="/myrecodemusic" element={<MyRecodeMusicPage />} />
               <Route path="/myrecodeword" element={<MyRecodeWordPage />} />
+              <Route path="/myrecodeword/test/record/detail" element={<MyRecodeWordDetailPage />} />
               <Route path="/myfeed" element={<MyFeedPage />} />
               <Route path="/myneighbor" element={<MyNeighborPage />} />
               <Route path="/myreceive" element={<MyNeighborReceivePage />} />
               <Route path="/mysend" element={<MyNeighborSendPage />} />
               <Route path="/mygroup" element={<MyGroupPage />} />
-              <Route path="/" exact element={<IntroPage />} />
               <Route path="/neighbor/feed/:feedId" element={<PlaceEditPage />} />
               <Route path="/neighbor/feed/:feedId/detail" element={<PlaceDetailPage />} />
-              <Route path="/study/test/record/detail" element={<MyRecodeWordDetailPage />} />
-              <Route path={`/study/:index`} element={<MusicDetailPage />} />
               <Route path="/placeneighbor" element={<PlaceNeighborPage />} />
             </Routes>
           </StyledDiv>

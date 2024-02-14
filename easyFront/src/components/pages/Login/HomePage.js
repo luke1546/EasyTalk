@@ -33,7 +33,6 @@ const AtenDiv = styled.div`
   align-items: center;
 `;
 
-
 const LeftDiv = styled.div`
   display: flex;
   justify-content: left;
@@ -88,7 +87,7 @@ const SenBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  `;
+`;
 
 const DayDiv = styled.div`
   margin: 20px 0;
@@ -110,7 +109,7 @@ const DayCircle = styled.div`
   margin: 4px;
   border: 1px solid #8382ff;
   font-size: 20px;
-  `;
+`;
 
 const PointText = styled.div`
   color: gray;
@@ -130,11 +129,19 @@ const HomePage = () => {
   const needExp = 100 - (exp % 100);
   const lv = Math.floor(exp / 100 + 1);
 
+  // 오늘의 단어 및 문장
+  const [wordData, setWordData] = useState([]);
+
+  const [toDaySentence, setTodaySentence] = useState("");
+  const [toDaySentenceMean, setTodaySentenceMean] = useState("");
+
   useEffect(() => {
     // 명세서 나의 유저데이터
     axios
       .get("/user", { withCredentials: true })
       .then((response) => {
+        console.log(response);
+
         const userData = response.data;
         const nickname = userData.nickname; // nickname
         const exp = userData.exp; // exp 값
@@ -155,13 +162,13 @@ const HomePage = () => {
     axios
       .get("/study/sentence/today", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
-        // const sentenceData = response.data.sentence;
-        // const wordsData = response.data.word;
+        const wordData = response.data.words;
+        const sentenceData = response.data.sentence;
 
-        // // 이후에 sentenceData와 wordsData를 이용하여 원하는 작업을 수행하면 됩니다.
-        // console.log(sentenceData);
-        // console.log(wordsData);
+        setWordData(wordData);
+
+        setTodaySentence(sentenceData.sentence.split("-")[0]);
+        setTodaySentenceMean(sentenceData.meaning.split("-")[0]);
       })
       .catch((error) => {
         console.error("문장 데이터 에러 : ", error);
@@ -186,15 +193,26 @@ const HomePage = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 40px' }}>
-      <ChaDiv>
-        <div>
-          <Textbox section="singleText" fontWeight="bold" context1={`${nickname}님 안녕하세요 !`} /> 
-        <br />
-          <Textbox section="singleText" context1="기분 좋은 오후에요." />
-          <Textbox section="singleText" context1="식사는 하셨나요 ?" />
-        </div>
-      </ChaDiv>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "0 40px",
+        }}
+      >
+        <ChaDiv>
+          <div>
+            <Textbox
+              section="singleText"
+              fontWeight="bold"
+              context1={`${nickname}님 안녕하세요 !`}
+            />
+            <br />
+            <Textbox section="singleText" context1="기분 좋은 오후에요." />
+            <Textbox section="singleText" context1="식사는 하셨나요 ?" />
+          </div>
+        </ChaDiv>
         <ProfileImgDiv src={profileImageUri} />
       </div>
       <Line />
@@ -203,6 +221,10 @@ const HomePage = () => {
       </LeftDiv>
       <RandomDiv>
         <WordBoxes>
+          {wordData &&
+            wordData.map((item, index) => {
+              return <div>{wordData.word}</div>;
+            })}
           <WordBox>
             <Textbox section="singleText" fontWeight="bold" context1="Apple" />
             <Textbox section="singleText" context1="사과" />
@@ -217,8 +239,8 @@ const HomePage = () => {
           </WordBox>
         </WordBoxes>
         <SenBox>
-          <Textbox section="singleText" fontWeight="bold" context1="Do you like apple?" />
-          <Textbox section="singleText" context1="너는 사과를 좋아하니 ?" />
+          <Textbox section="singleText" fontWeight="bold" context1={`${toDaySentence}`} />
+          <Textbox section="singleText" context1={`${toDaySentenceMean}`} />
         </SenBox>
       </RandomDiv>
       <Line />
