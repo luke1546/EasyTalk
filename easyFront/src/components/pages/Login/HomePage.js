@@ -145,7 +145,6 @@ const HomePage = () => {
         console.dir("response")
         console.dir(response);
         console.dir("request")
-        console.dir(axios.request(config))
         console.dir("getUri()")
         console.dir(axios.getUri())
 
