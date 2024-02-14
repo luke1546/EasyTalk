@@ -1,5 +1,4 @@
 // PlaceDetailPage.js
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -15,6 +14,7 @@ const PlaceDetailPage = () => {
   const { feedId } = useParams();
 
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,6 +22,7 @@ const PlaceDetailPage = () => {
         setFeedData(response.data);
         // const userResponse = await axios.get(`/neighbor/user/${response.data.userId}`);
         // setUser(userResponse.data);
+        console.log(feedData)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -38,7 +39,8 @@ const PlaceDetailPage = () => {
     <div className="PlaceDetailPage">
       광장 게시글 상세 화면
         <>
-          {feedData && <FeedBox
+        {feedData &&
+          <FeedBox
             key={feedData.feedId}
             userId={feedData.userId}
             feedId={feedData.feedId}
@@ -48,8 +50,10 @@ const PlaceDetailPage = () => {
             likeCount={feedData.heartCount}
             commentCount={feedData.commentCount}
             content={feedData.content}
-            createdDate={feedData.registerDate}
+          createdDate={feedData.registerDate}
+          feedImageUris={feedData.feedImageUris[feedData.feedImageUris.length-1]}
           />}
+        
           <SNSInputBox feedId={feedData.feedId} />
           <div>
           <Textbox section='singleText' context1={user.info || ""} context2={user.otherInfo || ""}/>

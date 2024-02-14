@@ -8,20 +8,19 @@ import { useNavigate } from 'react-router-dom';
 import './FeedBox.css';
 import EditFeedBox from '../EditFeedBox/EditFeedBox';
 
-const FeedBox = ({ feedId, targetUserId, profileImgageUri, feedImageUris, nickname, isLiked: initialIsLiked, heartCount, commentCount, content, registerDate }) => {
+const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked, likeCount, commentCount, content, createdDate, feedImageUris }) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(initialIsLiked);
-  const [likes, setLikes] = useState(heartCount);
-
-  const handleLikeClick = async (event) => {
-    event.stopPropagation();
+  const [likes, setLikes] = useState(likeCount);
+  const [isEditing, setIsEditing] = useState(false);
+  const handleLikeClick = async () => {
     try {
       if (isLiked) {
-        await axios.delete(`https://i10b307.p.ssafy.io/neighbor/feed/${feedId}`, {
+        await axios.delete(`http://your-api-url/remove-like/${feedId}`, {
           withCredentials: true,
         });
       } else {
-        await axios.post(`https://i10b307.p.ssafy.io/neighbor/feed/${feedId}`, {}, {
+        await axios.post(`http://your-api-url/add-like/${feedId}`, {}, {
           withCredentials: true,
         });
       }
@@ -33,35 +32,68 @@ const FeedBox = ({ feedId, targetUserId, profileImgageUri, feedImageUris, nickna
     }
   };
 
-  const handleFeedBoxClick = (event) => {
-    event.stopPropagation();
+  const handleFeedBoxClick = (feedId) => {
     // TODO: FeedBox 클릭 시의 동작 및 해당 FeedBox의 세부페이지로 이동 구현
     navigate(`/neighbor/feed/${feedId}`);
   };
 
-  const handleUserClick = (event) => {
-    event.stopPropagation();
+  const handleEditClick = () => {
+    // 피드 수정 버튼 클릭 시 수정 모드 활성화
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    // 피드 수정 취소 시 수정 모드 비활성화
+    setIsEditing(false);
+  };
+
+  const handleUserClick = () => {
     // Navigate to the user's detail page
-    navigate(`/neighbor/user/${targetUserId}`);
+    navigate(`/user/${userId}`);
   };
 
   return (
-    <div className="feed-box" onClick={handleFeedBoxClick}>
-      <div className="feed-info">
-        <div className="user-info" onClick={handleUserClick}>
-          <img className="profile-img" src={profileImgageUri} alt="Profile" />
-          <Textbox section="singleText" context1={nickname} />
-        </div>
-        <div className="like-comment-info">
-          <Button name={isLiked ? 'fHeartBtn' : 'heartBtn'} onClick={handleLikeClick} />
-          <Textbox section="singleText" context1={likes} />
-          <Icon name="commentIcon" />
-          <Textbox section="singleText" context1={commentCount} />
-        </div>
-      </div>
-      <Textbox section="singleText" context1={content} />
-      <img className="feedImage-Uris" src={feedImageUris} alt="feedImageUris" />
-      <Textbox section="singleText" context1={registerDate} />
+    <div 
+    className="feed-box" 
+    onClick={isEditing ? handleFeedBoxClick(feedId) : undefined}
+  >
+
+      {isEditing ? (
+        // 수정 모드일 때 EditFeedBox 컴포넌트를 렌더링
+        <EditFeedBox
+          feedId={feedId}
+          content={content}
+          onCancel={handleCancelEdit}
+          isLiked={isLiked}
+          likes={likes}
+          commentCount={commentCount}
+          userName={userName}
+          profileImg={profileImg}
+          feedImageUris={feedImageUris}
+        />
+      ) : (
+        <>
+          <div className="feed-info">
+            <div className="user-info" onClick={handleUserClick}>
+              <img className="profile-img" src={profileImg} alt="Profile" />
+                <Textbox section="singleText" context1={userName} />
+                
+            </div>
+            <div className="like-comment-info">
+              <Button name={isLiked ? 'fHeartBtn' : 'heartBtn'} onClick={handleLikeClick} />
+              <Textbox section="singleText" context1={likes} />
+              <Icon name="commentIcon" />
+              <Textbox section="singleText" context1={commentCount} />
+            </div>
+          </div>
+          <img className="profile-img" src={"https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com"+feedImageUris} alt="FeedImage" />
+            <Textbox section="singleText" context1={content} />
+            <Textbox section="singleText" context1={createdDate} />
+          <div onClick={handleEditClick}>
+          <Button name="submitBtn" text="수정"  />
+          </div>
+          </>
+      )}
     </div>
   );
 };

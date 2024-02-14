@@ -56,11 +56,4 @@ const TabBar = ({ tabs }) => {
   );
 };
 
-TabBar.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    to: PropTypes.string.isRequired,
-  })).isRequired,
-};
-
 export default TabBar;

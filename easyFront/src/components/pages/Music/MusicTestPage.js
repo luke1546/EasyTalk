@@ -12,6 +12,8 @@ const MusicTestPage = () => {
   const tmp = url.split("/");
   const musicId = tmp[3];
 
+  const [title, setTitle] = useState("");
+
   const [recognize, setRecognize] = useState("");
   const [score, setScore] = useState();
 
@@ -161,13 +163,25 @@ const MusicTestPage = () => {
   }, [recordedChunks, isRecording]);
 
   useEffect(() => {
+    // 제목 가져오는 axios
+    axios
+      .get(`/study/music/title?target=${musicId}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setTitle(response.data);
+      })
+      .catch((error) => {
+        console.error("제목 에러 : ", error);
+      });
+
     // musicId에 해당하는 노래를 시험 볼 때 필요한 정보 axios
     axios
       .get(`/study/music/test?target=${musicId}`, {
         withCredentials: true,
       })
       .then((response) => {
-        const lyric = response.data.map((item) => ({
+        const lyric = response.data.lyrics.map((item) => ({
           lyric: item.lyric,
           lyricId: item.lyricId,
           lyricAudioUri: item.lyricAudioUri,
@@ -186,7 +200,7 @@ const MusicTestPage = () => {
 
   return (
     <div className="MusicTestPage">
-      <div>제목 들어갈곳</div>
+      <div>{title}</div>
       <div>{lyric[currentLyricIndex]?.lyric || "가사를 불러오는 중..."} </div>{" "}
       {/* 가사 나올 박스 */}
       <div>{lyric[currentLyricIndex + 1]?.lyric || ""} </div> {/* 다음에 나올 가사 */}
