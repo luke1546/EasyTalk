@@ -57,6 +57,8 @@ const StyledDiv = styled.div`
 `;
 
 const AppDiv = styled.div`
+    font-family: 'Noto Sans KR', sans-serif !important;
+    font-size: 20px;
   text-align: center;
 `;
 
