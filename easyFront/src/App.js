@@ -1,8 +1,7 @@
 import "./App.css";
 
 import React from "react";
-import { useState } from "react";
-import { BrowserRouter, Route, Routes, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/UI/modules/Header";
 import Footer from "./components/UI/modules/Footer";
@@ -26,11 +25,11 @@ import MyNeighborPage from "./components/pages/My/MyNeighborPage";
 import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
 import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
 // import 
-import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
-import PlaceSearchPage from "./components/pages/Place/PlaceSearchPage";
-import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
-import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
 import PlaceNeighborPage from "./components/pages/Place/PlaceNeighborPage";
+import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
+import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
+import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
+
 
 const HeaderDiv = styled.div`
   z-index: 10;
@@ -103,15 +102,12 @@ const App = () => {
               <Route path="/" exact element={<IntroPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/home" element={<HomePage />} />
-              {/* <Route path="/study" element={<MusicHomePage />} /> */}
               <Route path="/group" element={<GroupHomePage />} />
               <Route path="/place" element={<PlaceHomePage />} />
               <Route path="/my" element={<MyHomePage />} />
-              {/* <Route path={`/study/search/:searchValue`} element={<MusicSearchPage />} /> */}
               <Route path="/login/oauth/kakao" element={<LoginHandeler />} />
               <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
               <Route path="/signup" element={<SignupPage />} />
-              {/* <Route path="/study/artist/나훈아" element={<ArtistDetailPage />} /> */}
               <Route path="/study/*" element={<StudyPage />} />
               <Route path="/myedit" element={<MyEditPage />} />
               <Route path="/mymusic" element={<MyMusicPage />} />
@@ -122,7 +118,12 @@ const App = () => {
               <Route path="/myreceive" element={<MyNeighborReceivePage />} />
               <Route path="/mysend" element={<MyNeighborSendPage />} />
               <Route path="/mygroup" element={<MyGroupPage />} />
-              {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
+              <Route path="/" exact element={<IntroPage />} />
+              <Route path="/neighbor/feed/:feedId" element={<PlaceEditPage />} />
+              <Route path="/neighbor/feed/:feedId/detail" element={<PlaceDetailPage />} />
+              <Route path="/study/test/record/detail" element={<MyRecodeWordDetailPage />} />
+              <Route path={`/study/:index`} element={<MusicDetailPage />} />
+              <Route path="/placeneighbor" element={<PlaceNeighborPage />} />
             </Routes>
           </StyledDiv>
           <PageFooter /> 
