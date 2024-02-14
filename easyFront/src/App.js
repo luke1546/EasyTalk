@@ -2,7 +2,7 @@ import "./App.css";
 
 import React from "react";
 import { useState } from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/UI/modules/Header";
 import Footer from "./components/UI/modules/Footer";
@@ -25,6 +25,7 @@ import MyGroupPage from "./components/pages/My/MyGroupPage";
 import MyNeighborPage from "./components/pages/My/MyNeighborPage";
 import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
 import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
+// import 
 import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
 import PlaceSearchPage from "./components/pages/Place/PlaceSearchPage";
 import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
@@ -72,51 +73,62 @@ const MainContents = styled.div`
   overflow: auto;
 `;
 
+const PageFooter = () => {
+  const location = useLocation();  // 현재 위치 상태를 추적합니다.
+
+  // 현재 위치가 "/"일 때는 렌더링하지 않습니다.
+  if (location.pathname === "/" || location.pathname === "/signup") {
+    return null;
+  }
+
+  return (
+    <FooterDiv>
+      <Footer className="Footer" /> 
+    </FooterDiv>
+  )
+}
+
 const App = () => {
   const code = new URL(window.location.href).searchParams.get("code");
+
   return (
-  <React.Fragment>
-    <BrowserRouter>
-      <AppDiv>
-        <HeaderDiv>
-          <Header className="Header" />
-        </HeaderDiv>
-        <StyledDiv as={MainContents}>
-          <Routes>
-            <Route path="/" exact element={<IntroPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/home" element={<HomePage />} />
-            {/* <Route path="/study" element={<MusicHomePage />} /> */}
-            <Route path="/group" element={<GroupHomePage />} />
-            <Route path="/place" element={<PlaceHomePage />} />
-            <Route path="/my" element={<MyHomePage />} />
-            {/* <Route path={`/study/search/:searchValue`} element={<MusicSearchPage />} /> */}
-            <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
-            <Route path="/signup" element={<SignupPage />} />
-            {/* <Route path="/study/artist/나훈아" element={<ArtistDetailPage />} /> */}
-            <Route path="/study/*" element={<StudyPage />} />
-            <Route path="/myedit" element={<MyEditPage />} />
-            <Route path="/mymusic" element={<MyMusicPage />} />
-            <Route path="/myrecodemusic" element={<MyRecodeMusicPage />} />
-            <Route path="/myrecodeword" element={<MyRecodeWordPage />} />
-            <Route path="/study/test/record/detail" element={<MyRecodeWordDetailPage />} />
-            <Route path="/myfeed" element={<MyFeedPage />} />
-            <Route path="/myneighbor" element={<MyNeighborPage />} />
-            <Route path="/myreceive" element={<MyNeighborReceivePage />} />
-            <Route path="/mysend" element={<MyNeighborSendPage />} />
-            <Route path="/mygroup" element={<MyGroupPage />} />
-            <Route path={`/neighbor/search/:searchValue`} element={<PlaceSearchPage />} />
-            <Route path={`/neighbor/feed/:feedId`} element={<PlaceDetailPage />} />
-            <Route path={`/neighbor/feed/:feedId`} element={<PlaceEditPage />}/>
-            <Route path={`/neighbor/user/:targetUserId`} element={<PlaceNeighborPage />}/>
-          </Routes>
-        </StyledDiv>
-        <FooterDiv>
-          <Footer className="Footer" /> 
-        </FooterDiv>
-      </AppDiv>
-    </BrowserRouter>
-  </React.Fragment>
+    <React.Fragment>
+      <BrowserRouter>
+        <AppDiv>
+          <HeaderDiv>
+            <Header className="Header" />
+          </HeaderDiv>
+          <StyledDiv as={MainContents}>
+            <Routes>
+              <Route path="/" exact element={<IntroPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/home" element={<HomePage />} />
+              {/* <Route path="/study" element={<MusicHomePage />} /> */}
+              <Route path="/group" element={<GroupHomePage />} />
+              <Route path="/place" element={<PlaceHomePage />} />
+              <Route path="/my" element={<MyHomePage />} />
+              {/* <Route path={`/study/search/:searchValue`} element={<MusicSearchPage />} /> */}
+              <Route path="/login/oauth/kakao" element={<LoginHandeler />} />
+              <Route path={`/login/oauth/kakao?code=${code}`} element={<LoginHandeler />} />
+              <Route path="/signup" element={<SignupPage />} />
+              {/* <Route path="/study/artist/나훈아" element={<ArtistDetailPage />} /> */}
+              <Route path="/study/*" element={<StudyPage />} />
+              <Route path="/myedit" element={<MyEditPage />} />
+              <Route path="/mymusic" element={<MyMusicPage />} />
+              <Route path="/myrecodemusic" element={<MyRecodeMusicPage />} />
+              <Route path="/myrecodeword" element={<MyRecodeWordPage />} />
+              <Route path="/myfeed" element={<MyFeedPage />} />
+              <Route path="/myneighbor" element={<MyNeighborPage />} />
+              <Route path="/myreceive" element={<MyNeighborReceivePage />} />
+              <Route path="/mysend" element={<MyNeighborSendPage />} />
+              <Route path="/mygroup" element={<MyGroupPage />} />
+              {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
+            </Routes>
+          </StyledDiv>
+          <PageFooter /> 
+        </AppDiv>
+      </BrowserRouter>
+    </React.Fragment>
   );
 };
 
