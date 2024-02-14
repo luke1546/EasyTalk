@@ -26,10 +26,14 @@ const StyledProfile = styled.div`
   flex-direction: row;
 `;
 
-const Profile = ({ direction, text1, text2, text3, imageUrl }) => {
-  // const [imageUrl, setImageUrl] = useState(
-  //   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  // );
+const Profile = ({ direction, text1, text2, text3, profileImageUri }) => {
+  const defaultImageUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  const url = "https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com";
+  if (profileImageUri) {
+    profileImageUri =  url + profileImageUri;
+  }
+  const [imageUrl, setImageUrl] = useState(profileImageUri || defaultImageUrl);
+  
   const fileInput = useRef();
 
   if (direction === "left") {

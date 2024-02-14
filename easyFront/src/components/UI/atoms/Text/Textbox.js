@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const TextBoxContainer = styled.span`
+  display: flex;
+  justify-content: flex-start;
   font-size: ${props => props.fontSize};
   font-weight: ${props => props.fontWeight}; // fontWeight 프롭을 추가합니다.
+  word-break: keep-all;
 `;
 
 export const Textbox = ({ section, context1, context2, fontSize, fontWeight, ...props }) => {
@@ -31,7 +34,7 @@ Textbox.propTypes = {
 
 Textbox.defaultProps = {
   context2: null,
-  fontSize: '18px',  // 기본 폰트 크기를 16px로 설정하였습니다. 필요에 따라 변경 가능합니다.
+  fontSize: '20px',  // 기본 폰트 크기를 16px로 설정하였습니다. 필요에 따라 변경 가능합니다.
 };
 
 export default Textbox;

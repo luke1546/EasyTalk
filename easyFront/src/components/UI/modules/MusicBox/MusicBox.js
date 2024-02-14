@@ -11,7 +11,7 @@ const MusicBoxWrapper = styled.div`
 const MusicDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   margin: 0 0px 0px 20px;
 `;
 
@@ -21,8 +21,9 @@ const MusicTitle = styled.p`
   padding: 0;
 `;
 
-const MusicInfo = styled.p`
+const MusicInfo = styled.div`
   display: flex;
+  text-align: left;
   margin: 0;
   padding: 0;
 `;
@@ -31,7 +32,10 @@ const MusicImage = styled.div`
   width: 200px;
   display: flex;
   justify-content: center;
-  align-items: center;
+`;
+
+const StyledP = styled.p`
+  margin: 20px 20px 0 0;
 `;
 
 const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoId }) => {
@@ -40,7 +44,7 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
   const time = `${min}:${sec < 10 ? "0" : ""}${sec}`;
   const REDIRECT_URI =
     process.env.REACT_APP_EASYTALK_URL +
-    process.env.REACT_APP_FRONT_PORT;
+    process.env.REACT_APP_FRONT_PORT
 
   return (
     <div>
@@ -53,28 +57,29 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
             <MusicDetailsWrapper>
               <MusicTitle className="music-title">{title}</MusicTitle>
               <MusicInfo>
-                <p className="music-artist">{artistName}</p>
-                <p className="music-time">{time}</p>
+                <StyledP className="music-artist">{artistName}</StyledP>
+                <StyledP className="music-artist">|</StyledP>
+                <StyledP className="music-time"> {time}</StyledP>
               </MusicInfo>
             </MusicDetailsWrapper>
           </MusicBoxWrapper>
         </Link>
-      ) : (
-        <Link to={`${REDIRECT_URI}/study/music/${musicId}`} state={musicId}>
-          <MusicBoxWrapper>
-          <div style={{ display: "flex", justifyContent: "center",  alignItems: "center"}}>
-            <img src={musicImageUrl} alt="Album Cover" style={{ width: "200px" }} />
-          </div>
-            <MusicDetailsWrapper>
-              <MusicTitle className="music-title">{title}</MusicTitle>
-              <MusicInfo>
-                <p className="music-artist">{artistName}</p>
-                <p className="music-time">{time}</p>
-              </MusicInfo>
-            </MusicDetailsWrapper>
-          </MusicBoxWrapper>
-        </Link>
-      )}
+    ) : (
+      <Link to={`${REDIRECT_URI}/study/music/${musicId}`} state={musicId}>
+        <MusicBoxWrapper>
+        <div style={{ display: "flex", justifyContent: "center",  alignItems: "center"}}>
+          <img src={musicImageUrl} alt="Album Cover" style={{ width: "200px" }} />
+        </div>
+          <MusicDetailsWrapper>
+            <MusicTitle className="music-title">{title}</MusicTitle>
+            <MusicInfo>
+              <p className="music-artist">{artistName}</p>
+              <p className="music-time"> {time}</p>
+            </MusicInfo>
+          </MusicDetailsWrapper>
+        </MusicBoxWrapper>
+      </Link>
+    )}
     </div>
   );
 };

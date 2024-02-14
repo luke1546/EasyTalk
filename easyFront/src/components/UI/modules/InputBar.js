@@ -13,6 +13,7 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 40px 0 20px 0;
+  margin: 40px 0 20px 0;
 `;
 const InputBar = ({ variant, uri }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -31,10 +32,10 @@ const InputBar = ({ variant, uri }) => {
       {/* 검색어를 입력하세요 */}
       {variant === "searchinputbar" && (
         <>
-          <Icon name="searchIcon" size="25px" color="#8382ff" />
+          <Icon name="searchIcon" size="30px" color="#8382ff" />
           <Input
             name="searchInput"
-            placeholder="검색어를 입력하세요"
+            placeholder="검색어를 입력하세요."
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
             onKeyPress={(event) => {
@@ -43,13 +44,13 @@ const InputBar = ({ variant, uri }) => {
               }
             }}
           />
-          <Button name="enterBtn" size="25px" color="#8382ff"  onClick={handleInputClick} />
+          <Button name="enterBtn" size="30px" color="#8382ff" onClick={handleInputClick} />
         </>
       )}
       {variant === "chatinputbar" && (
         <>
           <Icon name="commentIcon" />
-          <Input name="searchInput" placeholder="채팅을 입력하세요" />
+          <Input name="searchInput" placeholder="채팅을 입력하세요." />
           <Button name="submitBtn" text="전송" onClick={() => handleInputClick("chatInput")} />
         </>
       )}

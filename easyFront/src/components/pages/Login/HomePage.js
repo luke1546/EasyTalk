@@ -26,6 +26,17 @@ const ProfileImgDiv = styled.img`
   border: 1px solid black;
 `;
 
+<<<<<<< HEAD
+=======
+const AtenDiv = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 40px;
+  align-items: center;
+`;
+
+
+>>>>>>> feature-css
 const LeftDiv = styled.div`
   display: flex;
   justify-content: left;
@@ -58,7 +69,14 @@ const WordBox = styled.div`
   border-radius: 10px;
   width: 30%;
   padding: 10px;
+<<<<<<< HEAD
 
+=======
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+>>>>>>> feature-css
 `;
 
 const WordBoxes = styled.div`
@@ -69,11 +87,21 @@ const WordBoxes = styled.div`
 `;
 
 const SenBox = styled.div`
+<<<<<<< HEAD
   text-align: center; /* 가운데 정렬을 위해 text-align: center;를 적용합니다. */
+=======
+>>>>>>> feature-css
   border: 2px solid #8382ff;
   border-radius: 10px;
   margin: 10px 40px 20px;
   padding: 20px 0;
+<<<<<<< HEAD
+=======
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+>>>>>>> feature-css
   `;
 
 const DayDiv = styled.div`
@@ -95,12 +123,20 @@ const DayCircle = styled.div`
   color: ${(props) => (props.isAttend ? "white" : "black")};
   margin: 4px;
   border: 1px solid #8382ff;
+<<<<<<< HEAD
   font-size: 18px;
+=======
+  font-size: 20px;
+>>>>>>> feature-css
   `;
 
 const PointText = styled.div`
   color: gray;
+<<<<<<< HEAD
   font-size: 12px;
+=======
+  font-size: 15px;
+>>>>>>> feature-css
   text-align: center;
 `;
 
@@ -163,7 +199,11 @@ const HomePage = () => {
 
         setAttendanceList(userAttendance);
 
+<<<<<<< HEAD
         // setAttendanceList([1, 2, 3]);
+=======
+        setAttendanceList([1, 2]);
+>>>>>>> feature-css
       })
       .catch((error) => {
         console.error("출석부 에러 : ", error);
@@ -190,6 +230,7 @@ const HomePage = () => {
       <RandomDiv>
         <WordBoxes>
           <WordBox>
+<<<<<<< HEAD
             Apple
             <br />
             사과
@@ -209,6 +250,23 @@ const HomePage = () => {
           Do you like apple?
           <br />
           사과를 좋아하니 ?
+=======
+            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
+            <Textbox section="singleText" context1="사과" />
+          </WordBox>
+          <WordBox>
+            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
+            <Textbox section="singleText" context1="사과" />
+          </WordBox>
+          <WordBox>
+            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
+            <Textbox section="singleText" context1="사과" />
+          </WordBox>
+        </WordBoxes>
+        <SenBox>
+          <Textbox section="singleText" fontWeight="bold" context1="Do you like apple?" />
+          <Textbox section="singleText" context1="너는 사과를 좋아하니 ?" />
+>>>>>>> feature-css
         </SenBox>
       </RandomDiv>
       <Line />
@@ -236,12 +294,20 @@ const HomePage = () => {
       <LeftDiv>
         <Textbox section="singleText" context1="출석체크" fontWeight="bold" />
       </LeftDiv>
+<<<<<<< HEAD
       <ChaDiv>
+=======
+      <AtenDiv>
+>>>>>>> feature-css
         <div>
           <Textbox section="singleText" context1={`출석하고 경험치 받아가세요!`} />
           <Textbox section="singleText" context1={`일주일 연속 출석 시 30 경험치 추가!`} />
         </div>
+<<<<<<< HEAD
       </ChaDiv>
+=======
+      </AtenDiv>
+>>>>>>> feature-css
       <DayDiv>
         <div style={{ display: "flex" }}>
           {days.map((day, index) => (

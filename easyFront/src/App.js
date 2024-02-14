@@ -32,6 +32,7 @@ import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
 import PlaceNeighborPage from "./components/pages/Place/PlaceNeighborPage";
 
 const HeaderDiv = styled.div`
+  z-index: 10;
   position: fixed !important;
   background-color: white;
   width: 100vw;
@@ -41,6 +42,7 @@ const HeaderDiv = styled.div`
 `;
 
 const FooterDiv = styled.div`
+  z-index: 10;
   position: fixed !important;
   background-color: white;
   width: 100vw;

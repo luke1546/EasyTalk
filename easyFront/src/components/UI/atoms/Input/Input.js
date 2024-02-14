@@ -1,3 +1,4 @@
+// input.js
 import * as React from "react";
 import styled from "styled-components";
 
@@ -5,9 +6,10 @@ const SearchInput = styled.div`
   border: 2px solid #8382ff;
   border-radius: 50px;
   padding: 0 20px; // 상하 0, 좌우 20px
-  height: 30px;
-  width: 35%;
-  font-size: 17px;
+  height: 32px;
+  width: 50%;
+  font-size: 20x;
+  margin: 0 5px;
 `;
 
 const SingleInput = styled.div`
@@ -16,7 +18,7 @@ const SingleInput = styled.div`
   padding: 0 20px; // 상하 0, 좌우 20px
   height: 40px;
   width: calc(100% - 80px);
-  font-size: 18px;s
+  font-size: 20px;
 `;
 
 const StyleInput = styled.input`

@@ -18,8 +18,9 @@ const Emoticons = {
 };
 
 const Icon = ({ name, color, size }) => {
+const Icon = ({ name, color, size }) => {
   const Emoticon = Emoticons[name];
-  return Emoticon ? <Emoticon color={color} size={size}/> : null;
+  return Emoticon ? <Emoticon color={color} size={size} /> : null;
 };
 
 export default Icon;

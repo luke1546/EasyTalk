@@ -23,22 +23,22 @@ import styled from "styled-components";
 const StyledSubmitBtn = styled.button`
   background: #8382ff;
   border-radius: 50px;
-  padding: 2px 15px 4px;
+  padding: 0px 15px 4px;
   margin: 20px;
   box-shadow: 0px 4px 2px -2px #121212;
   border: none;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   background: ${({ color }) => color || "#8382ff"}};
 `;
 
 const StyledlogBtn = styled.button`
   background: #8382ff;
   border-radius: 50px;
-  padding: 2px 15px 4px;
+  padding: 0px 15px 4px;
   border: none;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   background: ${({ color }) => color || "#8382ff"}};
 `;
 
