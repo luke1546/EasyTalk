@@ -110,7 +110,6 @@ public class StudyController {
   public ResponseEntity<String> insertAnswerList(@RequestBody List<AnswerDto> answerList, HttpSession session) throws Exception {
     HashMap<String, Object> param = new HashMap<>();
     Long userId = (Long) session.getAttribute("userId");
-    userId = Long.parseLong("3300642563");  //지우기
     param.put("answerList", answerList);
     param.put("userId", userId);
     studyService.insertAnswerList(param);
