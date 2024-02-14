@@ -12,6 +12,6 @@ public interface WordMapper {
   void insertMeaning(WordMeaningDto wordMeaningDto) throws Exception;
   void updateUri() throws Exception;
   int checkWord(String word) throws Exception;
-  Integer getWordId(String word) throws Exception;
+  int getWordId(String word) throws Exception;
   void insertWordMusic(HashMap<String, Object> wordSong) throws Exception;
 }

@@ -15,18 +15,14 @@
     where sentenceId = LAST_INSERT_ID()
   </update>
 
-  <select id="getSentenceId" parameterType="String" resultType="Integer">
-    select sentenceId
+  <select id="getSentenceList" resultType="sentenceDto">
+    select *
     from sentences
-    where sentence like concat("%",#{sentence},"%")
   </select>
 
-  <insert id="insertSentenceWord" parameterType="map">
-    insert word_sentences(wordId, sentenceId)
-    values(#{wordId}, #{sentenceId})
-  </insert>
-
-  <select id="getTodaySentenceList" resultType="String">
-    select sentence from sentences where sentenceType = "today"
-  </select>
+  <update id="setSentenceType" parameterType="map">
+    update sentences
+    set sentenceType = #{type}
+    where sentenceId = #{sentenceId}
+  </update>
 </mapper>

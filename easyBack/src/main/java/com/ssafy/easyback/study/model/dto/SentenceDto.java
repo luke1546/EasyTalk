@@ -20,5 +20,5 @@ public class SentenceDto {
   private String sentenceType;
   String sentenceAudioUri;
   private OptionDto optionDto;
-  private Boolean isSaved;
+  private boolean isSaved;
 }
