@@ -9,6 +9,7 @@ import Line from "../../UI/atoms/Line/Line";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { RiContactsBookUploadLine } from "react-icons/ri";
 
 const ChaDiv = styled.div`
   display: flex;
@@ -140,6 +141,13 @@ const HomePage = () => {
         const exp = userData.exp; // exp 값
         const info = userData.info; // info 값
         const profileImageUri = userData.profileImageUri;
+        
+        console.dir("response")
+        console.dir(response);
+        console.dir("request")
+        console.dir(axios.request(config))
+        console.dir("getUri()")
+        console.dir(axios.getUri())
 
         setNickname(nickname);
         setExp(exp);
