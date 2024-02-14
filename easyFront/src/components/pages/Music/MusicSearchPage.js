@@ -7,14 +7,11 @@ import { useState, useEffect } from "react";
 import Textbox from "../../UI/atoms/Text/Textbox";
 import MusicBox from "../../UI/modules/MusicBox/MusicBox";
 
-const StyledImg = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-`;
-
-const MusicSearchPage = () => {
-  const { searchValue } = useParams();
+  const StyledImg = styled.img`
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  `;
 
   const [artists, setArtists] = useState([]);
   const [musicList, setMusicList] = useState([]);
@@ -123,7 +120,7 @@ const MusicSearchPage = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 export default MusicSearchPage;
