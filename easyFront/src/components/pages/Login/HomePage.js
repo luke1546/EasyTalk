@@ -26,8 +26,6 @@ const ProfileImgDiv = styled.img`
   border: 1px solid black;
 `;
 
-<<<<<<< HEAD
-=======
 const AtenDiv = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -36,7 +34,6 @@ const AtenDiv = styled.div`
 `;
 
 
->>>>>>> feature-css
 const LeftDiv = styled.div`
   display: flex;
   justify-content: left;
