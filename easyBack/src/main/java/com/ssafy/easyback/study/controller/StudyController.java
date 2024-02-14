@@ -9,6 +9,7 @@ import com.ssafy.easyback.study.model.dto.OptionDto;
 import com.ssafy.easyback.study.model.dto.RecordDto;
 import com.ssafy.easyback.study.model.dto.SentenceDto;
 import com.ssafy.easyback.study.model.dto.TestDto;
+import com.ssafy.easyback.study.model.dto.TodayDto;
 import com.ssafy.easyback.study.model.dto.WordDto;
 import com.ssafy.easyback.study.model.service.StudyService;
 import com.ssafy.easyback.study.stt.SpeechToText;
@@ -282,4 +283,10 @@ public class StudyController {
     param.put("testId", testId);
     return ResponseEntity.ok(studyService.getWordRecordDetail(param));
   }
+
+  @GetMapping("sentence/today")
+  public ResponseEntity<TodayDto> getTodaySentence() throws Exception {
+    return ResponseEntity.ok(studyService.getTodaySentence());
+  }
+
 }

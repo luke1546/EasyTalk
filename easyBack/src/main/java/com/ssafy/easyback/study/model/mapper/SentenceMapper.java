@@ -11,4 +11,10 @@ public interface SentenceMapper {
   void addToMySentenceBook(SentenceDto sentenceDto) throws Exception;
 
     void deleteSentence(SentenceDto sentenceDto) throws Exception;
+
+  Integer getTodaySentenceSize() throws Exception;
+
+  Integer getTodayWordSize(int sentenceId) throws Exception;
+
+  Integer getTodaySentenceId(int sentenceHash) throws Exception;
 }
