@@ -3,7 +3,6 @@ import { TiHome, TiMicrophoneOutline } from "react-icons/ti";
 import { FaRegBookmark, FaBookmark, FaAngleDown, FaRegEdit } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import { PiSpeakerHighBold } from "react-icons/pi";
-import { IoCloseCircleSharp } from "react-icons/io5";
 import { HiMiniMinusCircle } from "react-icons/hi2";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { IoIosHeart } from "react-icons/io";
@@ -13,7 +12,6 @@ import { LuCopyPlus, LuImagePlus } from "react-icons/lu";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import { BsMusicNoteList } from "react-icons/bs";
-import { AiOutlineEnter } from "react-icons/ai";
 
 import { MdOutlineFileDownload } from "react-icons/md";
 import { MdOutlineDownloading } from "react-icons/md";
@@ -92,8 +90,6 @@ const components = {
   fBookMarkBtn: FaBookmark,
   shareBtn: FiShare2,
   listenBtn: PiSpeakerHighBold,
-  xBtn: IoCloseCircleSharp,
-  enterBtn: AiOutlineEnter,
   dropBtn: FaAngleDown,
   editBtn: FaRegEdit,
   delBtn: HiMiniMinusCircle,

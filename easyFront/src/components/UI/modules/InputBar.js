@@ -33,7 +33,6 @@ const InputBar = ({ variant }) => {
       {/* 검색어를 입력하세요 */}
       {variant === "searchinputbar" && (
         <>
-          <Icon name="searchIcon" size="30px" color="#8382ff" />
           <Input
             name="searchInput"
             placeholder="검색어를 입력하세요."
@@ -45,7 +44,19 @@ const InputBar = ({ variant }) => {
               }
             }}
           />
-          <Button name="enterBtn" size="30px" color="#8382ff" onClick={handleInputClick} />
+          <Icon name="searchIcon" size="30px" color="#8382ff" />
+        </>
+      )}
+
+      {variant === "introinputbar" && (
+        <>
+          <Input
+            name="searchInput"
+            placeholder="Dancing Queen"
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
+          <Icon name="searchIcon" size="30px" color="#8382ff" />
         </>
       )}
 

@@ -2,7 +2,7 @@ import "./App.css";
 
 import React from "react";
 import { useState } from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "./components/UI/modules/Header";
@@ -25,6 +25,7 @@ import MyGroupPage from "./components/pages/My/MyGroupPage";
 import MyNeighborPage from "./components/pages/My/MyNeighborPage";
 import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
 import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
+// import 
 import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
 
 const HeaderDiv = styled.div`
@@ -71,6 +72,7 @@ const MainContents = styled.div`
 const App = () => {
   const [kakaoToken, setA] = useState(false); // 여기서 true false 값이 로그인 여부로 결정 ( 카카오 토큰 )
   const code = new URL(window.location.href).searchParams.get("code");
+
   return (
     <React.Fragment>
       <BrowserRouter>
@@ -104,14 +106,27 @@ const App = () => {
               <Route path="/mygroup" element={<MyGroupPage />} />
               {/* <Route path={`/study/:index`} element={<MusicDetailPage />} /> */}
             </Routes>
-            </StyledDiv>
-          <FooterDiv>
-            <Footer className="Footer" /> 
-          </FooterDiv>
+          </StyledDiv>
+          <PageFooter /> 
         </AppDiv>
       </BrowserRouter>
     </React.Fragment>
   );
 };
+
+const PageFooter = () => {
+  const location = useLocation();  // 현재 위치 상태를 추적합니다.
+
+  // 현재 위치가 "/"일 때는 렌더링하지 않습니다.
+  if (location.pathname === "/" || location.pathname === "/signup") {
+    return null;
+  }
+
+  return (
+    <FooterDiv>
+      <Footer className="Footer" /> 
+    </FooterDiv>
+  )
+}
 
 export default App;
