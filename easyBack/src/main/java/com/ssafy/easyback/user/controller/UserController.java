@@ -37,8 +37,6 @@ public class UserController {
     Long userId = (Long) session.getAttribute("userId");
     userDto.setUserId(userId);
 
-    log.info("image file size={}", userDto.getProfileImage().getSize());
-
     userService.registerUserAndSetAttendance(userDto, userId);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
