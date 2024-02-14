@@ -2,6 +2,7 @@ import "./App.css";
 
 import React from "react";
 import { useState } from "react";
+import axios from "axios"
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/UI/modules/Header";
@@ -31,7 +32,7 @@ import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
 import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
 import PlaceNeighborPage from "./components/pages/Place/PlaceNeighborPage";
 
-// axios.defaults.baseURL = 'https://i10b307.p.ssafy.io:8080';
+axios.defaults.baseURL = 'https://i10b307.p.ssafy.io:8080';
 
 const HeaderDiv = styled.div`
   z-index: 10;
