@@ -28,7 +28,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "proxy": ".",
+  "proxy": "https://i10b307.p.ssafy.io:8080",
   "eslintConfig": {
     "extends": [
       "react-app",
