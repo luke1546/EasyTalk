@@ -101,6 +101,12 @@ public class KakaoService {
       session.setAttribute("access_token", accessToken);
       session.setAttribute("userId", userId);
     }
+
+    // 로그인 되어있으면 출석하기
+    if (userRegistrationStatus == UserRegistrationStatus.REGISTERED) {
+      userService.setAttendance(userId);
+    }
+    
     loginResponseDto.setUserRegistrationStatus(userRegistrationStatus);
 
     return ResponseEntity.ok().body(loginResponseDto);
