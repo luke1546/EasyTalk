@@ -22,10 +22,10 @@ const ChaDiv = styled.div`
 const ProfileImgDiv = styled.img`
   display: flex;
   margin-left: auto;
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  border: 1px solid black;
+  // border: 1px solid black;
 `;
 
 const AtenDiv = styled.div`
@@ -63,32 +63,41 @@ const InnerDiv = styled.div`
 `;
 
 const WordBox = styled.div`
-  border: 2px solid #8382ff;
+  background-color: #8382ff;
+  color: white;
   border-radius: 10px;
+  background: linear-gradient(to top, #9c9cff, #cfcfff);
   width: 30%;
-  padding: 10px;
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  text-align: center;
+  box-shadow: 0px 4px 2px -4px #121212;
 `;
 
 const WordBoxes = styled.div`
   display: flex;
   gap: 10px;
   justify-content: space-between;
-  margin: 20px 40px 0px;
+  margin: 20px 20px 0px;
+
+  @media (max-width: 768px) {
+    margin: 10px 20px 0px;
+    // flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const SenBox = styled.div`
-  border: 2px solid #8382ff;
   border-radius: 10px;
-  margin: 10px 40px 20px;
-  padding: 20px 0;
+  margin: 10px 20px 20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  box-shadow: 0px 4px 2px -4px #121212;
+  background-color: #9c9cff;
+  color: white;
 `;
 
 const DayDiv = styled.div`
@@ -106,7 +115,7 @@ const DayCircle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.isAttend ? "#8382ff" : "transparent")};
+  background-color: ${(props) => (props.isAttend ? "#9c9cff" : "transparent")};
   color: ${(props) => (props.isAttend ? "white" : "black")};
   margin: 4px;
   border: 1px solid #8382ff;
@@ -251,7 +260,8 @@ const HomePage = () => {
               <Textbox
                 section="singleText"
                 fontWeight="bold"
-                context1={`${nickname}님 안녕하세요 !`}
+                fontSize="22px"
+                context1={`${nickname}님 반가워요!`}
               />
               <br />
               <Textbox section="singleText" context1="기분 좋은 오후에요." />
@@ -264,7 +274,7 @@ const HomePage = () => {
         </div>
         <Line />
         <LeftDiv>
-          <Textbox section="singleText" context1="오늘의 쉽게말하는 영어" fontWeight="bold" />
+          <Textbox section="singleText" fontSize="22px" context1="오늘의 쉽게말하는 영어" fontWeight="bold" />
         </LeftDiv>
         <RandomDiv>
           <WordBoxes>
@@ -272,10 +282,10 @@ const HomePage = () => {
               <WordBox>
                 <div key={index}>
                   <Textbox section="singleText" fontWeight="bold" context1={`${item.word}`} />
-                  <Textbox
+                  {/* <Textbox
                     section="singleText"
                     context1={`${item.wordMeaningDto[index].meaning}`}
-                  />
+                  /> */}
                 </div>
               </WordBox>
             ))}
@@ -287,7 +297,8 @@ const HomePage = () => {
         </RandomDiv>
         <Line />
         <LeftDiv>
-          <Textbox section="singleText" context1="경험치" fontWeight="bold" />
+          <Textbox section="singleText" 
+                fontSize="22px"context1="경험치" fontWeight="bold" />
         </LeftDiv>
         <ExpBar exp={exp} />
         <ExpDiv>
@@ -308,12 +319,12 @@ const HomePage = () => {
 
         <Line />
         <LeftDiv>
-          <Textbox section="singleText" context1="출석체크" fontWeight="bold" />
+          <Textbox section="singleText" fontSize="22px" context1="출석체크" fontWeight="bold" />
         </LeftDiv>
         <AtenDiv>
           <div>
             <Textbox section="singleText" context1={`출석하고 경험치 받아가세요!`} />
-            <Textbox section="singleText" context1={`일주일 연속 출석 시 30 경험치 추가!`} />
+            <Textbox section="singleText" context1={`일주일 연속 출석 시 30경험치 +`} />
           </div>
         </AtenDiv>
         <DayDiv>

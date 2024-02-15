@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 // import customAxios from '../../../api/customAxios';
 import TabBar from '../../UI/modules/TabBar/TabBar';
-import Profile from '../../UI/modules/Profile/Profile';
+import Profile from '../../UI/modules/Profile';
 import Button from "../../UI/atoms/Button/Button";
 import axios from "axios";
 
@@ -72,11 +72,10 @@ const MyNeighborPage = () => {
         {myNeighbor.map((neighbor, index) => (
           <div key={index}>
             <Profile
-              userId={neighbor.userId}
-              profileImg={neighbor.profileImg}
-              nickName={neighbor.nickName}
-              pageType="horizontal-layout" 
-            />
+            text1={neighbor.profileImg}
+            text2={neighbor.nickname}
+            pageType="horizontal-layout"
+          />
             {isEditing && (
             <div onClick={() => handleNeighborClick(neighbor.neighborId)}> {/* 버튼을 감싸는 div에 onClick 이벤트 설정 */}
               <Button

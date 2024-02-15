@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import TabBar from '../../UI/modules/TabBar/TabBar';
-import Profile from '../../UI/modules/Profile/Profile';
+import Profile from '../../UI/modules/Profile';
 import Button from "../../UI/atoms/Button/Button";
 
 
@@ -25,11 +25,11 @@ const MyNeighborSendPage = () => {
     }
 };
 
-useEffect(() => {
-  fetchMySend();
-}, []);
+  useEffect(() => {
+    fetchMySend();
+  }, []);
 
-// 이웃 신청 취소
+  // 이웃 신청 취소
   const handleCancel = async (neighborId) => {
     try {
       const params = {
@@ -60,10 +60,9 @@ useEffect(() => {
           // 각 이웃 신청에 대해 프로필과 수락, 거절 버튼을 렌더링
           <div key={index}>
             <Profile
-              userId={send.userId}
-              profileImg={send.profileImg}
-              nickName={send.nickName}
-              pageType="horizontal-layout" 
+              text1={send.profileImg}
+              text2={send.nickname}
+              pageType="horizontal-layout"
             />
             <div onClick={() => handleCancel(send.neighborId)}>
             <Button

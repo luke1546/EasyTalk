@@ -6,13 +6,17 @@ import React, { useState, useEffect } from "react";
 const MusicBoxWrapper = styled.div`
   display: flex;
   padding: 20px;
-  border: 2px solid #8382ff;
+  border: 1px solid #9c9cff;
   border-radius: 20px;
   margin: 20px 40px;
-  height: 100px;
+  color: #white;
+  height: 86px;
+  font-weight: bold;
+  box-shadow: 0px 5px 6px -4px #9c9cff;
 
   &:hover {
-    box-shadow: 0px 5px 6px -4px #121212;
+   
+    box-shadow: 0px 5px 6px 0px #9c9cff;
   }
 `;
 
@@ -38,9 +42,11 @@ const MusicInfo = styled.div`
 `;
 
 const MusicImage = styled.div`
-  width: 100px;
+  width: 86px;
   display: flex;
   justify-content: center;
+  box-shadow: 0px 5px 6px -4px #121212;
+  border-radius: 20px;
 `;
 
 const StyledP = styled.p`
@@ -57,12 +63,11 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
 
   const trimmedTitle = (window.innerWidth <= 768 && title.length > 20) 
     ? `${title.substring(0, 20)}...` 
-    : (title.length > 1000 ? `${title.substring(0, 1000)}...` : title);
+    : (title.length > 100 ? `${title.substring(0, 100)}...` : title);
 
   const trimmedArtistName = (window.innerWidth <= 500 && artistName.length > 7) 
     ? `${artistName.substring(0, 7)}...` 
     : (artistName.length > 30 ? `${artistName.substring(0, 30)}...` : artistName);
-
 
   return (
     <div>
@@ -70,10 +75,10 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
         <Link to={`${REDIRECT_URI}/study/music/${musicId}/${videoId}`} state={musicId}>
           <MusicBoxWrapper>
           <MusicImage>
-            <img src={musicImageUrl} alt="Album Cover" style={{ width: "100px", height: "100px", borderRadius: "20px" }} />
+            <img src={musicImageUrl} alt="Album Cover" style={{ width: "86px", height: "86px", borderRadius: "20px" }} />
           </MusicImage>
             <MusicDetailsWrapper>
-            <MusicTitle className="music-title">{trimmedTitle}</MusicTitle>
+            <MusicTitle className="music-title" >{trimmedTitle}</MusicTitle>
               <MusicInfo>
                 <StyledP className="music-artist">{trimmedArtistName}</StyledP>
                 <StyledP className="music-artist">|</StyledP> 
@@ -86,12 +91,12 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
       <Link to={`${REDIRECT_URI}/study/music/${musicId}`} state={musicId}>
         <MusicBoxWrapper>
         <div style={{ display: "flex", justifyContent: "center",  alignItems: "center"}}>
-          <img src={musicImageUrl} alt="Album Cover" style={{ width: "200px" }} />
+          <img src={musicImageUrl} alt="Album Cover" style={{ width: "86px", height: "86px", borderRadius: "20px" }} />
         </div>
           <MusicDetailsWrapper>
           <MusicTitle className="music-title">{trimmedTitle}</MusicTitle>
             <MusicInfo>
-              <StyledP className="music-artist">{trimmedArtistName}</StyledP>
+                <StyledP className="music-artist">{trimmedArtistName}</StyledP>
                 <StyledP className="music-artist">|</StyledP>
                 <StyledP className="music-time"> {time}</StyledP>
               </MusicInfo>

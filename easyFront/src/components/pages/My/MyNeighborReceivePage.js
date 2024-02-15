@@ -1,7 +1,7 @@
 // MyNeighborReceivePage.js
 import React, { useState, useEffect } from 'react';
 import TabBar from '../../UI/modules/TabBar/TabBar';
-import Profile from '../../UI/modules/Profile/Profile';
+import Profile from '../../UI/modules/Profile';
 import Button from "../../UI/atoms/Button/Button";
 import axios from "axios";
 
@@ -19,7 +19,7 @@ const MyNeighborReceivePage = () => {
 
         const response = await axios.get("/neighbor", { params }, { withCredentials: true });
       
-        setmyReceive(response.data)
+      setmyReceive(response.data)
       } catch (error) {
         console.error("Error myReceive", error);
       }
@@ -28,7 +28,6 @@ const MyNeighborReceivePage = () => {
   useEffect(() => {
     fetchMyReceive();
   }, []);
-  
   // 이웃 신청 수락
   const handleAccept = async (neighborId) => {
     try {
@@ -77,10 +76,9 @@ const MyNeighborReceivePage = () => {
           // 각 이웃 신청에 대해 프로필과 수락, 거절 버튼을 렌더링
             <div key={index}>
               <Profile
-                userId={receive.userId}
-                profileImg={receive.profileImg}
-                nickName={receive.nickName}
-                pageType="horizontal-layout" 
+                text1={receive.profileImg}
+                text2={receive.nickname}
+                pageType="horizontal-layout"
               />
               <div onClick={() => handleAccept(receive.neighborId)}>
                 <Button

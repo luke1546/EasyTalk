@@ -51,7 +51,7 @@ const InputBar = ({ variant, uri, onSubmit }) => {
             }}
           />
           <span onClick={handleInputClick}>
-            <Icon name="searchIcon" size="30px" color="#8382ff" />
+            <Icon name="searchIcon" size="35px" color="#9c9cff" />
           </span>
         </>
       )}
@@ -70,7 +70,7 @@ const InputBar = ({ variant, uri, onSubmit }) => {
             }}
           />
           <span onClick={intro}>
-            <Icon name="searchIcon" size="30px" color="#8382ff" />
+            <Icon name="searchIcon" size="30px" color="#9c9cff" />
           </span>
         </>
       )}

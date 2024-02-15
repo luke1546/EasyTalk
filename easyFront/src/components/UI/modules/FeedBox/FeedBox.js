@@ -88,8 +88,9 @@ const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked
             </div>
           </div>
           {feedImageUris && feedImageUris.map((imageUri, index) => (
-            <img key={index} className="profile-img" src={`${url}${imageUri}`} alt="FeedImage" />
+            <img key={index} className="feed-img" src={`${url}${imageUri}`} alt="FeedImage" />
           ))}
+          {/* <img className="feed-img" src={"https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com"+feedImageUris} alt="FeedImage" /> */}
 
             <Textbox section="singleText" context1={content} />
             <Textbox section="singleText" context1={createdDate} />
