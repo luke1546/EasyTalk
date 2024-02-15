@@ -1,67 +1,40 @@
-# 1. 프로젝트 개요
+# 💬🎤 쉽게말해 (EASYTALK)
+
+![mokup](./README_image/mokup.jpg)
+
+<br /><br />
+
+# 목차
+
+1. [개요](#개요)
+2. [프로젝트 소개](#프로젝트-소개)
+3. [서비스 화면](#서비스-화면)
+4. [주요 기능](#주요-기능)
+5. [협업 환경](#협업-환경)
+6. [기술 소개](#기술-소개)
+7. [팀원 소개](#팀원-소개)
+
+<br /><br />
+
+# 개요
 
 **SSAFY 10기 2학기 공통 프로젝트**
 
-중장년충을 위한 영어학습 플랫폼입니다.
+저희 **쉽게말해**는 중장년층분들이 영어를 쉽고 재미있게 배울 수 있도록 만들어졌습니다. <br /><br />
+영어에 익숙하지 않으신 분들도 수준에 맞춰 천천히 진행되며 <br /><br />
+`단어`, `문장`뿐만아니라 `상황별 영어대화법`, 그리고 사용자의 흥미를 일으키기위해 엣 추억을 회상하며 `올드팝`으로 영어를 배울 수있는 서비스를 제공하고있습니다. <br /><br />
+저희는 중장년층 분들이 영어를 통해 새로운 세상을 경험하고, 새로운 사람들과 만나는 것을 돕기 위해 다양한 학습 자료를 제공하고 있습니다. <br /><br />
+새로운 도전을 통해 더 넓은 세상을 경험하고, 새로운 사람들을 만나며 이제 당신의 두 번째 인생에 활력을 불어넣는 여행의 시작을 도와드리기 위해 기획하게 되었습니다.
 
 개발기간 : 2024.01.03 ~ 2024.02.16 (7주)
 
-### 👨‍👨‍👧‍👧 팀 소개
+<br /><br />
 
----
-
-**B307 : 전재우(Leader), 이준혁, 이호성, 신성현, 서민지, 박은미**
-
-**FRONTEND**
-
-- `이준혁(FE리더)` : BE 보조 | 설문알리미 | 컨텐츠제작자
-- `전재우` : 발표, PPT | 추억담당(재카담당)
-- `서민지` : UI&UX 디자이너 | Notion | 서기 | 컨텐츠제작자
-- `박은미` : GIT | README | 서기
-
-**BACKEND**
-
-- `신성현(BE리더)` : DB 관리 | 보안 | 아키텍쳐 | 기술담당
-- `이호성` : Jira | 알고리즘 | PM | 간식담당 | 호파고
-
-#### 🔥 GROUND RULE 🔥
-
-1. 친절하게 대화하기
-2. 밝게 인사하기
-3. mm, kakao 답장, 반응 빠르게 하기
-4. 모르는 것을 부끄러워 하지 않기!!
-5. 주도적으로 참여하기
-6. 자유로운 의견제시
-7. 개발현황 실시간 공유하기
-8. 매일 오전 회의 9시 30분
-
-### 📚 STACKS
-
----
-
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
-<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
-<br>
-
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-<br>
-
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
-<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
-<br>
-
-<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
-<img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-
-<br><br>
-
-# 2. 프로젝트 소개
+# 프로젝트 소개
 
 ### 📋 서비스명
 
-- 쉽게말해 (가제)
+- 쉽게말해 (EASYTALK)
 
 ### 🎯 페르소나
 
@@ -69,56 +42,45 @@
 
 ### 🎵 주요 서비스
 
-- 단계별 학습 : 파닉스 -> 단어 -> 문장으로 이루어진 단계별 학습 서비스
+- 단계별 학습 : 단어 -> 문장 -> 노래로 이루어진 단계별 학습 서비스
 - 올드팝을 통한 학습 : 노래를 통해 영어를 배우며 발음 일치도 평가 서비스
 - 실생활 표현 학습 : 상황에 따른 실생활 문장 표현 학습 서비스
 
 ### 🗺️ 배포 주소
 
-- 개발 버전 : <br>
-- 프론트 서버 :<br>
-- 백엔드 서버 :
+- 프론트 서버 : https://i10b307.p.ssafy.io/ <br />
+- 백엔드 서버 : https://i10b307.p.ssafy.io:8080/ <br />
 
-<br><br>
-
-# 3. 협업 환경
-
-### Git으로 협업하기
-
-브랜치로 작업 공간을 나누어 충돌의 방지와 함께 원본 코드를 안전하게 보관하고 체계적이며 독립적으로 개발을 진행할 수 있도록합니다.
-
-이를 위해 사용한 요소는 다음과 같습니다.
-
-- `브랜치` :
-
-매일 오전 스프린트 회의에서 파트별 commit을 확인하고 모두의 확인과 검증을 거쳐 merge를 하고 개발을 진행합니다.
-
-### Jira로 협업하기
-
-매주 오전 9시 30분 스프린트 회의를 통해 그 전날의 이슈를 공유하고 당일 목표를 세우고 목표 달성을 위한 구체적인 작업을 정리합니다.
-
-공통적인 일정 관리와 파트별 회의, 개인일정까지 모두 함께 공유하며 구체적으로 이슈를 관리합니다.
-
-이를 위해 사용된 요소들은 다음과 같습니다.
-
-- `Epic` :
-- `Store & Task` :
-- `번다운 차트` :
-
-### Notion으로 협업하기
-
-회의록, 스크럼 회의, 발표 정리, 문서 정리, 기획서 등 자료들을 Notion을 통해 작성 및 관리하였습니다.
-
-- `회의록` : 팀회의와 컨설턴트+코치님과의 회의 내용을 회의록으로 기록하였습니다.
-- `TO-DO` : 해야 할 일을 간단히 기록하여 완료된 일을 체크하였습니다.
-- `문서` : 요구사항 정의서, 기능명세서, 일정관리 등 공유 문서 관리를 노션에 기록하여 모두가 동일한 목표를 가지고 개발 할 수 있도록 하였습니다.
-- `자료방` : 프로젝트에 도움될 만한 자료들을 자료방에 공유하며 참고할 수 있도록 하였습니다.
-
-<br><br>
-
-# 4. 기획/설계
+## 📊 기획/설계
 
 ### 📑 기능 명세서
+
+![Functional_specification](./README_image/Functional_specification1.PNG)
+![Functional_specification](./README_image/Functional_specification2.PNG)
+![Functional_specification](./README_image/Functional_specification3.PNG)
+![Functional_specification](./README_image/Functional_specification4.PNG)
+
+### 📊 Sequence Diagram
+
+**로그인 기능**
+
+![Functional_specification](./README_image/login.png)
+
+**단어 학습 기능**
+
+![Functional_specification](./README_image/study_word.png)
+
+**데이터 요청 기능**
+
+![Functional_specification](./README_image/data_get.png)
+
+**녹음 기능**
+
+![Functional_specification](./README_image/recode.png)
+
+**광장 기능**
+
+![Functional_specification](./README_image/place.png)
 
 ### 💻 코딩 컨벤션
 
@@ -785,8 +747,193 @@
 <details>
   <summary>5. Git-Commit 컨벤션</summary>
 
+- `init`
+  프로젝트 초기 생성
+
+- `feat`
+  새로운 기능 추가
+
+- `fix`
+  버그 수정
+
+- `refacto`
+
+  1. 사용자 입장에서 기능의 차이는 없지만 개발자 입장에서 가독성이나 효율성을 올렸을 때
+  2. 기능상의 변경을 위해 코드가 수정되었을 때
+
+- `test`
+테스트(테스트 코드 추가, 수정, 삭제, 비즈니스 로직에 변경이 없는 경우)
 </details>
+
+<br /><br />
+
+# 서비스 화면
+
+1.  홈화면 : 학습 후 경험치 제공으로 학습 동기부여 제공 <br />
+=> 학습 진척도, 출석 등을 통한 경험치 부여 및 학습정도 시각화 제공 <br />
+=> 경험치, 레벨 등의 게이미피케이션을 통한 학습 동기부여
+<p float="left">
+<img src="./README_image/home1.PNG" width="150" />
+<img src="./README_image/home2.PNG" width="150" />
+</p>
+
+2.  노래 학습 : 올드팝을 통한 노래로 배우는 영어 학습 제공
+<p float="left">
+  <img src="./README_image/music1.PNG" width="80" />
+  <img src="./README_image/music2.PNG" width="80" />
+  <img src="./README_image/music3.PNG" width="80" />
+  <img src="./README_image/music4.PNG" width="80" />
+  <img src="./README_image/music5.PNG" width="80" />
+</p>
+
+3.  문장 학습 : 상황별 문장 학습을 통한 영어 학습 제공
+<p float="left">
+  <img src="./README_image/sentence1.PNG" width="130" />
+  <img src="./README_image/sentence2.PNG" width="130" />
+  <img src="./README_image/sentence3.PNG" width="130" /> 
+</p>
+4.  UI/UX : 타겟층에 맞는 UI/UX 제공 <br />
+    => 중장년층에게 맞는 큰 글씨와 직관적인 css 적용 <br />
+    => Atomic 디자인 react에서 적용하여 재사용성, 유지보수성, 확장성, 가독성 향상
+
+<br /><br />
+
+# 주요 기능
+
+### - 노래 학습
+
+1. 다양한 올드팝을 따라부르며 발음, 해석 제공을 통한 영어학습 서비스
+2. YouTube API를 활용하여 자막 정보를 싱크에 맞게 동적으로 변화시키는 기능
+3. Google Cloud STT 와 LCS 알고리즘 및 내부 알고리즘을 통한 유저 발음 정확도 산출
+
+### - 노래, 단어, 문장 저장을 통한 개인화 서비스 제공
+
+1. 저장한 노래를 기반으로 노래를 추천해주는 기능
+2. 이웃 기능을 통한 SNS피드 서비스 제공
+
+<br /><br />
+
+# 협업 환경
+
+### Git으로 협업하기
+
+브랜치로 작업 공간을 나누어 충돌의 방지와 함께 원본 코드를 안전하게 보관하고 체계적이며 독립적으로 개발을 진행할 수 있도록합니다.
+
+이를 위해 사용한 요소는 다음과 같습니다.
+
+- 브랜치 : `master`, `develop-BE`, `develop-FE`, `feature` <br />
+  기능 단위로 `feautre` 브랜치를 생성 후 FE는 `develop-FE` merge, <br/>
+  BE `develop-BE` merge하여 오류 확인 후 master에 최종 merge 하였습니다.
+  ![branch_graph](./README_image/git_graph.gif)
+
+매일 오전 스프린트 회의에서 파트별 commit을 확인하고 모두의 확인과 검증을 거쳐 merge를 하고 개발을 진행합니다.
+
+### Jira로 협업하기
+
+매주 오전 9시 30분 스프린트 회의를 통해 그 전날의 이슈를 공유하고 당일 목표를 세우고 목표 달성을 위한 구체적인 작업을 정리합니다.
+
+공통적인 일정 관리와 파트별 회의, 개인일정까지 모두 함께 공유하며 구체적으로 이슈를 관리합니다.
+
+이를 위해 사용된 요소들은 다음과 같습니다.
+
+- Epic : `기획`, `개발`, `UI/UX`, `디버깅` <br />
+  그외 이슈에 맞게 하위 `Epic`을 생성해 작업하였습니다.
+- Store & Task : `개발`, `스토리`
+- 번다운 차트
+  ![branch_graph](./README_image/burndown_chart.PNG)
+
+### Notion으로 협업하기
+
+회의록, 스크럼 회의, 발표 정리, 문서 정리, 기획서 등 자료들을 Notion을 통해 작성 및 관리하였습니다.
+
+- `회의록` : 팀회의와 컨설턴트+코치님과의 회의 내용을 회의록으로 기록하였습니다.
+- `TO-DO` : 해야 할 일을 간단히 기록하여 완료된 일을 체크하였습니다.
+- `문서` : 요구사항 정의서, 기능명세서, 일정관리 등 공유 문서 관리를 노션에 기록하여 모두가 동일한 목표를 가지고 개발 할 수 있도록 하였습니다.
+- `자료방` : 프로젝트에 도움될 만한 자료들을 자료방에 공유하며 참고할 수 있도록 하였습니다.
+- `주소` : https://ssafyb307.notion.site/ssafyb307/B-307-010553f15b77414098b0c305e8169008
+  <br><br>
 
 ### 💾 ERD
 
+![ERD](./README_image/ERD.png)
+
 ### 🎨 FIGMA
+
+![branch_graph](./README_image/figma.png)
+
+<br /><br />
+
+# 기술 소개
+
+⚙ Management Tool
+
+![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+<img src="https://img.shields.io/badge/gitlab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=#FC6D26">
+<img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=#000000">
+<img src="https://img.shields.io/badge/mattermost-0058CC?style=for-the-badge&logo=mattermost&logoColor=#0058CC">
+<img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=#5865F2">
+
+🖥 IDE
+
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+<img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=#007ACC">
+
+📚 API
+
+<img src="https://img.shields.io/badge/youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=#FF0000">
+<img src="https://img.shields.io/badge/kakao-FFCD00?style=for-the-badge&logo=kakao&logoColor=#FFCD00">
+
+📨 Infra
+
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+<img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=#232F3E">
+<img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=#569A31">
+<img src="https://img.shields.io/badge/ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=#E95420">
+
+📱 Frontend
+
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=#DB7093">
+<img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=#5A29E4">
+
+💾 Backend
+
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=#6DB33F">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=#4479A1">
+
+<br /><br />
+
+# 팀원 소개
+
+**B307 👨‍👨‍👧‍👧 : 전재우(Leader), 이준혁, 이호성, 신성현, 서민지, 박은미**
+
+**FRONTEND**
+
+- `이준혁(FE리더)` : BE 보조 | 설문알리미 | 컨텐츠제작자
+- `전재우` : 발표, PPT | 추억담당(재카담당)
+- `서민지` : UI&UX 디자이너 | Notion | 서기 | 컨텐츠제작자
+- `박은미` : GIT | README | 서기
+
+**BACKEND**
+
+- `신성현(BE리더)` : DB 관리 | 보안 | 아키텍쳐 | 기술담당
+- `이호성` : Jira | 알고리즘 | PM | 간식담당 | 호파고
+
+#### 🔥 GROUND RULE 🔥
+
+1. 친절하게 대화하기
+2. 밝게 인사하기
+3. mm, kakao 답장, 반응 빠르게 하기
+4. 모르는 것을 부끄러워 하지 않기!!
+5. 주도적으로 참여하기
+6. 자유로운 의견제시
+7. 개발현황 실시간 공유하기
+8. 매일 오전 회의 9시 30분
