@@ -123,10 +123,10 @@ const WordTestPage = () => {
         const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word/test?level=${level}`);
         setTestWord(response.data);
       }
-      else{
-        const response = await axios.get(`https://i10b307.p.ssafy.io:8080//study/word/test?filter=music&target=${index}`);
-        setTestWord(response.data);
-      }
+        else{
+          const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word/test?filter=music&target=${index}`);
+          setTestWord(response.data);
+        }
       } catch (error) {
         console.error('단어 목록을 가져오는 중 에러 발생:', error);
       }
