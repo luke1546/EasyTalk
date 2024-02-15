@@ -18,4 +18,6 @@ public interface PreProcessService {
     List<SentenceDto> getSentenceList() throws Exception;
 
   void setSentenceType(HashMap<String, Object> param) throws Exception;
+
+  void insertLyrics() throws Exception;
 }
