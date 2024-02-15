@@ -134,7 +134,7 @@ const WordTestPage = () => {
           ))}
           <Modal
             isOpen={isOpen}
-            onRequestClose={closeModal}
+            // onRequestClose={closeModal}
             overlayClassName="custom-overlay"
             className="custom-modal"
             shouldCloseOnOverlayClick={false} // overlay 클릭 시에 모달이 닫히지 않도록 설정
