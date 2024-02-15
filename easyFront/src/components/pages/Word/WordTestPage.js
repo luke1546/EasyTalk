@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Textbox from "../../UI/atoms/Text/Textbox";
+import Modal from 'react-modal';
 import axios from "axios";
 
 const WordTestPage = () => {
@@ -12,7 +13,7 @@ const WordTestPage = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [currentWord, setCurrentWord] = useState(null); // 초기값으로 null 설정
   const [choices, setChoices] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { level, index } = useParams();
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -63,12 +64,11 @@ const WordTestPage = () => {
       setRight(false);
     }
     selectedAnswers.push({'questionId':currentId, 'input':selectedAnswer});
-    console.log(selectedAnswers)
-    setIsModalOpen(true);
+    setIsOpen(true);
   };
 
   const handleNextQuestion = () => {
-    setIsModalOpen(false);
+    setIsOpen(false);
     if (currentIndex < testWord.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -96,31 +96,6 @@ const WordTestPage = () => {
     navigate(`/myrecodeword`); // 학습 목록 페이지로 이동
   };
 
-  const handleModalContentClick = (event) => {
-    // 모달 내부를 클릭한 경우에는 이벤트가 모달 외부로 전파되지 않도록 처리
-    event.stopPropagation();
-  };
-
-  const handleModalOutsideClick = (event) => {
-    if (!event.target.closest('.modal-content')) {
-      // 모달 외부를 클릭한 경우에만 모달을 닫지 않도록 처리
-      event.stopPropagation();
-    }
-  };
-  
-  useEffect(() => {
-    if (isModalOpen) {
-      document.addEventListener('click', handleModalOutsideClick);
-    } else {
-      document.removeEventListener('click', handleModalOutsideClick);
-    }
-  
-    // 컴포넌트가 unmount 될 때 이벤트 리스너를 정리
-    return () => {
-      document.removeEventListener('click', handleModalOutsideClick);
-    };
-  }, [isModalOpen]);
-
   return (
     <div>
       {!showResult ? (
@@ -132,14 +107,18 @@ const WordTestPage = () => {
               {choice}
             </button>
           ))}
-          {isModalOpen && (
-            <div className="modal-content" onClick={handleModalContentClick}>
-              <Textbox section={'singleText'} context1={isRight ? '맞았습니다!' : '틀렸습니다!'} />
-              <button onClick={isRight ? handleNextQuestion : handleSaveWord}>
-                {isRight ? '다음 문제로' : '저장하고 다음 문제로'}
-              </button>
-            </div>
-          )}
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={closeModal}
+            overlayClassName="custom-overlay"
+            className="custom-modal"
+            shouldCloseOnOverlayClick={false} // overlay 클릭 시에 모달이 닫히지 않도록 설정
+          >
+            <Textbox section={'singleText'} context1={isRight ? '맞았습니다!' : '틀렸습니다!'} />
+            <button onClick={isRight ? handleNextQuestion : handleSaveWord}>
+              {isRight ? '다음 문제로' : '저장하고 다음 문제로'}
+            </button>
+          </Modal>
         </>
       ) : (
         <>
