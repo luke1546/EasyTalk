@@ -43,7 +43,7 @@ const SentenceSituationPage = () => {
     { type: 'travel', label: '여행' },
     { type: 'study', label: '공부' },
     { type: 'introduce', label: '소개' },
-    { type: 'bussiness', label: '업무' },
+    { type: 'business', label: '업무' },
     { type: 'friendly', label: '친목' },
     { type: 'restaurant', label: '식당' },
   ];
