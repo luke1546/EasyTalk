@@ -1,25 +1,132 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Textbox from "../../UI/atoms/Text/Textbox";
+import Modal from 'react-modal';
 import axios from "axios";
+import styled from "styled-components";
+
+const WordDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+`;
+
+const Btn = styled.button`
+  border: 1px solid #8382ff;
+  border-radius: 50px;
+  background-color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 40px; // 패딩을 조절하여 버튼의 높이를 텍스트에 맞춤
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 5px 6px -4px #8382ff;
+  margin: 20px 20px 0;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #8382ff;
+  }
+`;
+
+const ModalText = styled.p`
+  font-size: 18px;
+  margin-bottom: 20px;
+`;
+
+const NextButton = styled.button`
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+const SaveButton = styled.button`
+  background-color: #ff0000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+const CustomModal = styled(Modal)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 999; // 모달 위에 위치하도록 설정
+`;
+
+const ModalContent = styled.div`
+  text-align: center;
+  position: relative; // 모달 안의 요소들의 위치를 상대적으로 조정하기 위해 추가
+`;
+
+const CustomModalOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // 반투명한 검은색 배경
+  z-index: 998; // 모달 위에 위치하도록 설정
+`;
+
+const TestResultContainer = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+`;
+
+const ResultText = styled.p`
+  font-size: 18px;
+  margin-bottom: 20px;
+`;
 
 const WordTestPage = () => {
   const [testWord, setTestWord] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentId, setCurrentId] = useState(null);
   const [isRight, setRight] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [currentWord, setCurrentWord] = useState(null); // 초기값으로 null 설정
   const [choices, setChoices] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { level } = useParams();
+  const { level, index } = useParams();
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   useEffect(() => {
     const fetchTestWords = async () => {
       try {
+        if(level){
         const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word/test?level=${level}`);
         setTestWord(response.data);
+      }
+      else{
+        const response = await axios.get(`https://i10b307.p.ssafy.io:8080//study/word/test?filter=music&target=${index}`);
+        setTestWord(response.data);
+      }
       } catch (error) {
         console.error('단어 목록을 가져오는 중 에러 발생:', error);
       }
@@ -32,6 +139,7 @@ const WordTestPage = () => {
     // 현재 단어와 선택지를 설정
     if (testWord.length > 0 && testWord[currentIndex]) {
       setCurrentWord(testWord[currentIndex]);
+      setCurrentId(testWord[currentIndex].questionId);
       setChoices(shuffleArray([testWord[currentIndex].meaning, testWord[currentIndex].wrong1, testWord[currentIndex].wrong2]));
     }
   }, [currentIndex, testWord]);
@@ -53,11 +161,12 @@ const WordTestPage = () => {
     } else {
       setRight(false);
     }
-    setIsModalOpen(true);
+    selectedAnswers.push({'questionId':currentId, 'input':selectedAnswer});
+    setIsOpen(true);
   };
 
   const handleNextQuestion = () => {
-    setIsModalOpen(false);
+    setIsOpen(false);
     if (currentIndex < testWord.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -78,41 +187,57 @@ const WordTestPage = () => {
   const handleFinishTest = async () => {
     // 시험 결과 저장 API 호출
     try {
-      await axios.put(`https://i10b307.p.ssafy.io:8080/study/word/test?level=${level}`);
+      await axios.put(`https://i10b307.p.ssafy.io:8080/study/word/test`, selectedAnswers);
     } catch (error) {
       console.error('시험 결과 저장 중 에러 발생:', error);
     }
-    navigate(`학습 목록`); // 학습 목록 페이지로 이동
+    navigate(`/myrecodeword`); // 학습 목록 페이지로 이동
   };
 
   return (
-    <div>
+    <WordDiv>
       {!showResult ? (
         <>
-          <h2>Question {currentIndex + 1}</h2>
+          <h2>문제 {currentIndex + 1}</h2>
           <h3>{currentWord?.word}</h3> {/* Optional chaining 사용 */}
           {choices.map((choice, index) => (
-            <button key={index} onClick={() => handleAnswerClick(choice)}>
+            <Btn key={index} onClick={() => handleAnswerClick(choice)}>
               {choice}
-            </button>
+            </Btn>
           ))}
-          {isModalOpen && (
-            <div>
-              <Textbox section={'singleText'} context1={isRight ? '맞았습니다!' : '틀렸습니다!'} />
-              <button onClick={isRight ? handleNextQuestion : handleSaveWord}>
-                {isRight ? '다음 문제로' : '저장하고 다음 문제로'}
-              </button>
-            </div>
-          )}
+          {/* 모달을 제외한 페이지에 오버레이 추가 */}
+          {isOpen && <CustomModalOverlay />}
+          <CustomModal
+            isOpen={isOpen}
+            overlayClassName="custom-overlay"
+            className="custom-modal"
+            shouldCloseOnOverlayClick={false}
+          >
+            <ModalContent>
+              <ModalText>{isRight ? '맞았습니다!' : '틀렸습니다!'}</ModalText>
+              {isRight ? 
+                <NextButton onClick={handleNextQuestion}>다음 문제로</NextButton>
+                :
+                <SaveButton onClick={handleSaveWord}>저장하고 다음 문제로</SaveButton>
+              }
+            </ModalContent>
+          </CustomModal>
         </>
       ) : (
-        <>
-          <h2>Test Result</h2>
-          <p>Correct Answers: {correctAnswers}/{testWord.length}</p>
-          <button onClick={handleFinishTest}>Finish Test</button>
-        </>
+        <CustomModal
+        isOpen={showResult}
+        overlayClassName="custom-overlay"
+        className="custom-modal"
+        shouldCloseOnOverlayClick={false}
+          >
+            <ModalContent>
+              <h2>시험 결과</h2>
+              <ResultText>맞힌 문제 수: {correctAnswers}/{testWord.length}</ResultText>
+              <Btn onClick={handleFinishTest}>시험 기록 보러가기</Btn>
+            </ModalContent>
+        </CustomModal>
       )}
-    </div>
+    </WordDiv>
   );
 };
 

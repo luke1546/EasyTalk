@@ -4,6 +4,37 @@ import React, { useEffect, useState } from 'react';
 import WordBox from '../../UI/modules/WordBox/WordBox';
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
+const WordDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+`;
+
+const Stagediv = styled.div`
+  border: 1px solid #8382ff;
+  border-radius: 20px;
+  height: 86px;
+  font-weight: bold;
+  box-shadow: 0px 5px 6px -4px #8382ff;
+  margin: 20px 20px 0;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #8382ff;
+  }
+`;
+
+const StyledP = styled.p`
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledTitle = styled.p`
+  text-align: left;
+  font-weight: bold;
+  padding: 0px 20px;
+`;
 
 const WordListPage = ( ) => {
   const [words, setWords] = useState([]);
@@ -19,7 +50,6 @@ const WordListPage = ( ) => {
         }
         else {
           const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word?filter=myList`);
-          console.log(response.data)
           setWords(response.data);
         }
       } catch (error) {
@@ -32,14 +62,14 @@ const WordListPage = ( ) => {
   }, [level]);
 
   return (
-    <div>
+    <WordDiv>
       {level ? (
         <>
-          <h2>{`${level}단계 단어 목록`}</h2>
+         <StyledTitle>{`${level}단계 단어 목록`}</StyledTitle>
         </>
   ) : (
     <>
-      <h2>저장한 단어</h2>
+      <StyledTitle>저장한 단어</StyledTitle>
     </>
       )
       }
@@ -53,7 +83,7 @@ const WordListPage = ( ) => {
           wordAudioUri={word.wordAudioUri}
         />
       ))}
-    </div>
+  </WordDiv >
   );
 };
 

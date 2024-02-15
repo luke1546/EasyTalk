@@ -5,13 +5,13 @@ import FeedBox from "../../UI/modules/FeedBox/FeedBox";
 import Icon from "../../UI/atoms/Icon/Icon";
 import Profile from "../../UI/modules/Profile";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { RiSafariFill } from "react-icons/ri";
 
 const PlaceHomePage = () => {
   const navigate = useNavigate();
-  
+
   const [hasNeighbors, setHasNeighbors] = useState(false);
   const [myFeed, setmyFeed] = useState([]);
 
@@ -37,20 +37,20 @@ const PlaceHomePage = () => {
     fetchMyFeed();
   }, []);
 
-  const handleSearchInput = event => {
+  const handleSearchInput = (event) => {
     setSearchTerm(event.target.value);
   };
 
   useEffect(() => {
     // input 엘리먼트가 렌더링된 후에 onChange 이벤트를 추가
     if (inputRef.current) {
-      inputRef.current.querySelector('input').addEventListener('change', handleSearchInput);
+      inputRef.current.querySelector("input").addEventListener("change", handleSearchInput);
     }
 
     // 컴포넌트가 언마운트될 때 이벤트 리스너를 제거
     return () => {
       if (inputRef.current) {
-        inputRef.current.querySelector('input').removeEventListener('change', handleSearchInput);
+        inputRef.current.querySelector("input").removeEventListener("change", handleSearchInput);
       }
     };
   }, []);
@@ -59,7 +59,9 @@ const PlaceHomePage = () => {
     // 검색어가 변경될 때마다 실행
     const fetchSearchResults = async () => {
       try {
-        const response = await axios.get(`/neighbor?keyword=${searchTerm}`, { withCredentials: true });
+        const response = await axios.get(`/neighbor?keyword=${searchTerm}`, {
+          withCredentials: true,
+        });
         setSearchResults(response.data); // 검색 결과를 상태에 저장
         // console.log("response data", response);
       } catch (error) {
@@ -86,14 +88,18 @@ const PlaceHomePage = () => {
             </div>
             <SNSInputBox
               type="post"
-            // onContentChange={(value) => setContent(value)}
-            // onImagesChange={(value) => setImages(value)}
-            // onPost={handlePost}
+              // onContentChange={(value) => setContent(value)}
+              // onImagesChange={(value) => setImages(value)}
+              // onPost={handlePost}
             />
             <div>
               {myFeed.map((feed) => (
                 // 클릭하면 게시글 수정 페이지로 이동
-                <div onClick={() => navigate(`/neighbor/feed/${feed.feedId}`, { state: { feedId: feed.feedId } })}>
+                <div
+                  onClick={() =>
+                    navigate(`/neighbor/feed/${feed.feedId}`, { state: { feedId: feed.feedId } })
+                  }
+                >
                   <FeedBox
                     key={feed.feedId}
                     userId={feed.userId} // userId가 있다고 가정합니다.
@@ -118,27 +124,27 @@ const PlaceHomePage = () => {
             <div ref={inputRef}>
               <InputBar variant="searchinputbar" uri="/neighbor/search/" />
             </div>
-            {searchResults.map(user => (
+            {searchResults.map((user) => (
               <div
                 key={user.userId}
-                onClick={() =>
-                  navigate(`/placeneighbor`, { state: { user } }) // 사용자 데이터를 상태로 전달
-                }>
-              <Profile
-                // userId={user.userId}
-                // profileImg={user.profileImg}
-                text1={user.nickName}
-                text2={user.info}
-                pageType="horizontal-layout"
-              />
+                onClick={
+                  () => navigate(`/placeneighbor`, { state: { user } }) // 사용자 데이터를 상태로 전달
+                }
+              >
+                <Profile
+                  // userId={user.userId}
+                  // profileImg={user.profileImg}
+                  text1={user.nickName}
+                  text2={user.info}
+                  pageType="horizontal-layout"
+                />
               </div>
             ))}
           </>
         )}
       </div>
     </>
-  )
+  );
 };
-
 
 export default PlaceHomePage;

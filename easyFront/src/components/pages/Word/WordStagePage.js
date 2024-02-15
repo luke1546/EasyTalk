@@ -2,7 +2,37 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Textbox from "../../UI/atoms/Text/Textbox";
+import styled from "styled-components";
+
+const WordDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+`;
+
+const Stagediv = styled.div`
+  border: 1px solid #8382ff;
+  border-radius: 20px;
+  height: 86px;
+  font-weight: bold;
+  box-shadow: 0px 5px 6px -4px #8382ff;
+  margin: 20px 20px 0;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #8382ff;
+  }
+`;
+
+const StyledP = styled.p`
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledTitle = styled.p`
+  text-align: left;
+  font-weight: bold;
+  padding: 0px 20px;
+`;
 
 const WordStagePage = () => {
   const navigate = useNavigate();
@@ -24,12 +54,14 @@ const WordStagePage = () => {
 
   return (
     <div>
-      <h2>단계별 단어 공부</h2>
+      <WordDiv>
+      <StyledTitle className="">단계별 단어 공부</StyledTitle>
       {levels.map((level) => (
-        <div key={level.id} onClick={() => handleLevelClick(level.id)}>
-          <Textbox section="singlePage" context1={level.label} />
-        </div>
-      ))}
+        <Stagediv  key={level.id} onClick={() => handleLevelClick(level.id)}>
+        <StyledP className="">{level.label}</StyledP>
+      </Stagediv >
+    ))}
+    </WordDiv>
     </div>
   );
 };

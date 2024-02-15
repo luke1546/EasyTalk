@@ -17,20 +17,24 @@ const TabBarContainer = styled.div`
     bottom: 0;
     left: 20px;
     right: 20px;
-    border-bottom: 3px solid #8382ff;
+    border-bottom: 3px solid #9c9cff;
   }
 `;
 
 const StyledTab = styled(Tab)`
   padding: 5px 30px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 20px;
   color: #121212;
 
   &.active {
-    background-color: #8382ff;
+    background-color: #9c9cff;
     color: white;
     border-radius: 20px 20px 0px 0px;
+  }
+
+  &:hover {
+    font-weight: bold;
   }
 `;
 

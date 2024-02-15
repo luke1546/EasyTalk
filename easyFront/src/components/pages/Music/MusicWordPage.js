@@ -1,12 +1,13 @@
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
 import Button from "../../UI/atoms/Button/Button";
 import WordBox from "../../UI/modules/WordBox/WordBox";
 
 const MusicWordPage = () => {
+  const navigate = useNavigate();
   const match = useMatch("*"); // 현재 경로의 패턴을 가져옴
+  const { videoId, index } = useParams();
   let url = match.pathname;
   url = url.replace("word", "test");
 
@@ -17,8 +18,6 @@ const MusicWordPage = () => {
   const [wordList, setWordList] = useState([]);
 
   const [title, setTitle] = useState("");
-
-  console.log(wordList);
 
   useEffect(() => {
     // 제목 가져오는 axios
@@ -56,6 +55,10 @@ const MusicWordPage = () => {
       });
   }, []);
 
+  const handleGoTest = () => {
+    navigate(`test`);
+  }
+
   return (
     <div className="MusicWordPage">
       <div>{title}</div>
@@ -77,9 +80,7 @@ const MusicWordPage = () => {
             );
           })}
       </div>
-      <Link to={url}>
-        <Button name="submitBtn" text="시험보기" />
-      </Link>
+      <Button name="submitBtn" text="시험보기" onClick={handleGoTest} />
     </div>
   );
 };

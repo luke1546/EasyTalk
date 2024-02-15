@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledBarBorder = styled.div`
-  height: 20px;
+  height: 30px;
   border-radius: 50px;
   border: 2px solid #8382ff;
   margin-right: 40px;
@@ -14,9 +14,10 @@ const StyledBarBorder = styled.div`
 
 const StyledLength = styled.div`
   width: ${({ width }) => `${width}%`};
-  height: 20px;
-  background: #8382ff;
+  height: 30px;
+  // background: #8382ff;
   border-radius: 50px 0 0 50px;
+  background: linear-gradient(to right, #8382ff, #cfcfff);
 `;
 
 const ExpText = styled.div`
@@ -24,14 +25,12 @@ const ExpText = styled.div`
   left: ${({ width }) => `${width}%`};
   bottom: 100%;
   color: white;
-  font-size: 15px;
+  font-size: 17px;
   background-color: #8382ff;
   border-radius: 50px; 
   padding: 2px 10px 4px;
   transform: translateX(-50%);
   margin: 20px 0; 
-
-  margin-top: 40px;
 
   &::after { // 말풍선의 꼬리 부분을 만듭니다.
     content: '';

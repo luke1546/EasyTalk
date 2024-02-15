@@ -1,7 +1,7 @@
+// PlaceNeighborPage.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
-
 import FeedBox from "../../UI/modules/FeedBox/FeedBox";
 import Profile from "../../UI/modules/Profile";
 import Button from "../../UI/atoms/Button/Button";
@@ -50,6 +50,7 @@ const PlaceNeighborPage = () => {
     try {
       const response = await axios.get(`/neighbor/feed?type=detail&target=${user.userId}`, { withCredentials: true });
       setFeeds(response.data); // 가져온 데이터를 상태에 저장
+      console.dir(response.data)
     } catch (error) {
       console.error("Error fetching feeds", error);
     }
@@ -99,8 +100,9 @@ const PlaceNeighborPage = () => {
           likeCount={feed.heartCount}
           commentCount={feed.commentCount}
           content={feed.content}
-            createdDate={feed.registerDate}
-            feedImageUris={feed.feedImageUris[feed.feedImageUris.length-1]}
+          createdDate={feed.registerDate}
+          feedImageUris={feed.feedImageUris}
+          editMode={false}
         />
       </div>
       ))}
