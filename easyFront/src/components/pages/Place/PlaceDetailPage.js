@@ -24,6 +24,7 @@ const PlaceDetailPage = () => {
 
         const commentResponse = await axios.get(`/neighbor/feed/${feedId}/comment`);
         setComments(commentResponse.data);
+        console.log(commentResponse.data)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -55,7 +56,7 @@ const PlaceDetailPage = () => {
             editMode={true}
             feedImageUris={feedData.feedImageUris}  // 변경된 부분
           />}
-        <hr />
+       <hr />
         <SNSInputBox feedId={feedData.feedId} />
         {comments.map((comment) => (
           <div key={comment.id}>

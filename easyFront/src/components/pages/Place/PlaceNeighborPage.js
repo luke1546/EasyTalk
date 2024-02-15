@@ -101,7 +101,8 @@ const PlaceNeighborPage = () => {
           commentCount={feed.commentCount}
           content={feed.content}
           createdDate={feed.registerDate}
-          feedImageUris={feed.feedImageUris}  // 변경된 부분
+          feedImageUris={feed.feedImageUris}
+          editMode={false}
         />
       </div>
       ))}

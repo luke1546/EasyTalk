@@ -3,6 +3,31 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Textbox from "../../UI/atoms/Text/Textbox";
 import Modal from 'react-modal';
 import axios from "axios";
+import styled from "styled-components";
+
+const WordDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+`;
+
+const Btn = styled.button`
+  border: 1px solid #8382ff;
+  border-radius: 50px;
+  background-color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 40px; // 패딩을 조절하여 버튼의 높이를 텍스트에 맞춤
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 5px 6px -4px #8382ff;
+  margin: 20px 20px 0;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #8382ff;
+  }
+`;
 
 const WordTestPage = () => {
   const [testWord, setTestWord] = useState([]);
@@ -97,15 +122,15 @@ const WordTestPage = () => {
   };
 
   return (
-    <div>
+    <WordDiv>
       {!showResult ? (
         <>
-          <h2>Question {currentIndex + 1}</h2>
+          <h2>문제 {currentIndex + 1}</h2>
           <h3>{currentWord?.word}</h3> {/* Optional chaining 사용 */}
           {choices.map((choice, index) => (
-            <button key={index} onClick={() => handleAnswerClick(choice)}>
+            <Btn key={index} onClick={() => handleAnswerClick(choice)}>
               {choice}
-            </button>
+            </Btn>
           ))}
           <Modal
             isOpen={isOpen}
@@ -124,10 +149,10 @@ const WordTestPage = () => {
         <>
           <h2>Test Result</h2>
           <p>Correct Answers: {correctAnswers}/{testWord.length}</p>
-          <button onClick={handleFinishTest}>Finish Test</button>
+          <Btn onClick={handleFinishTest}>Finish Test</Btn>
         </>
       )}
-    </div>
+    </WordDiv>
   );
 };
 

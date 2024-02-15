@@ -46,7 +46,7 @@ const MyRecodeMusicPage = () => {
         <Button
           name="submitBtn"
           text={issaving? '저장완료' : '저장'}
-          color={issaving ? 'red' : 'blue'}
+          color={issaving ? '#8382ff;' : '#8382ff;'}
           />
       </div>
       <div>
