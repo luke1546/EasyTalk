@@ -71,4 +71,10 @@
     from lyric_sentence
     where lyricId = #{lyricId}
   </select>
+
+  <select id="getLyricIdBySentence" parameterType="Integer" resultType="Integer">
+    select lyricId
+    from lyric_sentence
+    where sentenceId = #{sentenceId}
+  </select>
 </mapper>

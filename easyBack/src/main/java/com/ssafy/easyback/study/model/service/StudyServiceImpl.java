@@ -268,4 +268,8 @@ public class StudyServiceImpl implements StudyService{
     return todayDto;
   }
 
+  @Override
+  public Integer getLyricIdBySentence(Integer sentenceId) throws Exception {
+    return sentenceMapper.getLyricIdBySentence(sentenceId);
+  }
 }
