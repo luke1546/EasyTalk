@@ -7,7 +7,7 @@ import Button from '../../atoms/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import './ListenBox.css'; // 필요한 CSS 파일을 import
 
-const ListenBox = ({ id }) => {
+const ListenBox = ({ id, type }) => {
   const navigate = useNavigate();
   const [sentence, setSentence] = useState('');
   const [isSaved, setSaved] = useState('');
@@ -24,9 +24,14 @@ const ListenBox = ({ id }) => {
           setSaved(response.data.saved);
           setAudioUrl(response.data.sentenceAudioUri);
           console.log(response.data)
-          const response1 = await axios.get(`https://i10b307.p.ssafy.io:8080/study/music/sentence?target=${response.data.sentenceId}`)
-          setLyricId(response1.data)
-          console.log(response1.data)
+          if (type === 'lyric') {
+            const lyricId = await axios.get(`https://i10b307.p.ssafy.io:8080/study/music/sentence?target=${response.data.sentenceId}`)
+            setLyricId(lyricId.data)
+            setAudioUrl(`/study/music/lyric/audio/${lyricId.data}.wav`);
+            console.log(audioUrl)
+            console.log(lyricId.data)
+          }
+
           } catch (error) {
         console.error('문장을 가져오는 중 에러 발생:', error);
       }
@@ -37,7 +42,7 @@ const ListenBox = ({ id }) => {
 
   const playAudio = (event) => {
     event.stopPropagation();
-    const audio = new Audio(`https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com/study/music/lyric/audio/${lyricId}.wav`);
+    const audio = new Audio(`https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com${audioUrl}`);
     audio.play();
   };
 

@@ -49,7 +49,7 @@ const MusicSentencePage = () => {
     <div className="MusicSentencePage">
       <div>{title}</div>
       {sentenceIds.map((id) => (
-        <ListenBox key={id} id={id} />
+        <ListenBox key={id} id={id} type="lyric"/>
       ))}
     </div>
   );
