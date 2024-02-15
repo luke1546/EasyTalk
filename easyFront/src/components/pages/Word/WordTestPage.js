@@ -29,6 +29,79 @@ const Btn = styled.button`
   }
 `;
 
+const ModalText = styled.p`
+  font-size: 18px;
+  margin-bottom: 20px;
+`;
+
+const NextButton = styled.button`
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+const SaveButton = styled.button`
+  background-color: #ff0000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+const CustomModal = styled(Modal)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 999; // 모달 위에 위치하도록 설정
+`;
+
+const ModalContent = styled.div`
+  text-align: center;
+  position: relative; // 모달 안의 요소들의 위치를 상대적으로 조정하기 위해 추가
+`;
+
+const CustomModalOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // 반투명한 검은색 배경
+  z-index: 998; // 모달 위에 위치하도록 설정
+`;
+
+const TestResultContainer = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+`;
+
+const ResultText = styled.p`
+  font-size: 18px;
+  margin-bottom: 20px;
+`;
+
 const WordTestPage = () => {
   const [testWord, setTestWord] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -132,25 +205,37 @@ const WordTestPage = () => {
               {choice}
             </Btn>
           ))}
-          <Modal
+          {/* 모달을 제외한 페이지에 오버레이 추가 */}
+          {isOpen && <CustomModalOverlay />}
+          <CustomModal
             isOpen={isOpen}
-            // onRequestClose={closeModal}
             overlayClassName="custom-overlay"
             className="custom-modal"
-            shouldCloseOnOverlayClick={false} // overlay 클릭 시에 모달이 닫히지 않도록 설정
+            shouldCloseOnOverlayClick={false}
           >
-            <Textbox section={'singleText'} context1={isRight ? '맞았습니다!' : '틀렸습니다!'} />
-            <button onClick={isRight ? handleNextQuestion : handleSaveWord}>
-              {isRight ? '다음 문제로' : '저장하고 다음 문제로'}
-            </button>
-          </Modal>
+            <ModalContent>
+              <ModalText>{isRight ? '맞았습니다!' : '틀렸습니다!'}</ModalText>
+              {isRight ? 
+                <NextButton onClick={handleNextQuestion}>다음 문제로</NextButton>
+                :
+                <SaveButton onClick={handleSaveWord}>저장하고 다음 문제로</SaveButton>
+              }
+            </ModalContent>
+          </CustomModal>
         </>
       ) : (
-        <>
-          <h2>Test Result</h2>
-          <p>Correct Answers: {correctAnswers}/{testWord.length}</p>
-          <Btn onClick={handleFinishTest}>Finish Test</Btn>
-        </>
+        <CustomModal
+        isOpen={showResult}
+        overlayClassName="custom-overlay"
+        className="custom-modal"
+        shouldCloseOnOverlayClick={false}
+          >
+            <ModalContent>
+              <h2>시험 결과</h2>
+              <ResultText>맞힌 문제 수: {correctAnswers}/{testWord.length}</ResultText>
+              <Btn onClick={handleFinishTest}>시험 기록 보러가기</Btn>
+            </ModalContent>
+        </CustomModal>
       )}
     </WordDiv>
   );
