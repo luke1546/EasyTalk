@@ -2,6 +2,12 @@ import "./App.css";
 
 import React from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { loginState } from "./components/pages/Common/loginState";
+
 import styled from "styled-components";
 import Header from "./components/UI/modules/Header";
 import Footer from "./components/UI/modules/Footer";
@@ -24,12 +30,11 @@ import MyGroupPage from "./components/pages/My/MyGroupPage";
 import MyNeighborPage from "./components/pages/My/MyNeighborPage";
 import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
 import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
-// import 
+// import
 import PlaceNeighborPage from "./components/pages/Place/PlaceNeighborPage";
 import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
 import MusicDetailPage from "./components/pages/Music/MusicDetailPage";
 import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
-
 
 const HeaderDiv = styled.div`
   z-index: 10;
@@ -61,8 +66,8 @@ const StyledDiv = styled.div`
 `;
 
 const AppDiv = styled.div`
-    font-family: 'Noto Sans KR', sans-serif !important;
-    font-size: 20px;
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-size: 20px;
   text-align: center;
 `;
 
@@ -73,7 +78,7 @@ const MainContents = styled.div`
 `;
 
 const PageFooter = () => {
-  const location = useLocation();  // 현재 위치 상태를 추적합니다.
+  const location = useLocation(); // 현재 위치 상태를 추적합니다.
 
   // 현재 위치가 "/"일 때는 렌더링하지 않습니다.
   if (location.pathname === "/" || location.pathname === "/signup") {
@@ -82,10 +87,10 @@ const PageFooter = () => {
 
   return (
     <FooterDiv>
-      <Footer className="Footer" /> 
+      <Footer className="Footer" />
     </FooterDiv>
-  )
-}
+  );
+};
 
 const App = () => {
   const code = new URL(window.location.href).searchParams.get("code");
@@ -124,7 +129,7 @@ const App = () => {
               <Route path="/placeneighbor" element={<PlaceNeighborPage />} />
             </Routes>
           </StyledDiv>
-          <PageFooter /> 
+          <PageFooter />
         </AppDiv>
       </BrowserRouter>
     </React.Fragment>

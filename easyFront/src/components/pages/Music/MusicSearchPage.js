@@ -110,57 +110,56 @@ const MusicSearchPage = () => {
   return (
     <div className="MusicSearchPage">
       <TextDiv>
-        <Textbox context1={`${searchValue} 검색결과`} fontWeight='bold'/>
+        <Textbox context1={`${searchValue} 검색결과`} fontWeight="bold" />
       </TextDiv>
       <Line />
       <TextDiv>
-        <Textbox context1="가수" fontWeight='bold' />
+        <Textbox context1="가수" fontWeight="bold" />
       </TextDiv>
       {artists.length === 0 ? (
         <div>검색결과가 없습니다.</div>
       ) : (
         <div>
           {/* artistDto와 musicDto가 구분이 안돼서 파싱이 불가. 일단 주소 매핑 위해 임의로 제작 */}
-          {artists.map((item, index) => (
-            <div key={index}>
-              <Link to={`/study/music/artist/${item.artistId}`}>
-                {/* 지금 나훈아 이미지만 나오지만 호성님이 artistsUrl 추가해주시면 해당 값으로 변경하여 적용 */}
-                <StyledImg src={imageUrl} />
-                {/* 마찬가지로 이름도 임시로 artistId로 했지만 추후 변경 */}
-                <CenterDib>
-                  <Textbox context1={`${item.artistName}`} />
-                </CenterDib>
-              </Link>
-            </div>
-          ))}
+          {artists &&
+            artists.map((item, index) => (
+              <div key={index}>
+                <Link to={`/study/music/artist/${item.artistId}`}>
+                  <StyledImg src={item.artistImageUri} />
+                  <CenterDib>
+                    <Textbox context1={`${item.artistName}`} />
+                  </CenterDib>
+                </Link>
+              </div>
+            ))}
         </div>
       )}
-
       <Line />
       <TextDiv>
-        <Textbox context1="노래" fontWeight='bold' />
+        <Textbox context1="노래" fontWeight="bold" />
       </TextDiv>
 
       {musicList.length === 0 ? (
         <div>검색결과가 없습니다.</div>
       ) : (
         <MusicDiv>
-          {artists.map((item, index) => (
-            <div key={index}>
-              <MusicBox
-                musicId={item.musicId}
-                title={item.title}
-                artistName={item.artistName} 
-                musicTime={item.musicTime}
-                musicImageUrl={item.musicImageUri}
-                videoId={item.videoId}
-              />
-            </div>
-          ))}
+          {musicList &&
+            musicList.map((item, index) => (
+              <div key={index}>
+                <MusicBox
+                  musicId={item.musicId}
+                  title={item.title}
+                  artistName={item.artistName}
+                  musicTime={item.musicTime}
+                  musicImageUrl={item.musicImageUri}
+                  videoId={item.videoId}
+                />
+              </div>
+            ))}
         </MusicDiv>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default MusicSearchPage;

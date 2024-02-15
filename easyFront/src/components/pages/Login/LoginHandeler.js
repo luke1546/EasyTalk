@@ -2,12 +2,17 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios, { HttpStatusCode } from "axios";
 
+import { useRecoilState } from "recoil";
+import { loginState } from "../Common/loginState";
+
 const REDIRECT_URI =
   process.env.REACT_APP_EASYTALK_URL +
   process.env.REACT_APP_FRONT_PORT +
   process.env.REACT_APP_KAKAO_REDIRECT_URL;
 
 const LoginHandeler = (props) => {
+  const [loginToken, setLoginToken] = useRecoilState(loginState);
+
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
 
@@ -31,6 +36,8 @@ const LoginHandeler = (props) => {
         const userChecker = res.data.UserRegistrationStatus;
         const userId = res.data.userId;
 
+        const loginToken = true;
+
         if (userChecker === "UNREGISTERED") {
           // 등록되지 않은 사용자
           navigate("/signup");
@@ -40,6 +47,8 @@ const LoginHandeler = (props) => {
           navigate("/login");
         } else if (userChecker === "REGISTERED") {
           // 등록된 사용자
+          setLoginToken(true);
+          localStorage.setItem("loginToken", loginToken);
           navigate("/home");
           // navigate("/home", { state: { userId: userId } });
         } else {
