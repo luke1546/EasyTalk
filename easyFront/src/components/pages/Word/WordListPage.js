@@ -19,7 +19,6 @@ const WordListPage = ( ) => {
         }
         else {
           const response = await axios.get(`https://i10b307.p.ssafy.io:8080/study/word?filter=myList`);
-          console.log(response.data)
           setWords(response.data);
         }
       } catch (error) {

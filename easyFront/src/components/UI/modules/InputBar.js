@@ -1,4 +1,3 @@
-
 //InputBar.js
 import * as React from "react";
 import styled from "styled-components";
@@ -15,7 +14,7 @@ const StyledContainer = styled.div`
   margin: 40px 0 20px 0;
   margin: 40px 0 20px 0;
 `;
-const InputBar = ({ variant, uri }) => {
+const InputBar = ({ variant, uri, onSubmit }) => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const handleInputClick = () => {
@@ -23,8 +22,16 @@ const InputBar = ({ variant, uri }) => {
     if (searchValue === "") {
       alert("검색어를 입력해주세요!");
     } else {
-      navigate( uri + `${searchValue}`);
+      navigate(uri + `${searchValue}`);
       // navigate(`/neighbor/search/${searchValue}`);
+    }
+  };
+
+  const intro = () => {
+    if (searchValue === "") {
+      alert("검색어를 입력해주세요!");
+    } else {
+      onSubmit && onSubmit(searchValue);
     }
   };
   return (
@@ -43,7 +50,9 @@ const InputBar = ({ variant, uri }) => {
               }
             }}
           />
-          <Icon name="searchIcon" size="30px" color="#8382ff" />
+          <span onClick={handleInputClick}>
+            <Icon name="searchIcon" size="30px" color="#8382ff" />
+          </span>
         </>
       )}
 
@@ -51,11 +60,18 @@ const InputBar = ({ variant, uri }) => {
         <>
           <Input
             name="searchInput"
-            placeholder="Dancing Queen"
+            placeholder="검색창"
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                intro();
+              }
+            }}
           />
-          <Icon name="searchIcon" size="30px" color="#8382ff" />
+          <span onClick={intro}>
+            <Icon name="searchIcon" size="30px" color="#8382ff" />
+          </span>
         </>
       )}
       {variant === "chatinputbar" && (

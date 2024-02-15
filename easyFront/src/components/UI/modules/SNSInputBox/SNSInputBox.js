@@ -1,10 +1,10 @@
 // SNSInputBox.js
-
+import axios from 'axios';
 import React, { useState } from 'react';
 import Button from '../../atoms/Button/Button';
 import './SNSInputBox.css';
 
-const SNSInputBox = ({ type, onSubmit }) => {
+const SNSInputBox = ({ type, onSubmit, feedId }) => {
   const [content, setContent] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -17,10 +17,15 @@ const SNSInputBox = ({ type, onSubmit }) => {
     setSelectedImage(file);
   };
 
-  const handleSubmit = () => {
-    // TODO: 게시글 또는 댓글 작성 로직 구현
-    onSubmit({ content, selectedImage });
-  };
+  const handleSubmit = async () => {
+    try {
+      await axios.post(`/neighbor/feed/${feedId}/comment`, { content: content });
+      setContent('');
+      setSelectedImage(null);
+    } catch (error) {
+      console.error('Error posting comment:', error);
+    }
+  }
 
   return (
     <div className={`sns-input-box ${type}`}>
@@ -40,7 +45,9 @@ const SNSInputBox = ({ type, onSubmit }) => {
           <input id="image-upload" type="file" accept="image/*" onChange={handleImageChange} />
         </>
       )}
-      <Button name="submitBtn" text='등록' onClick={handleSubmit} />
+      <div onClick={handleSubmit}>
+        <Button name="submitBtn" text='등록' />
+      </div>
     </div>
   );
 };

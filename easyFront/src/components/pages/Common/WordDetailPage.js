@@ -56,7 +56,7 @@ const WordDetailPage = () => {
 
   const handlePlayClick = (event) => {
     event.stopPropagation();
-    const audio = new Audio(targetWord.wordAudioUri);
+    const audio = new Audio(`https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com${targetWord.wordAudioUri}`);
     audio.play();
   };
 

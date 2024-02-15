@@ -24,7 +24,7 @@ const WordStagePage = () => {
 
   return (
     <div>
-      <h2>단계별 단어 공부</h2>
+      <h2>단계 선택</h2>
       {levels.map((level) => (
         <div key={level.id} onClick={() => handleLevelClick(level.id)}>
           <Textbox section="singlePage" context1={level.label} />

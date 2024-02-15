@@ -6,6 +6,8 @@ import ExpBar from "../../UI/modules/ExpBar";
 import Line from "../../UI/atoms/Line/Line";
 // import yourImage from './path_to_your_image_file';
 
+import { AccessChecker } from "../Common/AccessChecker";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -119,6 +121,8 @@ const PointText = styled.div`
 `;
 
 const HomePage = () => {
+  // AccessChecker();
+
   const [nickname, setNickname] = useState("");
   const [exp, setExp] = useState("");
   const [info, setInfo] = useState("");
@@ -136,165 +140,198 @@ const HomePage = () => {
   const [toDaySentence, setTodaySentence] = useState("");
   const [toDaySentenceMean, setTodaySentenceMean] = useState("");
 
+  // useEffect(() => {
+  //   // 명세서 나의 유저데이터
+  //   axios
+  //     .get("/user", { withCredentials: true })
+  //     .then((response) => {
+  //       console.log(userData);
+  //       const userData = response.data;
+  //       const nickname = userData.nickname; // nickname
+  //       const exp = userData.exp; // exp 값
+  //       const info = userData.info; // info 값
+  //       const profileImageUri = userData.profileImageUri;
+
+  //       setNickname(nickname);
+  //       setExp(exp);
+  //       setInfo(info);
+  //       setProfileImageUri(profileImageUri);
+  //     })
+  //     .catch((error) => {
+  //       console.error("유저 데이터 에러 : ", error);
+  //       console.dir(error);
+  //     });
+
+  //   // 문장 데이터 (오늘의 단어)
+  //   axios
+  //     .get("/study/sentence/today", { withCredentials: true })
+  //     .then((response) => {
+  //       const wordData = response.data.words;
+  //       const sentenceData = response.data.sentence;
+
+  //       setWordData(wordData);
+
+  //       setTodaySentence(sentenceData.sentence.split("-")[0]);
+  //       setTodaySentenceMean(sentenceData.meaning.split("-")[0]);
+  //     })
+  //     .catch((error) => {
+  //       console.error("문장 데이터 에러 : ", error);
+  //       console.dir(error);
+  //     });
+
+  //   // 명세서 기준 출석데이터
+  //   // 0부터 월요일
+  //   axios
+  //     .get("/user/attendance", { withCredentials: true })
+  //     .then((response) => {
+  //       const userAttendance = response.data;
+
+  //       setAttendanceList(userAttendance);
+
+  //       setAttendanceList([1, 2]);
+  //     })
+  //     .catch((error) => {
+  //       console.error("출석부 에러 : ", error);
+  //     });
+  // }, []);
+
+  const [userDataLoading, setUserDataLoading] = useState(true);
+  const [sentenceDataLoading, setSentenceDataLoading] = useState(true);
+  const [attendanceDataLoading, setAttendanceDataLoading] = useState(true);
+
   useEffect(() => {
-    // 명세서 나의 유저데이터
-    axios
-      .get("/user", { withCredentials: true })
-      .then((response) => {
-        console.log(response);
+    axios.get("/user", { withCredentials: true }).then((response) => {
+      const userData = response.data;
+      const nickname = userData.nickname; // nickname
+      const exp = userData.exp; // exp 값
+      const info = userData.info; // info 값
+      const profileImageUri = userData.profileImageUri;
 
-        const userData = response.data;
-        const nickname = userData.nickname; // nickname
-        const exp = userData.exp; // exp 값
-        const info = userData.info; // info 값
-        const profileImageUri = userData.profileImageUri;
-        
-        console.dir("response")
-        console.dir(response);
-        console.dir("request")
-        console.dir("getUri()")
-        console.dir(axios.getUri())
+      setNickname(nickname);
+      setExp(exp);
+      setInfo(info);
+      setProfileImageUri(profileImageUri);
+      setUserDataLoading(false);
+    });
 
-        setNickname(nickname);
-        setExp(exp);
-        setInfo(info);
-        setProfileImageUri(profileImageUri);
-      })
-      .catch((error) => {
-        console.error("유저 데이터 에러 : ", error);
-        console.dir(error);
-      });
+    axios.get("/study/sentence/today", { withCredentials: true }).then((response) => {
+      const wordData = response.data.words;
+      const sentenceData = response.data.sentence;
 
-    // 문장 데이터 (오늘의 단어)
-    axios
-      .get("/study/sentence/today", { withCredentials: true })
-      .then((response) => {
-        const wordData = response.data.words;
-        const sentenceData = response.data.sentence;
+      setWordData(wordData);
 
-        setWordData(wordData);
+      setTodaySentence(sentenceData.sentence.split("-")[0]);
+      setTodaySentenceMean(sentenceData.meaning.split("-")[0]);
+      setSentenceDataLoading(false);
+    });
 
-        setTodaySentence(sentenceData.sentence.split("-")[0]);
-        setTodaySentenceMean(sentenceData.meaning.split("-")[0]);
-      })
-      .catch((error) => {
-        console.error("문장 데이터 에러 : ", error);
-        console.dir(error);
-      });
+    axios.get("/user/attendance", { withCredentials: true }).then((response) => {
+      const userAttendance = response.data;
 
-    // 명세서 기준 출석데이터
-    // 0부터 월요일
-    axios
-      .get("/user/attendance", { withCredentials: true })
-      .then((response) => {
-        const userAttendance = response.data;
+      setAttendanceList(userAttendance);
 
-        setAttendanceList(userAttendance);
-
-        setAttendanceList([1, 2]);
-      })
-      .catch((error) => {
-        console.error("출석부 에러 : ", error);
-      });
+      setAttendanceDataLoading(false);
+    });
   }, []);
 
-  return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "0 40px",
-        }}
-      >
-        <ChaDiv>
-          <div>
+  if (userDataLoading || sentenceDataLoading || attendanceDataLoading) {
+    return <div>Loading...</div>; // or return a loading spinner
+  } else {
+    return (
+      <>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: "0 40px",
+          }}
+        >
+          <ChaDiv>
+            <div>
+              <Textbox
+                section="singleText"
+                fontWeight="bold"
+                context1={`${nickname}님 안녕하세요 !`}
+              />
+              <br />
+              <Textbox section="singleText" context1="기분 좋은 오후에요." />
+              <Textbox section="singleText" context1="식사는 하셨나요 ?" />
+            </div>
+          </ChaDiv>
+          <ProfileImgDiv
+            src={`https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com` + profileImageUri}
+          />
+        </div>
+        <Line />
+        <LeftDiv>
+          <Textbox section="singleText" context1="오늘의 쉽게말하는 영어" fontWeight="bold" />
+        </LeftDiv>
+        <RandomDiv>
+          <WordBoxes>
+            {wordData.map((item, index) => (
+              <WordBox>
+                <div key={index}>
+                  <Textbox section="singleText" fontWeight="bold" context1={`${item.word}`} />
+                  <Textbox
+                    section="singleText"
+                    context1={`${item.wordMeaningDto[index].meaning}`}
+                  />
+                </div>
+              </WordBox>
+            ))}
+          </WordBoxes>
+          <SenBox>
+            <Textbox section="singleText" fontWeight="bold" context1={`${toDaySentence}`} />
+            <Textbox section="singleText" context1={`${toDaySentenceMean}`} />
+          </SenBox>
+        </RandomDiv>
+        <Line />
+        <LeftDiv>
+          <Textbox section="singleText" context1="경험치" fontWeight="bold" />
+        </LeftDiv>
+        <ExpBar exp={exp} />
+        <ExpDiv>
+          <InnerDiv>
+            <Textbox section="singleText" context1={`${nickname}님 대단해요 !`} />
+            <br />
             <Textbox
               section="singleText"
-              fontWeight="bold"
-              context1={`${nickname}님 안녕하세요 !`}
+              context1={`${needExp} 경험치 더 받으면`}
+              context2={`${lv}레벨이 돼요.`}
             />
-            <br />
-            <Textbox section="singleText" context1="기분 좋은 오후에요." />
-            <Textbox section="singleText" context1="식사는 하셨나요 ?" />
-          </div>
-        </ChaDiv>
-        <ProfileImgDiv src={profileImageUri} />
-      </div>
-      <Line />
-      <LeftDiv>
-        <Textbox section="singleText" context1="오늘의 쉽게말하는 영어" fontWeight="bold" />
-      </LeftDiv>
-      <RandomDiv>
-        <WordBoxes>
-          {wordData &&
-            wordData.map((item, index) => {
-              return <div>{wordData.word}</div>;
-            })}
-          <WordBox>
-            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
-            <Textbox section="singleText" context1="사과" />
-          </WordBox>
-          <WordBox>
-            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
-            <Textbox section="singleText" context1="사과" />
-          </WordBox>
-          <WordBox>
-            <Textbox section="singleText" fontWeight="bold" context1="Apple" />
-            <Textbox section="singleText" context1="사과" />
-          </WordBox>
-        </WordBoxes>
-        <SenBox>
-          <Textbox section="singleText" fontWeight="bold" context1={`${toDaySentence}`} />
-          <Textbox section="singleText" context1={`${toDaySentenceMean}`} />
-        </SenBox>
-      </RandomDiv>
-      <Line />
-      <LeftDiv>
-        <Textbox section="singleText" context1="경험치" fontWeight="bold" />
-      </LeftDiv>
-      <ExpBar exp={exp} />
-      <ExpDiv>
-        <InnerDiv>
-          <Textbox section="singleText" context1={`${nickname}님 대단해요 !`} />
-          <br />
-          <Textbox
-            section="singleText"
-            context1={`${needExp} 경험치 더 받으면`}
-            context2={`${lv}레벨이 돼요.`}
-          />
-          <Textbox section="singleText" context1={`${lv + 1}레벨을 달성할 수 있어요.`} />
-        </InnerDiv>
-      </ExpDiv>
-      <Link to="/study">
-        <Button name="submitBtn" text="학습 이어서하고 경험치 받기" />
-      </Link>
+            <Textbox section="singleText" context1={`${lv + 1}레벨을 달성할 수 있어요.`} />
+          </InnerDiv>
+        </ExpDiv>
+        <Link to="/study">
+          <Button name="submitBtn" text="학습 이어서하고 경험치 받기" />
+        </Link>
 
-      <Line />
-      <LeftDiv>
-        <Textbox section="singleText" context1="출석체크" fontWeight="bold" />
-      </LeftDiv>
-      <AtenDiv>
-        <div>
-          <Textbox section="singleText" context1={`출석하고 경험치 받아가세요!`} />
-          <Textbox section="singleText" context1={`일주일 연속 출석 시 30 경험치 추가!`} />
-        </div>
-      </AtenDiv>
-      <DayDiv>
-        <div style={{ display: "flex" }}>
-          {days.map((day, index) => (
-            <div key={index}>
-              <DayCircle key={index} isAttend={attendanceList.includes(index)}>
-                {day}
-              </DayCircle>
-              {attendanceList.includes(index) && <PointText>+10</PointText>}
-            </div>
-          ))}
-        </div>
-      </DayDiv>
-    </>
-  );
+        <Line />
+        <LeftDiv>
+          <Textbox section="singleText" context1="출석체크" fontWeight="bold" />
+        </LeftDiv>
+        <AtenDiv>
+          <div>
+            <Textbox section="singleText" context1={`출석하고 경험치 받아가세요!`} />
+            <Textbox section="singleText" context1={`일주일 연속 출석 시 30 경험치 추가!`} />
+          </div>
+        </AtenDiv>
+        <DayDiv>
+          <div style={{ display: "flex" }}>
+            {days.map((day, index) => (
+              <div key={index}>
+                <DayCircle key={index} isAttend={attendanceList.includes(index)}>
+                  {day}
+                </DayCircle>
+                {attendanceList.includes(index) && <PointText>+10</PointText>}
+              </div>
+            ))}
+          </div>
+        </DayDiv>
+      </>
+    );
+  }
 };
 
 export default HomePage;

@@ -80,7 +80,7 @@ const SentenceDetailPage = () => {
   return (
     <div>
       <ListenBox
-        sentence={sentence}
+        id={id}
       />
       <div className="TestPage">
         <MicBox />
