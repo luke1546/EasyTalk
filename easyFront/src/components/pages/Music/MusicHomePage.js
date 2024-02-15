@@ -79,7 +79,7 @@ const MusicHomePage = () => {
           testId: item.testId,
           testTitle: item.testTitle,
         }));
-
+        console.log(response)
         setMyStudyMusic(myStudyMusic);
       })
       .catch((error) => {

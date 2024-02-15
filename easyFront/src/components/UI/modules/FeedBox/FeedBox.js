@@ -13,6 +13,7 @@ const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likes, setLikes] = useState(likeCount);
   const [isEditing, setIsEditing] = useState(false);
+  const url = "https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com";
   const handleLikeClick = async () => {
     try {
       if (isLiked) {
@@ -75,7 +76,7 @@ const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked
         <>
           <div className="feed-info">
             <div className="user-info" onClick={handleUserClick}>
-              <img className="profile-img" src={profileImg} alt="Profile" />
+              <img className="profile-img" src={`${url}${profileImg}`} alt="Profile" />
                 <Textbox section="singleText" context1={userName} />
                 
             </div>
@@ -86,7 +87,10 @@ const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked
               <Textbox section="singleText" context1={commentCount} />
             </div>
           </div>
-          <img className="profile-img" src={"https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com"+feedImageUris} alt="FeedImage" />
+          {feedImageUris && feedImageUris.map((imageUri, index) => (
+            <img key={index} className="profile-img" src={`${url}${imageUri}`} alt="FeedImage" />
+          ))}
+
             <Textbox section="singleText" context1={content} />
             <Textbox section="singleText" context1={createdDate} />
           <div onClick={handleEditClick}>

@@ -50,6 +50,7 @@ const PlaceNeighborPage = () => {
     try {
       const response = await axios.get(`/neighbor/feed?type=detail&target=${user.userId}`, { withCredentials: true });
       setFeeds(response.data); // 가져온 데이터를 상태에 저장
+      console.dir(response.data)
     } catch (error) {
       console.error("Error fetching feeds", error);
     }
@@ -100,9 +101,8 @@ const PlaceNeighborPage = () => {
           commentCount={feed.commentCount}
           content={feed.content}
           createdDate={feed.registerDate}
-          feedImageUris={feed.feedImageUris[feed.feedImageUris.length-1]}
-          editMode={false}
-          />
+          feedImageUris={feed.feedImageUris}  // 변경된 부분
+        />
       </div>
       ))}
     </>
