@@ -3,18 +3,18 @@ import * as React from "react";
 import styled from "styled-components";
 
 const SearchInput = styled.div`
-  border: 2px solid #8382ff;
+  border: 2px solid #9c9cff;
   border-radius: 50px;
   padding: 0 20px; // 상하 0, 좌우 20px
-  height: 32px;
+  height: 35px;
   width: 50%;
   margin: 0 5px;
 `;
 
 const SingleInput = styled.div`
-  border: 2px solid #8382ff;
+  border: 2px solid #9c9cff;
   border-radius: 50px;
-  padding: 0 20px; // 상하 0, 좌우 20px
+  padding: 10px 20px; // 상하 0, 좌우 20px
   height: 40px;
   width: calc(100% - 80px);
   font-size: 20px;

@@ -17,6 +17,11 @@ const BoxDiv = styled.div`
   // border: 1px solid s#8382ff;
 `;
 
+const LineDiv = styled.div`
+  padding: 20px 0 ;
+`;
+
+
 const MusicHomePage = () => {
   const [musicList, setMusicList] = useState([]);
 
@@ -119,7 +124,7 @@ const MusicHomePage = () => {
     <div className="MusicHomePage">
       <InputBar variant="searchinputbar" />
       <LeftDiv>
-        <Textbox section="singleText" context1="지금 인기있는 노래" />
+        <Textbox section="singleText" context1="지금 인기있는 노래" fontWeight="bold" />
       </LeftDiv>
         <div>
           {musicList &&
@@ -146,13 +151,17 @@ const MusicHomePage = () => {
             })}
         </div>
       
-      <Line />
+      <LineDiv>
+        <Line />
+      </LineDiv>
       <LeftDiv>
-        <Textbox section="singleText" context1="AI가 추천하는 노래" />
+        <Textbox section="singleText" fontWeight="bold" context1="AI가 추천하는 노래" />
       </LeftDiv>
-      <Line />
+      <LineDiv>
+        <Line />
+      </LineDiv>
       <LeftDiv>
-        <Textbox section="singleText" context1={`${nickname}님이 학습한 노래`} />
+        <Textbox section="singleText" fontWeight="bold" context1={`${nickname}님이 학습한 노래`} />
         <div>
           {myStudyMusic &&
             myStudyMusic.slice(0, 5).map((item, index) => {

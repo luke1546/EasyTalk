@@ -26,7 +26,7 @@ const StyledSubmitBtn = styled.button`
   box-shadow: 0px 4px 2px -2px #121212;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   background: ${({ color }) => color || "#8382ff"}};
 `;
 
@@ -36,20 +36,20 @@ const StyledlogBtn = styled.button`
   padding: 0px 15px 4px;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   background: ${({ color }) => color || "#8382ff"}};
 `;
 
 const StyledNoneBtn = styled.button`
   background: transparent;
   border: none;
-  font-size: ${({ size }) => size || "18px"}};
+  font-size: ${({ size }) => size || "20px"}};
 `;
 
 const FooterBtn = styled.button`
   background: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 22px;
   
   &:hover {
     font-weight: bold;

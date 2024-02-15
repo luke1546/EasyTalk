@@ -4,6 +4,37 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ListenBox from "../../UI/modules/ListenBox/ListenBox";
+import styled from "styled-components";
+
+const WordDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+`;
+
+const Stagediv = styled.div`
+  border: 1px solid #8382ff;
+  border-radius: 20px;
+  height: 86px;
+  font-weight: bold;
+  box-shadow: 0px 5px 6px -4px #8382ff;
+  margin: 20px 20px 0;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #8382ff;
+  }
+`;
+
+const StyledP = styled.p`
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledTitle = styled.p`
+  text-align: left;
+  font-weight: bold;
+  padding: 0px 20px;
+`;
 
 const SentenceListPage = ( ) => {
   const [sentences, setSentences] = useState([]);
@@ -35,18 +66,20 @@ const SentenceListPage = ( ) => {
   }, [type]);
 
   return (
-    <div>
+    <WordDiv>
       {type ? (
-          <h2>{situation}</h2>
+          <StyledTitle>{situation}</StyledTitle>
       ) : (
-          <h2>저장한 문장</h2>
+          <StyledTitle>저장한 문장</StyledTitle>
       )}
+      <div>
       {sentences && sentences.map((sentence) => (
         <ListenBox
-          id={sentence.sentenceId}
+          sentence={sentence}
         />
       ))}
-    </div>
+      </div>
+    </WordDiv>
   );
 };
 

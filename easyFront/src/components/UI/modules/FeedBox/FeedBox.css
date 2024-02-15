@@ -1,13 +1,18 @@
 /* FeedBox.css */
 
 .feed-box {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px 0;
-  cursor: pointer;
+  border: 1px solid #9c9cff;
+  border-radius: 20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   transition: background-color 0.3s ease-in-out;
+  box-shadow: 0px 5px 6px -4px #9c9cff;
+  margin: 20px 20px 0;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #9c9cff;
+  }
 }
 
 .feed-box:hover {
@@ -33,6 +38,11 @@
   margin-right: 10px;
 }
 
+.feed-img {
+  width: 500px;
+  height: 30px;
+}
+
 .singleText {
   font-size: 16px;
   margin-bottom: 10px;
@@ -51,7 +61,7 @@
 }
 
 .edit-button {
-  background-color: #007bff;
+  background-color: #9c9cff;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -61,7 +71,7 @@
 }
 
 .edit-button:hover {
-  background-color: #0056b3;
+  background-color: #9c9cff;
 }
 
 /* Move the edit button to the right */
