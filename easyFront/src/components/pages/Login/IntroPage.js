@@ -6,14 +6,19 @@ import InputBar from "../../UI/modules/InputBar";
 import MusicBox from "../../UI/modules/MusicBox/MusicBox";
 import YouTube from "react-youtube";
 import ListenBox from "../../UI/modules/ListenBox/ListenBox";
-import WordBox from '../../UI/modules/WordBox/WordBox';
+import WordBox from "../../UI/modules/WordBox/WordBox";
 import Button from "../../UI/atoms/Button/Button";
 
-const IntroPage = () => {
+import axios from "axios";
+import { useState, useEffect } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
+const IntroPage = () => {
   return (
     <>
     <div className="IntroPage">
+    
 
     <div>
       <span>
@@ -69,8 +74,7 @@ const IntroPage = () => {
   </div>
   
   <div>
-  <YouTube
-  />
+    <YouTube/>
   </div>
       
   <p>아래로 스크롤</p>
@@ -99,34 +103,48 @@ const IntroPage = () => {
     />
   </div>
 
-  <p>아래로 스크롤</p>
+        <p>여기를 클릭하면 다음 페이지로 이동해요!</p> */}
+        {clickIndex === 4 && (
+          <div>
+            <div>
+              <span>step 4. 따라부르며 나의 실력을 점검해보세요!</span>
+            </div>
+            <div>
+              <Button name="submitBtn" text="도전하기" />
+            </div>
+            {sentenceLyric &&
+              sentenceLyric.slice(0, 3).map((item, index) => (
+                <div key={index}>
+                  <div>{item.lyric}</div>
+                  <div>{item.meaning}</div>
+                  <br />
+                </div>
+              ))}
+            {buttonTF ? (
+              <button onClick={buttonClick}>녹음종료</button>
+            ) : (
+              <button onClick={buttonClick}>녹음하기</button>
+            )}
 
-  <div>
-    <span>
-      step 4.
-      따라부르며 나의 실력을 점검해보세요!
-    </span>
-  </div>
-
-  <div>
-    <Button name="submitBtn" text="도전하기"/>
-  </div>
-
-  <p>아래로 스크롤</p>
-
-  <div>
-    <span>
-          가사 ~
-          일치율
-    </span>
-  </div>
-
-  <Link to="/login">
-    <Button name="submitBtn" text="지금 가입하기"/>
-  </Link>
-
-  </div>
-  </>
+            <div>{!isRecordLoading ? "Loading..." : "녹음된 문장:" + recognize}</div>
+            <div>{!isRecordLoading ? "" : "일치율:" + score}</div>
+            <p onClick={handleClick}>여기를 클릭하면 다음 페이지로 이동해요!</p>
+          </div>
+        )}
+        {clickIndex === 5 && (
+          <div>
+            <div>
+              <span>
+                <div>{!isRecordLoading ? "Loading..." : "총 정확도 :" + matchRate + "% 일치"}</div>
+              </span>
+            </div>
+            <Link to="/login">
+              <Button name="submitBtn" text="지금 가입하기" />
+            </Link>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

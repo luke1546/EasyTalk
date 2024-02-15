@@ -22,8 +22,6 @@ const MusicHomePage = () => {
 
   const [myStudyMusic, setMyStudyMusic] = useState([]);
 
-  console.log(myStudyMusic);
-
   useEffect(() => {
     // 조회수순 정렬하여 음악 리스트 제공
     axios
@@ -68,23 +66,48 @@ const MusicHomePage = () => {
       });
 
     // 학습한 노래들 /study/test/record?target={word}
+    // axios
+    //   .get("/study/test/record?target=music", { withCredentials: true })
+    //   .then((response) => {
+    //     const myStudyMusic = response.data.map((item) => ({
+    //       score: item.score,
+    //       startTime: item.startTime,
+    //       target: item.target,
+    //       testAudioUri: item.testAudioUri,
+    //       testId: item.testId,
+    //       testTitle: item.testTitle,
+    //     }));
+
+    //     setMyStudyMusic(myStudyMusic);
+    //   })
+    //   .catch((error) => {
+    //     console.error("학습한 노래 데이터 에러 : ", error);
+    //     console.dir(error);
+    //   });
     axios
-      .get("/study/test/record?target=music", { withCredentials: true })
+      .get(`/study/music`, {
+        params: {
+          filter: "myList",
+          order: "hit",
+          sort: "desc",
+        },
+        withCredentials: true,
+      })
       .then((response) => {
         const myStudyMusic = response.data.map((item) => ({
-          score: item.score,
-          startTime: item.startTime,
-          target: item.target,
-          testAudioUri: item.testAudioUri,
-          testId: item.testId,
-          testTitle: item.testTitle,
+          musicId: item.musicId,
+          title: item.title,
+          artistName: item.artistName,
+          musicTime: item.musicTime,
+          musicImageUrl: item.musicImageUri,
+          videoId: item.videoId,
         }));
         console.log(response)
         setMyStudyMusic(myStudyMusic);
+        console.log(myStudyMusic);
       })
       .catch((error) => {
-        console.error("학습한 노래 데이터 에러 : ", error);
-        console.dir(error);
+        console.error("내가 학습한 음악 리스트 에러 : ", error);
       });
   }, []);
 
@@ -134,11 +157,23 @@ const MusicHomePage = () => {
           {myStudyMusic &&
             myStudyMusic.slice(0, 5).map((item, index) => {
               return (
-                <div>
-                  score: {item.score}, startTime: {item.startTime}, target: {item.target},
-                  testAudioUri: {item.testAudioUri}, testId: {item.testId}, testTitle:
-                  {item.testTitle},
-                </div>
+                <Link
+                  to={{
+                    pathname: `/study/music/${item.musicId}/${item.videoId}`,
+                    state: { videoId: item.videoId },
+                  }}
+                >
+                  <BoxDiv key={item.musicId}>
+                    <MusicBox
+                      musicId={item.musicId}
+                      title={item.title}
+                      artistName={item.artistName}
+                      musicTime={item.musicTime}
+                      musicImageUrl={item.musicImageUrl}
+                      videoId={item.videoId}
+                    />
+                  </BoxDiv>
+                </Link>
               );
             })}
         </div>
