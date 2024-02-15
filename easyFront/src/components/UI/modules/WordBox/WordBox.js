@@ -7,7 +7,7 @@ import './WordBox.css';
 
 const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
   const [Saved, setSaved] = useState(isSaved);
-
+  
   const handleSaveClick = async (event) => {
     event.stopPropagation();
     try {
@@ -25,7 +25,7 @@ const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
 
   const handlePlayClick = (event) => {
     event.stopPropagation();
-    const audio = new Audio(wordAudioUri);
+    const audio = new Audio(`https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com${wordAudioUri}`);
     audio.play();
   };
 

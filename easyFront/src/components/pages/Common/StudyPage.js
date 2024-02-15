@@ -48,13 +48,13 @@ const StudyPage = () => {
         <Route path={`/music/search/:searchValue`} element={<MusicSearchPage />} />
         <Route path={`/music/artist/:artistName`} element={<ArtistDetailPage />} />
         <Route path={`/music/:index/:videoId/word`} element={<MusicWordPage />} />
-        {/* <Route path={`/music/:index/:videoId/word/:word`} element={<SentenceDetailPage />} /> */}
+        <Route path={`/music/:index/:videoId/word/test`} element={<WordTestPage />} />
         <Route path={`/music/:index/:videoId/sentence`} element={<MusicSentencePage />} />
         <Route path={`/music/:index/:videoId/share`} element={<MusicSharePage />} />
         <Route path={`/music/:index/:videoId/test`} element={<MusicTestPage />} />
         <Route path={`/music/:index/:videoId/test/result`} element={<TestResultPage />} />
         {/* <Route path={`/music/:index/:videoId/sentence/:lyricId`} element={<SentenceDetailPage />} /> */}
-
+        
         {/* Word Route */}
         <Route path="word/stage" element={<WordStagePage />} />
         <Route path={`word/stage/:level`} element={<WordListPage />} />

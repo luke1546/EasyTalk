@@ -8,9 +8,6 @@ import YouTube from "react-youtube";
 import ListenBox from "../../UI/modules/ListenBox/ListenBox";
 import WordBox from "../../UI/modules/WordBox/WordBox";
 import Button from "../../UI/atoms/Button/Button";
-
-import axios from "axios";
-import { useState, useEffect } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 

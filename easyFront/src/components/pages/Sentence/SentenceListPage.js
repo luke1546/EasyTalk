@@ -43,7 +43,7 @@ const SentenceListPage = ( ) => {
       )}
       {sentences && sentences.map((sentence) => (
         <ListenBox
-          sentence={sentence}
+          id={sentence.sentenceId}
         />
       ))}
     </div>
