@@ -13,12 +13,14 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("study")
+@Transactional
 public class StudyController {
   private final PreProcessService preProcessService;
   private final MusicService musicService;
@@ -96,5 +98,11 @@ public class StudyController {
   public ResponseEntity<String> setSentenceType(@RequestBody HashMap<String, Object> param) throws Exception {
     preProcessService.setSentenceType(param);
     return ResponseEntity.ok("ok");
+  }
+
+  @GetMapping("lyric")
+  public ResponseEntity<String> insertLyrics() throws Exception {
+    preProcessService.insertLyrics();
+    return ResponseEntity.ok("200");
   }
 }

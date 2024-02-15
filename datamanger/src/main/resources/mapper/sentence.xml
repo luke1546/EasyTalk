@@ -25,4 +25,19 @@
     set sentenceType = #{type}
     where sentenceId = #{sentenceId}
   </update>
+
+  <select id="getAllLyrics">
+    select *
+    from lyrics
+  </select>
+
+  <insert id="insertLyrics" parameterType="lyricsDto">
+    insert into sentences(sentence, meaning, sentenceType)
+    values(#{lyric}, #{meaning}, "music")
+  </insert>
+
+  <insert id="insertLyricSentence" parameterType="lyricsDto">
+    insert into lyric_sentence(lyricId, sentenceId)
+    values(#{lyricId}, last_insert_id())
+  </insert>
 </mapper>

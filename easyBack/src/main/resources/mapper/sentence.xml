@@ -12,11 +12,19 @@
   <select id="getSentencesList" parameterType="sentenceDto" resultType="sentenceDto">
     select s.sentenceId, sentence, meaning, sentenceType, sentenceAudioUri
     from sentences s
-    <if test="optionDto.filter == 'myList'">
+    <choose>
+    <when test="optionDto.filter == 'list'">
+        where 1=1
+    </when>
+    <when test="optionDto.filter == 'myList'">
       join sentence_books b
       on s.sentenceId = b.sentenceId
       where userId = #{userId}
-    </if>
+    </when>
+    <otherwise>
+      where sentenceType = #{optionDto.filter}
+    </otherwise>
+    </choose>
     order by ${optionDto.order} ${optionDto.sort}
     limit ${optionDto.start},${optionDto.end}
   </select>
@@ -56,5 +64,17 @@
     WHERE sentenceType = 'today'
     ORDER BY sentenceId
       LIMIT 1 OFFSET #{sentenceHash}
+  </select>
+
+  <select id="getSentenceIdByLyric" parameterType="Integer" resultType="Integer">
+    select sentenceId
+    from lyric_sentence
+    where lyricId = #{lyricId}
+  </select>
+
+  <select id="getLyricIdBySentence" parameterType="Integer" resultType="Integer">
+    select lyricId
+    from lyric_sentence
+    where sentenceId = #{sentenceId}
   </select>
 </mapper>

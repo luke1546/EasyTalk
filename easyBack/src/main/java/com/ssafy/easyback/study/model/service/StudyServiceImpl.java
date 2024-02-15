@@ -197,6 +197,11 @@ public class StudyServiceImpl implements StudyService{
   }
 
   @Override
+  public Integer getSentenceIdByLyric(Integer lyricId) throws Exception {
+    return sentenceMapper.getSentenceIdByLyric(lyricId);
+  }
+
+  @Override
   public void addToMyMusicBook(HashMap<String,Object> param) throws Exception {
     MusicDto musicDto2 = musicMapper.getMusicInfo((Integer) param.get("musicId"));
     System.out.println(musicDto2);
@@ -263,4 +268,8 @@ public class StudyServiceImpl implements StudyService{
     return todayDto;
   }
 
+  @Override
+  public Integer getLyricIdBySentence(Integer sentenceId) throws Exception {
+    return sentenceMapper.getLyricIdBySentence(sentenceId);
+  }
 }
