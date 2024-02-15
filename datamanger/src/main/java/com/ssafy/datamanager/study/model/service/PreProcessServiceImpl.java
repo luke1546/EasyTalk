@@ -249,4 +249,14 @@ public class PreProcessServiceImpl implements PreProcessService {
   public void setSentenceType(HashMap<String, Object> param) throws Exception {
     sentenceMapper.setSentenceType(param);
   }
+
+  @Override
+  public void insertLyrics() throws Exception {
+    List<LyricsDto> lyrics = sentenceMapper.getAllLyrics();
+    for(LyricsDto lyric : lyrics){
+      System.out.println(lyric);
+      sentenceMapper.insertLyrics(lyric);
+      sentenceMapper.insertLyricSentence(lyric);
+    }
+  }
 }

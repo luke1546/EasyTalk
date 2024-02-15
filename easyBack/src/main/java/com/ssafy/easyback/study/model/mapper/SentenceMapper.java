@@ -17,4 +17,6 @@ public interface SentenceMapper {
   Integer getTodayWordSize(int sentenceId) throws Exception;
 
   Integer getTodaySentenceId(int sentenceHash) throws Exception;
+
+  Integer getSentenceIdByLyric(Integer lyricId) throws Exception;
 }

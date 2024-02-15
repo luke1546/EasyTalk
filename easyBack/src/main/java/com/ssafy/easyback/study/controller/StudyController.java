@@ -303,4 +303,9 @@ public class StudyController {
     return ResponseEntity.ok(studyService.getTodaySentence());
   }
 
+  @GetMapping("music/lyric")
+  public ResponseEntity<Integer> getSentenceIdByLyric(@RequestParam("target") Integer lyricId) throws Exception{
+    return ResponseEntity.ok(studyService.getSentenceIdByLyric(lyricId));
+  }
+
 }
