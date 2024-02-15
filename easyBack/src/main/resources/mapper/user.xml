@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.user.model.mapper.UserMapper">
+  <select id="selectUserbyId" resultType="com.ssafy.easyback.user.model.dto.ResponseUserDto">
+    SELECT userId,
+           nickname,
+           profileImageUri,
+           exp,
+           info,
+           phone
+    FROM users
+    WHERE userId = #{userId}
+  </select>
+
+  <insert id="insertUserInfo" parameterType="com.ssafy.easyback.user.model.dto.RegistrationUserDTO">
+    INSERT INTO `users`
+      (userId, nickname, profileImageUri, info)
+    VALUES (#{userId}, #{nickname}, #{profileImageUri}, #{info} )
+  </insert>
+
+  <select id="selectAttendanceById" parameterType="java.lang.Long"
+    resultType="java.lang.Integer">
+    SELECT (DAYOFWEEK(attendanceDate) + 5) % 7
+    FROM attendances
+    WHERE userId = #{userId}
+      AND YEARWEEK(attendanceDate
+        , 1) = YEARWEEK(CURDATE()
+        , 1)
+    order by DAYOFWEEK(attendanceDate)
+  </select>
+
+  <select id="selectTodayAttendance" parameterType="java.lang.Long"
+    resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM attendances
+    WHERE userID = #{userId}
+      AND attendanceDate = CURDATE();
+  </select>
+
+  <insert id="insertTodayAttendance" parameterType="java.lang.Long">
+    INSERT INTO attendances (userId, attendanceDate)
+    VALUES (#{userId}, CURDATE());
+  </insert>
+
+  <select id="selectUserbyPhoneNumber" parameterType="String">
+    SELECT IF(
+             EXISTS(SELECT 1
+                    FROM users
+                    WHERE phone = #{phone}
+                      AND userId = #{userId}), 1, 0
+           );
+  </select>
+
+  <update id="modifyUserInfo" parameterType="registrationUserDTO">
+    update users
+    set info = #{info},
+        profileImageUri = #{profileImageUri}
+    where userId = #{userId}
+  </update>
+
+    <update id="addExp" parameterType="Long">
+        update users
+        set exp = 100
+        where userId = #{userId}
+    </update>
+</mapper>

@@ -34,5 +34,5 @@ application-key.properties
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
+### VS Code ### 
 .vscode/

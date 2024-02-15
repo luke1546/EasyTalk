@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.neighbor.model.mapper.NeighborMapper">
+    <insert id="requestNeighbor" parameterType="neighborDto">
+        insert into neighbors(userId, neighborId, statusCode)
+        values(#{userId}, #{neighborId}, #{status}),
+            (#{neighborId}, #{userId}, "RECEIVED")
+    </insert>
+
+    <update id="receiveNeighbor" parameterType="neighborDto">
+        update neighbors
+        set statusCode = #{status},
+            since = current_timestamp()
+        where (userId = #{neighborId} and neighborId = #{userId})
+            or (userId = #{userId} and neighborId = #{neighborId})
+    </update>
+
+    <delete id="deleteNeighbor" parameterType="neighborDto">
+        delete
+        from neighbors
+        where (userId = #{neighborId} and neighborId = #{userId})
+           or (userId = #{userId} and neighborId = #{neighborId})
+    </delete>
+
+    <select id="getNeighborList" parameterType="map" resultType="responseUserDto">
+        select *
+        from users
+        <if test="status != ''">
+        where userId in(
+            select neighborId as userId
+            from neighbors
+            where userId = #{userId} and statusCode = #{status}
+        )
+        </if>
+        <if test="status == ''">
+            where 1=1
+        </if>
+        and nickname like concat("%",#{keyword},"%")
+        and userId != #{userId}
+        order by #{order} #{sort}
+    </select>
+
+    <select id="getNeighborStatus" parameterType="map" resultType="String">
+        select statusCode
+        from neighbors
+        where userId = #{userId} and neighborId = #{neighborId}
+    </select>
+
+</mapper>

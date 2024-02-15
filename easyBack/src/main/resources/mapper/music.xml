@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.study.model.mapper.MusicMapper">
+
+  <select id="getMusicList" parameterType="musicDto" resultType="musicDto">
+    select distinct m.musicId, artistName, m.artistId, videoId, title, musicTime, hit, musicImageUri, artistImageUri
+    from musics m
+    join artists a on a.artistId = m.artistId
+    <if test="optionDto.filter == 'myList'">
+      join tests t on m.musicId = t.musicId
+      where userId = #{userId}
+    </if>
+    <if test="optionDto.filter == 'artist'">
+      where m.artistId = #{artistId}
+    </if>
+    <if test="optionDto.filter == 'list'">
+      where 1=1
+    </if>
+    and title like concat("%",#{keyword},"%")
+    order by ${optionDto.order} ${optionDto.sort}
+    limit ${optionDto.start},${optionDto.end}
+  </select>
+
+  <select id="getMusicTitle" parameterType="int" resultType="String">
+    select title
+    from musics
+    where musicId = #{musicId}
+  </select>
+
+  <select id="getArtistList" parameterType="String" resultType="artistDto">
+    select *
+    from artists
+    where artistName like concat("%",#{keyword},"%")
+    <if test="type == 'detail'">
+      and artistId = #{artistId}
+    </if>
+  </select>
+
+  <update id="addMusicHit" parameterType="int">
+    update musics
+    set hit = hit + 1
+    where musicId = #{musicId}
+  </update>
+
+  <select id="getMusicDetail" parameterType="int" resultType="lyricsDto">
+    select *
+    from lyrics
+    where musicId = #{musicId}
+  </select>
+
+  <select id="getMusicInfo" parameterType="int" resultType="musicDto">
+    select artistId, title
+    from musics
+    where musicId=#{musicId}
+  </select>
+
+  <insert id="insertMusicTest" parameterType="map">
+    insert into music_tests(testId, musicId, artistId)
+    values(#{testId}, #{musicId}, #{artistId})
+  </insert>
+
+  <select id="getRecognize" parameterType="int">
+    select input
+    from music_tests
+    where testId = #{testId}
+  </select>
+
+  <select id="getMusicId" parameterType="int" resultType="int">
+    select musicId
+    from tests
+    where testId = #{testId}
+  </select>
+
+  <update id="endMusicTest" parameterType="map">
+    update tests
+    set score = #{score}
+    where testId = #{testId}
+  </update>
+
+  <update id="submitMusicTest" parameterType="map">
+    UPDATE music_tests
+    SET input = IFNULL(CONCAT(input, #{recognize}), #{recognize})
+    WHERE testId = #{testId}
+  </update>
+
+  <insert id="addToMyMusicBook" parameterType="map">
+    insert into music_books(musicId, userId, artistId)
+    values(#{musicId},#{userId},#{artistId})
+  </insert>
+
+  <delete id="deleteMyMusic" parameterType="map">
+    delete
+    from music_books
+    where userId=#{userId}
+  </delete>
+</mapper>

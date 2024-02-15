@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.neighbor.model.mapper.NeighborMapper">
+    <insert id="writeFeed" parameterType="map">
+        insert into feeds(userId, content)
+        values(#{userId}, #{content});
+    </insert>
+
+    <update id="modifyFeed" parameterType="map">
+        update feeds
+        set content = #{content}
+        where feedId = #{feedId}
+    </update>
+
+    <delete id="deleteFeed" parameterType="map">
+        delete
+        from feeds
+        where feedId = #{feedId}
+    </delete>
+
+    <select id="getFeedId" resultType="int">
+        select last_insert_id()
+    </select>
+
+    <insert id="insertImageUri" parameterType="map">
+        insert into feed_images(feedId, feedImageUri)
+        values(#{feedId}, #{UUID})
+    </insert>
+
+    <select id="getFeedList" parameterType="map" resultType="feedDto">
+        select f.userId as "targetUserId", feedId, nickname, profileImageUri, (
+        select count(*)
+        from hearts
+        where feedId = f.feedId
+        ) as "heartCount",
+        (
+        select count(*)
+        from comments
+        where feedId = f.feedId
+        ) as "commentCount",
+        content, registrationDate, IF(f.userId = #{userId},true,false) as "myFeed"
+        from feeds f
+        join users u
+        on f.userId = u.userId
+        <if test="type == 'list'">
+            where f.userId = any(
+            select neighborId
+            from neighbors
+            where userId = #{userId}
+            )
+        </if>
+        <if test="type == 'detail'">
+            where f.userId = #{neighborId}
+        </if>
+        <if test="type == 'myList'">
+            where f.userId = #{userId}
+        </if>
+    </select>
+
+    <select id="getFeedImages" parameterType="int" resultType="String">
+        select feedImageUri
+        from feed_images
+        where feedId = #{feedId}
+    </select>
+
+    <select id="getFeedDetail" parameterType="map" resultType="feedDto">
+        select f.userId as "targetUserId", feedId, nickname, profileImageUri, (
+            select count(*)
+            from hearts
+            where feedId = f.feedId
+        ) as "heartCount",
+        (
+            select count(*)
+            from comments
+            where feedId = f.feedId
+        ) as "commentCount",
+        content, registrationDate, IF(f.userId = #{userId},true,false) as "myFeed"
+        from feeds f
+        join users u
+        on f.userId = u.userId
+        where feedId = #{feedId}
+    </select>
+
+    <select id="getFeedComment" parameterType="map" resultType="commentDto">
+        select commentId, nickname, profileImageUri, content, IF(c.userId = #{userId},true,false) as "myFeed", registrationDate
+        from comments c
+        join users u
+        on u.userId = c.userId
+        where feedId = #{feedId};
+    </select>
+
+    <insert id="writeComment" parameterType="map">
+        insert into comments(feedId, userId, content)
+        values(#{feedId},#{userId},#{content});
+    </insert>
+
+    <update id="modifyComment" parameterType="map">
+        update comments
+        set content=#{content}
+        where commentId = #{commentId}
+    </update>
+
+    <delete id="deleteComment" parameterType="map">
+        delete
+        from comments
+        where commentId = #{commentId}
+    </delete>
+</mapper>

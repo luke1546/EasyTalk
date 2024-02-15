@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.study.model.mapper.WordMapper">
+  <select id="getWordsList" parameterType="wordDto" resultType="wordDto">
+    select w.wordId, word, pronunciation, level, type, wordAudioUri
+    from words w
+        <if test="optionDto.filter == 'list'">
+            where level = #{level}
+        </if>
+        <if test="optionDto.filter == 'myList'">
+            join word_books b
+            on w.wordId = b.wordId
+            where userId = #{userId}
+        </if>
+        <if test="optionDto.filter == 'music'">
+            join word_musics m
+            on w.wordId = m.wordId
+            where musicId = #{musicId}
+        </if>
+    order by ${optionDto.order} ${optionDto.sort}
+    limit ${optionDto.start},${optionDto.end}
+  </select>
+
+  <select id="getMyWordsList" parameterType="Long" resultType="Integer"> -- 단어장에서 단어리스트 가져오기
+    select wordId
+    from word_books
+    where userId = #{userId}
+  </select>
+
+  <select id="getMeaning" parameterType="Integer" resultType="wordMeaningDto"> -- 단어 의미 보기
+    select meaning, partOfSpeech
+    from words_meaning
+    where wordId = #{wordId}
+  </select>
+
+
+  <select id="getWord" parameterType="wordDto" resultType="wordDto">    -- 단어 상세보기
+    select *
+    from words
+    where wordId = #{wordId}
+  </select>
+
+  <insert id="insertTests" parameterType="map">                    -- 테스트 하나 생성
+    insert into tests(userId, testTitle, testType, musicId)
+    values(#{userId}, #{testTitle}, #{testType}, #{musicId})
+  </insert>
+
+  <insert id="insertWordTests" parameterType="map">                    -- 문제 20개 생성해서 DB입력
+    insert into word_tests(testId, wordId, wrong1, wrong2, meaning)
+    values(#{testId}, #{wordId}, #{wrong1}, #{wrong2}, #{meaning})
+  </insert>
+
+  <select id="getTestId" parameterType="Long" resultType="Integer">    -- 유저가 방금 생성한 testId 가져오기
+    select testId
+    from tests
+    where userId = #{userId}
+    order by testId desc
+    limit 1
+  </select>
+
+
+  <select id="getWordTest" parameterType="int" resultType="TestDto">
+      select questionId, w.wordId, word, meaning, wrong1, wrong2, w.wordAudioUri
+      from word_tests t
+      join words w
+      on t.wordId = w.wordId
+      where testId = #{testId}
+  </select>
+
+  <select id="createWrong" parameterType="int" resultType="map">
+      select word, meaning
+      from words_meaning m
+      join words w
+      on m.wordId = w.wordId
+      where w.wordId != #{wordId}
+      order by rand()
+      limit 2;
+  </select>
+
+  <select id="createAnswer" parameterType="map" resultType="Integer">
+    select w.wordId
+    from words w
+    <if test="filter == 'list'">
+      where level = #{level}
+    </if>
+    <if test="filter == 'myList'">
+      join word_books b
+      on w.wordId = b.wordId
+      where userId = #{userId}
+    </if>
+    <if test="filter == 'music'">
+      join word_musics m
+      on w.wordId = m.wordId
+      where musicId = #{musicId}
+    </if>
+    order by rand()
+    limit 20
+  </select>
+
+    <update id="insertAnswer" parameterType="answerDto">
+        update word_tests
+        set input = #{input}
+        where questionId = #{questionId}
+    </update>
+
+    <update id="gradingWordTest" parameterType="int">
+        update tests
+            set score = (
+                select count(*)*5
+                from word_tests t
+                join words w
+                on t.wordId = w.wordId
+                where questionId = any(
+                    select questionId
+                    from word_tests
+                    where testId = #{testId}
+                )
+            and (input = word or input = meaning)
+        )
+        where testId = #{testId}
+    </update>
+
+    <update id="getExp" parameterType="map">
+        update users
+        set exp = exp +
+        (
+        select score
+        from tests
+        where testId = #{testId}
+        )
+        where userId = #{userId}
+    </update>
+
+  <insert id="addToMyWordBook" parameterType="wordDto">
+    insert into word_books(userId, wordId, wordDate)
+    values(#{userId}, #{wordId}, current_timestamp())
+  </insert>
+
+    <delete id="deleteWord" parameterType="wordDto">
+        delete
+        from word_books
+        where userId = #{userId} and wordId = #{wordId}
+    </delete>
+
+  <insert id="insertWord" parameterType="wordDto">
+    insert into words
+        (word, pronunciation, level, wordAudioUri)
+    values
+        (#{word}, #{pronunciation}, #{level}, #{wordAudioUri})
+  </insert>
+
+  <insert id="insertMeaning" parameterType="wordMeaningDto">
+    insert into words_meaning(wordId, meaning, partOfSpeech)
+    values(
+            (
+              select wordId
+              from words
+              where word = #{word}
+            ),
+            #{meaning},
+            #{partOfSpeech}
+          )
+  </insert>
+
+    <select id="checkWord" resultType="int" parameterType="String">
+        select count(*)
+        from words
+        where word=#{word}
+    </select>
+
+  <select id="getWordRecord" parameterType="map" resultType="recordDto">
+    select testId, IF(testType != "music" and musicId = 0,"word","music") as "filter", testTitle, startTime, score,
+           IF(testType = "music", concat("/study/music/test/audio/", testId, ".mp3"), "") as "testAudioUri"
+    from tests
+    where userId = #{userId}
+    <if test="target == 'word'">
+      and testType != "music"
+    </if>
+    <if test="target == 'music'">
+      and testType = "music"
+    </if>
+    order by #{order} #{sort}
+  </select>
+
+  <select id="getWordRecordDetail" parameterType="map" resultType="wordDto">
+    select w.wordId, word, meaning, wordAudioUri,
+           IF(input = word or input = meaning,true,false) as "isRight"
+    from word_tests t
+    join words w
+    on t.wordId = w.wordId
+    where testId = #{testId}
+  </select>
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.easyback.study.model.mapper.SentenceMapper">
+  <select id="getMySentencesList" parameterType="Long" resultType="Integer">
+    select sentenceId
+    from sentence_books
+    where userId = #{userId}
+  </select>
+
+  <select id="getSentencesList" parameterType="sentenceDto" resultType="sentenceDto">
+    select s.sentenceId, sentence, meaning, sentenceType, sentenceAudioUri
+    from sentences s
+    <choose>
+    <when test="optionDto.filter == 'list'">
+        where 1=1
+    </when>
+    <when test="optionDto.filter == 'myList'">
+      join sentence_books b
+      on s.sentenceId = b.sentenceId
+      where userId = #{userId}
+    </when>
+    <otherwise>
+      where sentenceType = #{optionDto.filter}
+    </otherwise>
+    </choose>
+    order by ${optionDto.order} ${optionDto.sort}
+    limit ${optionDto.start},${optionDto.end}
+  </select>
+
+  <select id="getSentence" parameterType="Integer" resultType="sentenceDto">    -- 단어 상세보기
+    select *
+    from sentences
+    where sentenceId = #{sentenceId}
+  </select>
+
+  <insert id="addToMySentenceBook" parameterType="map">
+    insert into sentence_books(userId, sentenceId, sentenceDate)
+    values(#{userId}, #{sentenceId}, current_timestamp())
+  </insert>
+
+  <delete id="deleteSentence" parameterType="sentenceDto">
+    delete
+    from sentence_books
+    where userId = #{userId} and sentenceId = #{sentenceId}
+  </delete>
+
+  <select id="getTodaySentenceSize" resultType="Integer">
+    select count(*)
+    from sentences
+    where sentenceType = "today"
+  </select>
+
+  <select id="getTodayWordSize" parameterType="Integer" resultType="Integer">
+    select count(*)
+    from word_sentences
+    where sentenceId = #{sentenceId}
+  </select>
+
+  <select id="getTodaySentenceId" parameterType="Integer" resultType="Integer">
+    SELECT sentenceId
+    FROM sentences
+    WHERE sentenceType = 'today'
+    ORDER BY sentenceId
+      LIMIT 1 OFFSET #{sentenceHash}
+  </select>
+
+  <select id="getSentenceIdByLyric" parameterType="Integer" resultType="Integer">
+    select sentenceId
+    from lyric_sentence
+    where lyricId = #{lyricId}
+  </select>
+</mapper>

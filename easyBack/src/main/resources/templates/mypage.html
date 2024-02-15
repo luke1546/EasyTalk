@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    form {
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea, button {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<p th:text="${access_token}"></p>
+<a href="http://localhost:80/mypage">myPage</a>
+
+<form action="http://localhost/user/register" method="post" enctype="multipart/form-data">
+  <label for="nickname">닉네임:</label>
+  <input type="text" id="nickname" name="nickname" placeholder="닉네임을 입력하세요">
+
+  <label for="profileImage">프로필 이미지:</label>
+  <input type="file" id="profileImage" name="profileImage">
+
+  <label for="exp">경험:</label>
+  <input type="number" id="exp" name="exp" placeholder="경험치를 입력하세요">
+
+  <label for="info">정보:</label>
+  <textarea id="info" name="info" placeholder="추가 정보를 입력하세요"></textarea>
+
+  <label for="phone">전화번호:</label>
+  <input type="tel" id="phone" name="phone" placeholder="전화번호를 입력하세요">
+
+  <button type="submit">등록</button>
+
+
+</form>
+<hr><hr><hr>
+<form action="http://localhost/group/1/join" method="post">
+  <label for="password">비밀번호 </label>
+  <input type="password" id="password" name="password" placeholder="패스워드를 입력해주세요">
+
+  <button type="submit">등록</button>
+</form>
+
+<hr><hr><hr>
+<h1>그룹 개설</h1>
+<form action="http://localhost/group" method="post">
+  <label for="password">Password:</label><br>
+  <input type="text" id="password" name="password" value="ddf2f1" required minlength="6"><br>
+  <label for="groupName">Group Name:</label><br>
+  <input type="text" id="groupName" name="groupName" value="CS스터디" required><br>
+  <label for="limitCount">Limit Count:</label><br>
+  <input type="number" id="limitCount" name="limitCount" value="20" required><br>
+  <label for="description">Description:</label><br>
+  <input type="text" id="description" name="description" value="0 char 0 char" required><br>
+  <label for="targetCycle">Target Cycle:</label><br>
+  <input type="text" id="targetCycle" name="targetCycle" value="하루" required><br>
+  <label for="targetTime">Target Time:</label><br>
+  <input type="number" id="targetTime" name="targetTime" value="60" required><br>
+  <input type="submit" value="Submit">
+</form>
+
+<hr><hr>
+<a href="/group/1/leader">리더확인하기</a>
+
+</body>
