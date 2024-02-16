@@ -2,7 +2,6 @@ import { Link, useMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ListenBox from "../../UI/modules/ListenBox/ListenBox";
 import axios from "axios";
-import ListenBox from "../../UI/modules/ListenBox/ListenBox";
 
 const MusicSentencePage = () => {
   const [sentenceIds, setSentenceIds] = useState([]);

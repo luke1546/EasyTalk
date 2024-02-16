@@ -1,7 +1,4 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
-
 import InputBar from "../../UI/modules/InputBar";
 import MusicBox from "../../UI/modules/MusicBox/MusicBox";
 import YouTube from "react-youtube";
