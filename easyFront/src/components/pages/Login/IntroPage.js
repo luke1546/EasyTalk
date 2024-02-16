@@ -14,6 +14,20 @@ import styled from "styled-components";
 
 import ScrollFadeDiv from "./ScrollFadeDiv";
 
+const Hdiv = styled.div`
+  padding: 20px 30px 0 30px ;
+  border: 2px solid #9c9cff;
+  border-radius: 20px;
+  margin: 20px;
+`;
+
+const Ldiv = styled.div`
+  padding: 20px;
+  border: 2px solid #9c9cff;
+  border-radius: 20px;
+  margin: 0 20px;
+`;
+
 const MicDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -429,12 +443,14 @@ const IntroPage = ({ isEnd }) => {
         <ScrollFadeDiv>
           {" "}
           <div>
+            <br />
+            <br />
             <span>
               영어, 아직도 어렵게 생각하세요?
             </span>
             <br />
             <span>
-              좋아하는 노래를 따라부르며 영어를 배워보세요!
+              좋아하는 노래를 따라부르며 <br />영어를 배워보세요!
             </span>
           </div>
           <br />
@@ -461,9 +477,13 @@ const IntroPage = ({ isEnd }) => {
           </div>
           <br />
           <br />
+          <br />
+          <br />
           <p onClick={handleClick}>
             아래로 스크롤<p>∨</p>
           </p>
+          <br />
+
         </ScrollFadeDiv>
         {/* )}
         {clickIndex === 1 && ( */}
@@ -472,6 +492,7 @@ const IntroPage = ({ isEnd }) => {
           <div>
             <span>step 1. 원하는 노래를 찾아보세요!</span>
           </div>
+          <br />
           <InputBar
             variant="introinputbar"
             onSubmit={async (searchValue) => {
@@ -529,13 +550,14 @@ const IntroPage = ({ isEnd }) => {
                           handleClick();
                         }}
                       >
-                        <Button name="submitBtn" text={`${item.title}로 결정할게요!`} />
-                        <hr />
+                        <Button name="submitBtn" text={`${item.title} 선택`} />
                       </div>
                     </div>
                   ))}
               </div>
             )}
+            <br />
+            <br />
           </div>
           <p onClick={handleClick}>
             아래로 스크롤<p>∨</p>
@@ -545,8 +567,9 @@ const IntroPage = ({ isEnd }) => {
         {clickIndex === 2 && ( */}
         <ScrollFadeDiv>
           <div>
-            <span>step 2. 원하는 노래를 실시간 번역해 드려요!</span>
+            <span>step 2. <br />원하는 노래를 실시간 번역해 드려요!</span>
           </div>
+          <br />
           <div ref={videoRef}>
             <YouTube
               videoId={videoId}
@@ -564,19 +587,23 @@ const IntroPage = ({ isEnd }) => {
             {activeLyric.map((letterComponent, index) => (
               <React.Fragment key={index}>{letterComponent}</React.Fragment>
             ))}
+            <br />
+            <br />
             <p onClick={handleClick}>
-              아래로 스크롤<p></p>
+              아래로 스크롤<p>∨</p>
               <p></p>
             </p>
           </div>
+          <br />
         </ScrollFadeDiv>
         {/* )}
         {clickIndex === 3 && ( */}
         <ScrollFadeDiv>
           {" "}
           <div>
-            <span>step 3. 영어 단어와 문장을 학습해보세요!</span>
+            <span>step 3. <br />영어 단어와 문장을 학습해보세요!</span>
           </div>
+          <br />
           <div>
             {/* <ListenBox/> */}
             {/* 리슨박스 들어가야되는데 ,,, */}
@@ -584,19 +611,23 @@ const IntroPage = ({ isEnd }) => {
             {sentenceLyric &&
               sentenceLyric.slice(0, 3).map((item, index) => (
                 <div key={index}>
-                  <div style={{ border: "1px solid black" }}>
+                  <Ldiv >
                     {/* <Link to={`${item.lyricId}`}> */}
                     <div>{item.lyric}</div>
                     <div>{item.meaning}</div>
                     {/* </Link> */}
-                  </div>
+                  </Ldiv>
                   <br />
                 </div>
               ))}
           </div>
+          <br />
+          <br />
           <p onClick={handleClick}>
             아래로 스크롤<p>∨</p>
           </p>
+          <br />
+          <br />
         </ScrollFadeDiv>
         {/* )}{" "} */}
         {/* <p>아래로 스크롤<p></p><p></p></p> */}
@@ -616,13 +647,14 @@ const IntroPage = ({ isEnd }) => {
           <div>
             <span>step 4. <br/>따라부르며 나의 실력을 점검해보세요!</span>
           </div>
+          <br />
           {sentenceLyric &&
             sentenceLyric.slice(0, 3).map((item, index) => (
-              <div key={index}>
+              <Hdiv key={index}>
                 <div>{item.lyric}</div>
                 <div>{item.meaning}</div>
                 <br />
-              </div>
+              </Hdiv>
             ))}
           <MicDiv>
           {buttonTF ? (
@@ -639,7 +671,9 @@ const IntroPage = ({ isEnd }) => {
           </MicDiv>
 
           <div>{!isRecording && recordedChunks.length > 0 ? "Loading..." : ""}</div>
-          <div>{!isRecordLoading ? "" : "일치율:" + score +'%'}</div>
+          <div>{!isRecordLoading ? "" : "일치율:" + score + '%'}</div>
+          <br />
+          <br />
           <p onClick={handleClick}>
             아래로 스크롤<p>∨</p>
           </p>
