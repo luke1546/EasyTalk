@@ -62,7 +62,6 @@ const StudyPage = () => {
         <Route path="word/stagetest" element={<WordStagePage />} />
         <Route path={`word/stagetest/:level`} element={<WordTestPage />} />
         <Route path={`word/:wordId/detail`} element={<WordDetailPage />} />
-        {/* <Route path="word/musictest" element={<MusicSearchPage />} /> */}
 
         {/* Sentence Route */}
         <Route path="sentence/situation" element={<SentenceSituationPage />} />

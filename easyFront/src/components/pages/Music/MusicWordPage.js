@@ -3,6 +3,26 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Button from "../../UI/atoms/Button/Button";
 import WordBox from "../../UI/modules/WordBox/WordBox";
+import styled from "styled-components";
+
+const Btn = styled.button`
+  border: 1px solid #8382ff;
+  border-radius: 50px;
+  background-color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 40px; // 패딩을 조절하여 버튼의 높이를 텍스트에 맞춤
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 5px 6px -4px #8382ff;
+  margin: 20px 20px 0;
+  left: 50%;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #8382ff;
+  }
+`;
 
 const MusicWordPage = () => {
   const navigate = useNavigate();
@@ -56,7 +76,7 @@ const MusicWordPage = () => {
   }, []);
 
   const handleGoTest = () => {
-    navigate(`test`);
+    navigate('test');
   }
 
   return (
@@ -80,7 +100,7 @@ const MusicWordPage = () => {
             );
           })}
       </div>
-      <Button name="submitBtn" text="시험보기" onClick={handleGoTest} />
+      <Btn onClick={handleGoTest}>시험 보기</Btn>
     </div>
   );
 };

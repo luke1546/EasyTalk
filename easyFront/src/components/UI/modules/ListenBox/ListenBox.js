@@ -7,12 +7,13 @@ import Button from '../../atoms/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import './ListenBox.css'; // 필요한 CSS 파일을 import
 
-const ListenBox = ({ id }) => {
+const ListenBox = ({ id, type }) => {
   const navigate = useNavigate();
   const [sentence, setSentence] = useState('');
   const [isSaved, setSaved] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioUrl, setAudioUrl] = useState('');
+  const [lyricId, setLyricId] = useState('');
 
   useEffect(() => {
     
@@ -22,6 +23,15 @@ const ListenBox = ({ id }) => {
           setSentence(response.data);
           setSaved(response.data.saved);
           setAudioUrl(response.data.sentenceAudioUri);
+          console.log(response.data)
+          if (type === 'lyric') {
+            const lyricId = await axios.get(`https://i10b307.p.ssafy.io:8080/study/music/sentence?target=${response.data.sentenceId}`)
+            setLyricId(lyricId.data)
+            setAudioUrl(`/study/music/lyric/audio/${lyricId.data}.wav`);
+            console.log(audioUrl)
+            console.log(lyricId.data)
+          }
+
           } catch (error) {
         console.error('문장을 가져오는 중 에러 발생:', error);
       }
