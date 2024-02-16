@@ -7,14 +7,44 @@ import WordBox from "../../UI/modules/WordBox/WordBox";
 import Button from "../../UI/atoms/Button/Button";
 
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-const IntroPage = () => {
+import ScrollFadeDiv from "./ScrollFadeDiv";
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MicBtn = styled(Button)`
+  color: #8382ff;
+  border: 1px solid #8382ff;
+  border-radius: 50px;
+  background-color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 40px; // 패딩을 조절하여 버튼의 높이를 텍스트에 맞춤
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 5px 6px -4px #8382ff;
+  margin: 20px auto 0; /* 수정된 부분: 상단 마진을 20px로, 좌우 마진을 auto로 설정하여 수평 가운데 정렬 */
+  margin-right: 85px;
+  left: 50%;
+  transform: translateX(-50%); /* 수정된 부분: 가운데 정렬을 위해 transform을 사용하여 좌표 이동 */
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #8382ff;
+  }
+`;
+
+const IntroPage = ({ isEnd }) => {
   const navigate = useNavigate();
 
-  // 클릭 or 클릭 이벤트
+  // 클릭 이벤트
   const [clickIndex, setClickIndex] = useState(0);
 
   const handleClick = () => {
@@ -71,6 +101,9 @@ const IntroPage = () => {
     if (event.data === YouTube.PlayerState.PLAYING) {
       youtubePlay();
       setHideFont(true);
+    }
+    if (event.data === YouTube.PlayerState.PAUSED) {
+      event.target.playVideo();
     }
     if (event.data === YouTube.PlayerState.ENDED) {
       setHideFont(false);
@@ -355,149 +388,192 @@ const IntroPage = () => {
     }
   }, [score]);
 
+  const [isSearched, setIsSearched] = useState(false);
+
+  // 유튜브 비디오 옵저버
+  const [videoPlayer, setVideoPlayer] = useState(null);
+  const videoRef = useRef(null);
+
+  const onReady = (event) => {
+    setVideoPlayer(event.target);
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting && videoPlayer) {
+          videoPlayer.stopVideo();
+        }
+      },
+      { root: null, rootMargin: "0px", threshold: 0 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [videoPlayer]);
+  //
+
   return (
     <>
-      <div className="IntroPage">
-        {clickIndex === 0 && (
+      <FlexContainer>
+        {/* {clickIndex === 0 && ( */}
+        <ScrollFadeDiv>
+          {" "}
           <div>
-            {" "}
-            <div>
-              <span>
-                영어, 아직도 어렵게 생각하세요? 좋아하는 노래를 따라부르며 영어를 배워보세요!
-              </span>
-            </div>
-            <div>
-              <span>쉽게말해는 중장년층을 위한 특별한 영어 학습 플랫폼입니다.</span>
-            </div>
-            <div>
-              <span>
-                지금 바로 쉽게말해의 무료 노래 학습을 체험하고, 노래와 함께 영어 실력을 키워보세요!
-              </span>
-            </div>
-            <p onClick={handleClick}>여기를 클릭하면 다음 페이지로 이동해요!</p>
+            <span>
+              영어, 아직도 어렵게 생각하세요? 좋아하는 노래를 따라부르며 영어를 배워보세요!
+            </span>
           </div>
-        )}
-        {clickIndex === 1 && (
           <div>
-            {" "}
-            <div>
-              <span>step 1. 원하는 노래를 찾아보세요!</span>
-            </div>
-            <InputBar
-              variant="introinputbar"
-              onSubmit={(searchValue) => {
-                // 노래 검색
-                axios
-                  .get(`/study/music`, {
-                    params: {
-                      keyword: `${searchValue}`,
-                    },
-                    withCredentials: true,
-                  })
-                  .then((response) => {
-                    console.log(response.data);
+            <span>쉽게말해는 중장년층을 위한 특별한 영어 학습 플랫폼입니다.</span>
+          </div>
+          <div>
+            <span>
+              지금 바로 쉽게말해의 무료 노래 학습을 체험하고, 노래와 함께 영어 실력을 키워보세요!
+            </span>
+          </div>
+          <p onClick={handleClick}>
+            아래로 스크롤<p>∨</p>
+          </p>
+        </ScrollFadeDiv>
+        {/* )}
+        {clickIndex === 1 && ( */}
+        <ScrollFadeDiv isSearched={isSearched}>
+          {" "}
+          <div>
+            <span>step 1. 원하는 노래를 찾아보세요!</span>
+          </div>
+          <InputBar
+            variant="introinputbar"
+            onSubmit={async (searchValue) => {
+              // 노래 검색
+              try {
+                setIsSearched(true);
 
-                    const musicList = response.data.map((item) => ({
-                      musicId: item.musicId,
-                      videoId: item.videoId,
-                      title: item.title,
-                      artistName: item.artistName,
-                      musicImageUri: item.musicImageUri,
-                      musicTime: item.musicTime,
-                    }));
+                const response = await axios.get(`/study/music`, {
+                  params: {
+                    keyword: `${searchValue}`,
+                  },
+                  withCredentials: true,
+                });
 
-                    setMusicList(musicList);
-                  })
-                  .catch((error) => {
-                    console.error("아티스트 출력 에러 : ", error);
-                  });
+                console.log(response.data);
+
+                const musicList = response.data.map((item) => ({
+                  musicId: item.musicId,
+                  videoId: item.videoId,
+                  title: item.title,
+                  artistName: item.artistName,
+                  musicImageUri: item.musicImageUri,
+                  musicTime: item.musicTime,
+                }));
+
+                setMusicList(musicList);
+              } catch (error) {
+                console.error("아티스트 출력 에러 : ", error);
+              } finally {
+                setIsSearched(false);
+              }
+            }}
+          />
+          <div>
+            {musicList.length === 0 ? (
+              <div>검색을 진행해주세요. | 예시: snowman</div>
+            ) : (
+              <div>
+                {musicList &&
+                  musicList.map((item, index) => (
+                    <div key={index}>
+                      <MusicBox
+                        musicId={item.musicId}
+                        title={item.title}
+                        artistName={item.artistName}
+                        musicTime={item.musicTime}
+                        musicImageUrl={item.musicImageUri}
+                        videoId={item.videoId}
+                        linkOff="true"
+                      />
+
+                      <div
+                        onClick={() => {
+                          onMusicId(item.musicId, item.videoId);
+                          handleClick();
+                        }}
+                      >
+                        <Button name="submitBtn" text={`${item.title}로 결정할게요!`} />
+                        <hr />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+          <p onClick={handleClick}>
+            아래로 스크롤<p>∨</p>
+          </p>
+        </ScrollFadeDiv>
+        {/* )}
+        {clickIndex === 2 && ( */}
+        <ScrollFadeDiv>
+          <div>
+            <span>step 2. 원하는 노래를 실시간 번역해 드려요!</span>
+          </div>
+          <div ref={videoRef}>
+            <YouTube
+              videoId={videoId}
+              onReady={onReady}
+              onStateChange={onStateChange}
+              opts={{
+                width: youtubeWidth.toString(),
+                height: youtubeHeight.toString(),
               }}
             />
-            <div>
-              {musicList.length === 0 ? (
-                <div>검색을 진행해주세요. | 예시: snowman</div>
-              ) : (
-                <div>
-                  {musicList &&
-                    musicList.map((item, index) => (
-                      <div key={index}>
-                        <MusicBox
-                          musicId={item.musicId}
-                          title={item.title}
-                          artistName={item.artistName}
-                          musicTime={item.musicTime}
-                          musicImageUrl={item.musicImageUri}
-                          videoId={item.videoId}
-                        />
-                        <button
-                          onClick={() => {
-                            onMusicId(item.musicId, item.videoId);
-                            handleClick();
-                          }}
-                        >
-                          {item.title} 선택
-                        </button>
-                      </div>
-                    ))}
-                </div>
-              )}
-            </div>
-            <p onClick={handleClick}>여기를 클릭하면 다음 페이지로 이동해요!</p>
           </div>
-        )}
-        {clickIndex === 2 && (
-          <div>
-            {" "}
-            <div>
-              <span>step 2. 원하는 노래를 실시간 번역해 드려요!</span>
-            </div>
-            <div>
-              <YouTube
-                videoId={videoId}
-                onStateChange={onStateChange}
-                opts={{
-                  width: youtubeWidth.toString(),
-                  height: youtubeHeight.toString(),
-                }}
-              />
-            </div>
-            {!hideFont && <div style={{ color: "gray" }}>영상을 클릭하면 자막이 나옵니다.</div>}
-            {isLoading ? <div>loading...</div> : <></>}
-            <div id="lyric" style={{ color: color }}>
-              {activeLyric.map((letterComponent, index) => (
-                <React.Fragment key={index}>{letterComponent}</React.Fragment>
-              ))}
-              <p onClick={handleClick}>여기를 클릭하면 다음 페이지로 이동해요!</p>
-            </div>
+          {!hideFont && <div style={{ color: "gray" }}>영상을 클릭하면 자막이 나옵니다.</div>}
+          {hideFont && isLoading ? <div>loading...</div> : <></>}
+          <div id="lyric" style={{ color: color }}>
+            {activeLyric.map((letterComponent, index) => (
+              <React.Fragment key={index}>{letterComponent}</React.Fragment>
+            ))}
+            <p onClick={handleClick}>
+              아래로 스크롤<p></p>
+              <p></p>
+            </p>
           </div>
-        )}
-        {clickIndex === 3 && (
+        </ScrollFadeDiv>
+        {/* )}
+        {clickIndex === 3 && ( */}
+        <ScrollFadeDiv>
+          {" "}
           <div>
-            {" "}
-            <div>
-              <span>step 3. 영어 단어와 문장을 학습해보세요!</span>
-            </div>
-            <div>
-              {/* <ListenBox/> */}
-              {/* 리슨박스 들어가야되는데 ,,, */}
-              {/* 일단은 sentence쪽 박스로 */}
-              {sentenceLyric &&
-                sentenceLyric.slice(0, 3).map((item, index) => (
-                  <div key={index}>
-                    <div style={{ border: "1px solid black" }}>
-                      {/* <Link to={`${item.lyricId}`}> */}
-                      <div>{item.lyric}</div>
-                      <div>{item.meaning}</div>
-                      {/* </Link> */}
-                    </div>
-                    <br />
+            <span>step 3. 영어 단어와 문장을 학습해보세요!</span>
+          </div>
+          <div>
+            {/* <ListenBox/> */}
+            {/* 리슨박스 들어가야되는데 ,,, */}
+            {/* 일단은 sentence쪽 박스로 */}
+            {sentenceLyric &&
+              sentenceLyric.slice(0, 3).map((item, index) => (
+                <div key={index}>
+                  <div style={{ border: "1px solid black" }}>
+                    {/* <Link to={`${item.lyricId}`}> */}
+                    <div>{item.lyric}</div>
+                    <div>{item.meaning}</div>
+                    {/* </Link> */}
                   </div>
-                ))}
-            </div>
-            <p onClick={handleClick}>여기를 클릭하면 다음 페이지로 이동해요!</p>
+                  <br />
+                </div>
+              ))}
           </div>
-        )}{" "}
-        {/* <p>여기를 클릭하면 다음 페이지로 이동해요!</p> */}
+          <p onClick={handleClick}>
+            아래로 스크롤<p>∨</p>
+          </p>
+        </ScrollFadeDiv>
+        {/* )}{" "} */}
+        {/* <p>아래로 스크롤<p></p><p></p></p> */}
         {/* <div>
           <WordBox
           // key={word.wordId}
@@ -508,47 +584,53 @@ const IntroPage = () => {
           />
         </div>
 
-        <p>여기를 클릭하면 다음 페이지로 이동해요!</p> */}
-        {clickIndex === 4 && (
+        <p>아래로 스크롤<p></p><p></p></p> */}
+        {/* {clickIndex === 4 && ( */}
+        <ScrollFadeDiv>
           <div>
-            <div>
-              <span>step 4. 따라부르며 나의 실력을 점검해보세요!</span>
-            </div>
-            <div>
-              <Button name="submitBtn" text="도전하기" />
-            </div>
-            {sentenceLyric &&
-              sentenceLyric.slice(0, 3).map((item, index) => (
-                <div key={index}>
-                  <div>{item.lyric}</div>
-                  <div>{item.meaning}</div>
-                  <br />
-                </div>
-              ))}
-            {buttonTF ? (
-              <button onClick={buttonClick}>녹음종료</button>
-            ) : (
-              <button onClick={buttonClick}>녹음하기</button>
-            )}
+            <span>step 4. 따라부르며 나의 실력을 점검해보세요!</span>
+          </div>
+          {sentenceLyric &&
+            sentenceLyric.slice(0, 3).map((item, index) => (
+              <div key={index}>
+                <div>{item.lyric}</div>
+                <div>{item.meaning}</div>
+                <br />
+              </div>
+            ))}
+          {buttonTF ? (
+            <>
+              {" "}
+              <MicBtn name="micCircleBtn" size="40" onClick={buttonClick} />
+              <div>녹음중</div>
+            </>
+          ) : (
+            <>
+              <MicBtn name="micCircleBtn" size="40" onClick={buttonClick} />
+              <div>녹음하기</div>
+            </>
+          )}
 
-            <div>{!isRecordLoading ? "Loading..." : "녹음된 문장:" + recognize}</div>
-            <div>{!isRecordLoading ? "" : "일치율:" + score}</div>
-            <p onClick={handleClick}>여기를 클릭하면 다음 페이지로 이동해요!</p>
-          </div>
-        )}
-        {clickIndex === 5 && (
+          <div>{!isRecordLoading ? "Loading..." : "녹음된 문장:" + recognize}</div>
+          <div>{!isRecordLoading ? "" : "일치율:" + score}</div>
+          <p onClick={handleClick}>
+            아래로 스크롤<p>∨</p>
+          </p>
+        </ScrollFadeDiv>
+        {/* )} */}
+        {/* {clickIndex === 5 && ( */}
+        <ScrollFadeDiv>
           <div>
-            <div>
-              <span>
-                <div>{!isRecordLoading ? "Loading..." : "총 정확도 :" + matchRate + "% 일치"}</div>
-              </span>
-            </div>
-            <Link to="/login">
-              <Button name="submitBtn" text="지금 가입하기" />
-            </Link>
+            <span>
+              <div>{!isRecordLoading ? "Loading..." : "총 정확도 :" + matchRate + "% 일치"}</div>
+            </span>
           </div>
-        )}
-      </div>
+          <Link to="/login">
+            <Button name="submitBtn" text="지금 가입하기" />
+          </Link>
+        </ScrollFadeDiv>
+        {/* )} */}
+      </FlexContainer>
     </>
   );
 };

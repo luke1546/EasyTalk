@@ -4,7 +4,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { loginState } from "./components/pages/Common/loginState";
 
@@ -74,6 +74,7 @@ const AppDiv = styled.div`
 const MainContents = styled.div`
   padding-top: 10vh;
   height: 82vh;
+  overflow-x: hidden;
   overflow: auto;
 `;
 
@@ -95,6 +96,40 @@ const PageFooter = () => {
 const App = () => {
   const code = new URL(window.location.href).searchParams.get("code");
 
+  const [isEnd, setIsEnd] = useState(false); // 스크롤이 끝에 도달했는지를 저장하는 상태
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    const onCheckScroll = () => {
+      const divElement = divRef.current;
+      if (divElement) {
+        const { scrollTop, scrollHeight, clientHeight } = divElement;
+        // console.log(scrollTop);
+        // console.log(scrollHeight);
+        // console.log(clientHeight);
+
+        if (scrollTop + clientHeight + 100 >= scrollHeight) {
+          console.log("End");
+          setIsEnd(true); // 스크롤이 끝에 도달했음을 상태에 저장
+        } else {
+          setIsEnd(false); // 스크롤이 끝에 도달하지 않았음을 상태에 저장
+        }
+      }
+    };
+
+    const divElement = divRef.current;
+    if (divElement) {
+      divElement.addEventListener("scroll", onCheckScroll);
+    }
+
+    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거합니다.
+    return () => {
+      if (divElement) {
+        divElement.removeEventListener("scroll", onCheckScroll);
+      }
+    };
+  }, []);
+
   return (
     <React.Fragment>
       <BrowserRouter>
@@ -102,9 +137,9 @@ const App = () => {
           <HeaderDiv>
             <Header className="Header" />
           </HeaderDiv>
-          <StyledDiv as={MainContents}>
+          <StyledDiv as={MainContents} ref={divRef}>
             <Routes>
-              <Route path="/" exact element={<IntroPage />} />
+              <Route path="/" exact element={<IntroPage isEnd={isEnd} />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/group" element={<GroupHomePage />} />

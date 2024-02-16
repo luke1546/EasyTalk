@@ -117,7 +117,7 @@ const MusicHomePage = () => {
 
   return (
     <div className="MusicHomePage">
-      <InputBar variant="searchinputbar" />
+      <InputBar variant="searchinputbar" uri="/study/music/search/" />
       <LeftDiv>
         <Textbox section="singleText" context1="지금 인기있는 노래" />
         <div>

@@ -1,37 +1,59 @@
 // ListenBox.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Textbox from '../../atoms/Text/Textbox';
-import Button from '../../atoms/Button/Button';
-import { useNavigate } from 'react-router-dom';
-import './ListenBox.css'; // 필요한 CSS 파일을 import
+import Textbox from "../../atoms/Text/Textbox";
+import Button from "../../atoms/Button/Button";
+import { useNavigate } from "react-router-dom";
+import "./ListenBox.css"; // 필요한 CSS 파일을 import
 
-const ListenBox = ({ sentence }) => {
+const ListenBox = ({ id }) => {
   const navigate = useNavigate();
-  const [isSaved, setSaved] = useState(sentence.saved);
+  const [sentence, setSentence] = useState("");
+  const [isSaved, setSaved] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioUrl, setAudioUrl] = useState("");
+
+  useEffect(() => {
+    const fetchSentence = async () => {
+      try {
+        const response = await axios.get(
+          `https://i10b307.p.ssafy.io:8080/study/sentence/detail?target=${id}`
+        );
+        setSentence(response.data);
+        setSaved(response.data.saved);
+        setAudioUrl(response.data.sentenceAudioUri);
+      } catch (error) {
+        console.error("문장을 가져오는 중 에러 발생:", error);
+      }
+    };
+
+    fetchSentence();
+  }, [id]);
+
+  const playAudio = (event) => {
+    event.stopPropagation();
+    const audio = new Audio(`https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com${audioUrl}`);
+    audio.play();
+  };
 
   const handleSaveClick = async (event) => {
     event.stopPropagation();
     try {
       if (!isSaved) {
-        await axios.post(`https://i10b307.p.ssafy.io:8080/study/sentence`, {'sentenceId' : sentence.sentenceId})
+        await axios.post(`https://i10b307.p.ssafy.io:8080/study/sentence`, { sentenceId: id });
         setSaved(true);
       } else {
-        await axios.delete(`https://i10b307.p.ssafy.io:8080/study/sentence?sentenceId=${sentence.sentenceId}`);
+        await axios.delete(`https://i10b307.p.ssafy.io:8080/study/sentence?sentenceId=${id}`);
         setSaved(false);
       }
     } catch (error) {
-      console.error('Error saving or deleting:', error);
+      console.error("Error saving or deleting:", error);
     }
   };
 
   const handleListenBoxClick = (id) => {
     navigate(`/study/sentence/${id}/detail`);
-  };
-
-  const handlePlayClick = (event) => {
-    event.stopPropagation();
   };
 
   return (
@@ -46,7 +68,7 @@ const ListenBox = ({ sentence }) => {
         ) : (
           <Button name="bookMarkBtn" onClick={handleSaveClick} />
         )}
-        <Button name="listenBtn" onClick={handlePlayClick} />
+        <Button name="listenBtn" onClick={playAudio} />
       </div>
     </div>
   );
