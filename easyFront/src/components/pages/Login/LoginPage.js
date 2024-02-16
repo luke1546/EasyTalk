@@ -11,16 +11,24 @@ const REDIRECT_URI =
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 const LoginPage = () => {
-  console.log(CLIENT_ID);
-  console.log(REDIRECT_URI);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(KAKAO_AUTH_URL);
+  });
+
+  // console.log(CLIENT_ID);
+  // console.log(REDIRECT_URI);
   return (
     <div className="LoginPage">
-      로그인페이지
+      Loading...
+      {/* 로그인페이지
       <a href={KAKAO_AUTH_URL}>
         <button>카카오 로그인</button>
-      </a>
+      </a> */}
     </div>
   );
 };
 
 export default LoginPage;
+
