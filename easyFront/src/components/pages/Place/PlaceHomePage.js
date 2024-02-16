@@ -4,10 +4,27 @@ import SNSInputBox from "../../UI/modules/SNSInputBox/SNSInputBox";
 import FeedBox from "../../UI/modules/FeedBox/FeedBox";
 import Icon from "../../UI/atoms/Icon/Icon";
 import Profile from "../../UI/modules/Profile";
+import Line from "../../UI/atoms/Line/Line";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { RiSafariFill } from "react-icons/ri";
+import styled from "styled-components";
+
+const ProfileDiv = styled.div`
+  border: 2px solid #9c9cff;
+  border-radius: 20px;
+  margin: 20px;
+  box-shadow: 0px 5px 6px -4px #9c9cff;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #9c9cff;
+  }
+`;
+
+const StyledP = styled.p`
+  font-weight: bold;
+`;
 
 const PlaceHomePage = () => {
   const navigate = useNavigate();
@@ -105,12 +122,13 @@ const PlaceHomePage = () => {
                     userId={feed.userId} // userId가 있다고 가정합니다.
                     feedId={feed.feedId}
                     profileImg={feed.profileImageUri}
-                    nickname={feed.nickname}
+                    userName={feed.nickname}
                     isLiked={false} // 좋아요 여부는 별도로 관리해야 할 것 같습니다.
                     likeCount={feed.heartCount}
                     commentCount={feed.commentCount}
                     content={feed.content}
                     createdDate={feed.registerDate}
+                    // feedImageUris={feed.feedImageUris[feed.feedImageUris.length - 1]}
                   />
                 </div>
               ))}
@@ -119,8 +137,9 @@ const PlaceHomePage = () => {
         ) : (
           <>
             <br />
-            <Icon name="warningIcon" />
-            <p>아직 내 이웃이 없습니다! 내 이웃을 추가해주세요.</p>
+            <Icon name="warningIcon" size="50px" color=" #9c9cff"/>
+              <p>아직 내 이웃이 없습니다!
+                <br />내 이웃을 추가해주세요.</p>
             <div ref={inputRef}>
               <InputBar variant="searchinputbar" uri="/neighbor/search/" />
             </div>
@@ -131,13 +150,19 @@ const PlaceHomePage = () => {
                   () => navigate(`/placeneighbor`, { state: { user } }) // 사용자 데이터를 상태로 전달
                 }
               >
+                <ProfileDiv>
+                  <StyledP>
+                    검색결과
+                  </StyledP>
+                  <Line/>
                 <Profile
                   // userId={user.userId}
                   // profileImg={user.profileImg}
-                  text1={user.nickName}
+                  text1={user.nickname}
                   text2={user.info}
                   pageType="horizontal-layout"
                 />
+                </ProfileDiv>
               </div>
             ))}
           </>

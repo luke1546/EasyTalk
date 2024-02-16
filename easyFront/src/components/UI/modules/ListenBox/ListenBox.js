@@ -22,6 +22,7 @@ const ListenBox = ({ id }) => {
           setSentence(response.data);
           setSaved(response.data.saved);
           setAudioUrl(response.data.sentenceAudioUri);
+          console.log(response.data)
           } catch (error) {
         console.error('문장을 가져오는 중 에러 발생:', error);
       }

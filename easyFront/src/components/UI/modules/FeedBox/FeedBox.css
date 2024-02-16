@@ -23,6 +23,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  justify-content: space-between;
 }
 
 .user-info {
@@ -39,8 +40,9 @@
 }
 
 .feed-img {
-  width: 500px;
-  height: 30px;
+  width: auto;
+  height: auto;
+  margin: 20px;
 }
 
 .singleText {
@@ -54,6 +56,7 @@
   justify-content: space-between;
   font-size: 14px;
   margin-top: 10px;
+  gap: 5px;
 }
 
 .like-comment-info span {

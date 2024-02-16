@@ -6,13 +6,14 @@ const TextBoxContainer = styled.span`
   display: flex;
   justify-content: flex-start;
   font-size: ${props => props.fontSize};
-  font-weight: ${props => props.fontWeight}; // fontWeight 프롭을 추가합니다.
+  font-weight: ${props => props.fontWeight}; 
+  color: ${props => props.color}; 
   word-break: keep-all;
 `;
 
-export const Textbox = ({ section, context1, context2, fontSize, fontWeight, ...props }) => {
+export const Textbox = ({ section, context1, context2, color, fontSize, fontWeight, ...props }) => {
   return (
-    <TextBoxContainer className={"${section}-textbox"} fontSize={fontSize} fontWeight={fontWeight} {...props}>
+    <TextBoxContainer className={"${section}-textbox"} color={color} fontSize={fontSize} fontWeight={fontWeight} {...props}>
       {section === "doubleText" ? (
         <>
           <span>{context1}</span>

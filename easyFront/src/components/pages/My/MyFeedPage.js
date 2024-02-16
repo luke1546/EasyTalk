@@ -42,6 +42,7 @@ const MyFeedPage = () => {
             commentCount={feed.commentCount}
             content={feed.content}
             createdDate={feed.registerDate}
+            // feedImageUris={feed.feedImageUris[feed.feedImageUris.length - 1]}
           />
         </div>
       ))}

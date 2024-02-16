@@ -2,8 +2,41 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Textbox from '../../atoms/Text/Textbox';
-import Button from '../../atoms/Button/Button';
-import './WordBox.css';
+import styled from 'styled-components';
+
+const WordBoxContainer = styled.div`
+  display: flex;
+  padding: 20px;
+  border: 2px solid #9c9cff;
+  border-radius: 20px;
+  margin: 20px;
+  box-shadow: 0px 5px 6px -4px #9c9cff;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #9c9cff;
+  }
+`;
+
+const OneDiv = styled.div`
+  width: 100%;
+`;
+
+const TopDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Divider = styled.div`
+  height: 0.1vh;
+  background-color: #9c9cff;
+  margin: 10px;
+`;
+
+const LeftAlignContainer = styled.div`
+  text-align: left;
+  padding: 10px;
+`;
 
 const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
   const [Saved, setSaved] = useState(isSaved);
@@ -30,21 +63,19 @@ const WordBox = ({ wordId, word, isSaved, meaning, wordAudioUri }) => {
   };
 
   return (
-    <div>
+    <WordBoxContainer>
+      <OneDiv>
       <Link to={`/study/word/${wordId}/detail`} state={wordId}>
-        <Textbox section="singleText" context1={word} />
-        <div className="divider" />
-        <Textbox section="singleText" context1={meaning} />
+        <TopDiv>
+          <Textbox color="black" fontWeight="bold" fontSize="25px" section="singleText" context1={word} />
+        </TopDiv>
+      <Divider />
+      <LeftAlignContainer>
+        <Textbox color="black" section="singleText" context1={meaning} />
+      </LeftAlignContainer>
       </Link>
-      <div className="buttons">
-        {Saved ? (
-          <Button name="fBookMarkBtn" onClick={handleSaveClick} />
-        ) : (
-          <Button name="bookMarkBtn" onClick={handleSaveClick} />
-        )}
-        <Button name="listenBtn" onClick={handlePlayClick} />
-      </div>
-    </div>
+      </OneDiv>
+    </WordBoxContainer>
   );
 };
 

@@ -18,12 +18,14 @@ const StyledTextWrapper = styled.span`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 20px;
 `;
 
 const StyledProfile = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 `;
 
 const Profile = ({ direction, text1, text2, text3, profileImageUri }) => {
@@ -48,7 +50,7 @@ const Profile = ({ direction, text1, text2, text3, profileImageUri }) => {
           <StyledImg src={imageUrl} />
         </StyledImgWrapper>
         <StyledTextWrapper>
-          <Textbox section="singlePage" context1={text1} />
+          <Textbox section="singlePage" context1={text1} fontWeight="bold" />
           <Textbox section="singlePage" context1={text2} />
           <Textbox section="singlePage" context1={text3} />
         </StyledTextWrapper>
@@ -58,7 +60,7 @@ const Profile = ({ direction, text1, text2, text3, profileImageUri }) => {
   return (
     <StyledProfile>
       <StyledTextWrapper>
-        <Textbox section="singlePage" context1={text1} />
+        <Textbox section="singlePage" context1={text1} fontWeight="bold" />
         <Textbox section="singlePage" context1={text2} />
         <Textbox section="singlePage" context1={text3} />
       </StyledTextWrapper>

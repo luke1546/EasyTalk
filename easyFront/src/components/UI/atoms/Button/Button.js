@@ -21,7 +21,7 @@ import styled from "styled-components";
 const StyledSubmitBtn = styled.button`
   background: #8382ff;
   border-radius: 50px;
-  padding: 0px 15px 4px;
+  padding: 4px 15px 4px;
   margin: 20px;
   box-shadow: 0px 4px 2px -2px #121212;
   border: none;
@@ -33,7 +33,7 @@ const StyledSubmitBtn = styled.button`
 const StyledlogBtn = styled.button`
   background: #8382ff;
   border-radius: 50px;
-  padding: 0px 15px 4px;
+  padding: 4px 15px 4px;
   border: none;
   color: white;
   font-size: 18px;
@@ -49,12 +49,8 @@ const StyledNoneBtn = styled.button`
 const FooterBtn = styled.button`
   background: transparent;
   border: none;
-  font-size: 22px;
-  
-  &:hover {
-    font-weight: bold;
-  }
-
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const logBtn  = ({ text, color }) => {
@@ -113,9 +109,9 @@ const components = {
   footerBtn: footerBtn
 };
 
-const Button = ({ name, color, size, ...props }) => {
+const Button = ({ name, color, size, text, ...props }) => {
   const Component = components[name];
-  return Component ? <Component color={color} size={size} {...props} /> : null;
+  return Component ? <Component color={color} size={size} text={text} {...props} /> : null;
 };
 
 export default Button;

@@ -1,8 +1,52 @@
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Component } from "react";
 import YouTube from "react-youtube";
 import React from "react";
+import Line from "../../UI/atoms/Line/Line";
+import Button from "../../UI/atoms/Button/Button";
+import styled from "styled-components";
+
+const SubDiv = styled.div`
+  margin: 20px;
+`;
+
+const StudyBtn = styled.div`
+  display: flex;
+  padding: 10px 50px;
+  border: 2px solid #9c9cff;
+  border-radius: 10px;
+  margin: 20px 10px;
+  font-weight: bold;
+  box-shadow: 0px 5px 6px -4px #9c9cff;
+
+  &:hover {
+    box-shadow: 0px 5px 6px 0px #9c9cff;
+}
+`;
+
+const StudyDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BtnDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BBtn = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+`;
 
 const MusicDetailPage = () => {
   const { index, videoId } = useParams();
@@ -16,11 +60,11 @@ const MusicDetailPage = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        setYoutubeWidth(window.innerWidth * 0.8);
-        setYoutubeHeight(window.innerWidth * 0.8 * 9 / 16);
+        setYoutubeWidth(window.innerWidth * 0.9);
+        setYoutubeHeight(window.innerWidth * 0.9 * 9 / 16);
       } else {
-        setYoutubeWidth(window.innerWidth * 0.4);
-        setYoutubeHeight(window.innerWidth * 0.4 * 9 / 16);
+        setYoutubeWidth(window.innerWidth * 0.54);
+        setYoutubeHeight(window.innerWidth * 0.54 * 9 / 16);
       }
     };
   
@@ -43,9 +87,7 @@ const MusicDetailPage = () => {
 
   // 유튜브 api 관련 변수
   const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
-
   const [title, setTitle] = useState("");
-
   const [hideFont, setHideFont] = useState(false);
 
   const onStateChange = (event) => {
@@ -62,7 +104,9 @@ const MusicDetailPage = () => {
 
   // 글씨가 가지고 있는 색상 상태
   const Letter = ({ letter, active }) => (
-    <span style={{ color: active ? "red" : "black" }}>{letter}</span>
+    <span style={{ color: active ? "black" : "grey", fontWeight: active ? "bold" : "normal" }}>
+      {letter}
+    </span>
   );
 
   const youtubePlay = () => {
@@ -146,6 +190,7 @@ const MusicDetailPage = () => {
 
     //유튜브 api 관련 axios
     axios
+      .create({withCredentials: false})
       .get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${API_KEY}&part=snippet`)
       .then((response) => {
         const title = response.data.items[0].snippet.title;
@@ -174,7 +219,7 @@ const MusicDetailPage = () => {
   return (
     <div className="MusicDetailPage">
       {/* 제목의 경우 유튜브 api 가져오면서 해당 제목을 파싱 */}
-      <div>{title}</div>
+      {/* <div>{title}</div> */}
       <div>
       <YouTube
       videoId={videoId}
@@ -184,32 +229,68 @@ const MusicDetailPage = () => {
         height: youtubeHeight.toString(),
       }}
     />
-
       </div>
-      {!hideFont && <div style={{ color: "gray" }}>영상을 클릭하면 자막이 나옵니다.</div>}
+      <SubDiv>
+      {!hideFont && <div style={{ color: "9c9cff" }}>영상이 시작되면 자막이 나옵니다.</div>}
       <div id="lyric" style={{ color: color }}>
         {activeLyric.map((letterComponent, index) => (
           <React.Fragment key={index}>{letterComponent}</React.Fragment>
         ))}
-      </div>
+        </div>
+      </SubDiv>
       {/* <button onClick={youtubePlay}>자막 실행</button> */}
-      <hr />
-      <div>
+      <Line />
+      <StudyDiv>
         {title && (
           <Link
             to={{
               pathname: "word",
               state: { title: title },
-            }}
-          >
-            단어
+            }}>
+            <StudyBtn>
+              단어
+            </StudyBtn>
           </Link>
         )}
-        | <Link to="sentence">문장</Link>
-      </div>
+        <Link to="sentence">
+          <StudyBtn>
+            문장
+          </StudyBtn>
+        </Link>
+      </StudyDiv>
       <div>
-        {saveChecker ? <span>제거하기</span> : <span onClick={saveMusic}>등록하기</span>}|{" "}
-        <Link to="share">공유하기</Link> | <Link to="test">시험보기</Link>
+        <BBtn>
+          <BtnDiv>
+            <Link to="">
+              <div>
+                <Button name="delBtn" size="60px" color="#9c9cff" />
+              </div>
+              <div>
+                저장취소
+              </div>
+            </Link>
+          </BtnDiv>
+          <BtnDiv>
+            <Link to="share">
+              <div>
+                <Button name="shareBtn" size="60px" color="#9c9cff" />
+              </div>
+              <div>
+                공유하기
+              </div>
+            </Link>
+          </BtnDiv>
+          <BtnDiv>
+            <Link to="test">
+              <div>
+                <Button name="micCircleBtn" size="60px" color="#9c9cff" />
+              </div>
+              <div>
+                시험보기
+              </div>
+            </Link>
+          </BtnDiv>
+        </BBtn>
       </div>
     </div>
   );

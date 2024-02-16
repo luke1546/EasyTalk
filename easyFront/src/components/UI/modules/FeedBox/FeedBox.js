@@ -8,12 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import './FeedBox.css';
 import EditFeedBox from '../EditFeedBox/EditFeedBox';
 
-const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked, likeCount, commentCount, content, createdDate, feedImageUris }) => {
+const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked, likeCount, commentCount, content, createdDate, feedImageUris, editMode }) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likes, setLikes] = useState(likeCount);
   const [isEditing, setIsEditing] = useState(false);
-  const url = "https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com";
   const handleLikeClick = async () => {
     try {
       if (isLiked) {
@@ -57,7 +56,7 @@ const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked
     <div 
     className="feed-box" 
     onClick={isEditing ? handleFeedBoxClick(feedId) : undefined}
-  >
+    >
 
       {isEditing ? (
         // 수정 모드일 때 EditFeedBox 컴포넌트를 렌더링
@@ -76,27 +75,25 @@ const FeedBox = ({ userId, feedId, profileImg, userName, isLiked: initialIsLiked
         <>
           <div className="feed-info">
             <div className="user-info" onClick={handleUserClick}>
-              <img className="profile-img" src={`${url}${profileImg}`} alt="Profile" />
+              <img className="profile-img" src={"https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com"+profileImg} alt="Profile" />
                 <Textbox section="singleText" context1={userName} />
                 
             </div>
             <div className="like-comment-info">
-              <Button name={isLiked ? 'fHeartBtn' : 'heartBtn'} onClick={handleLikeClick} />
+              <Button name={isLiked ? 'fHeartBtn' : 'heartBtn'} color="red" size="20px" onClick={handleLikeClick} />
               <Textbox section="singleText" context1={likes} />
-              <Icon name="commentIcon" />
+              <Icon name="commentIcon" size="18px" color="grey" />
               <Textbox section="singleText" context1={commentCount} />
             </div>
           </div>
-          {feedImageUris && feedImageUris.map((imageUri, index) => (
-            <img key={index} className="feed-img" src={`${url}${imageUri}`} alt="FeedImage" />
-          ))}
-          {/* <img className="feed-img" src={"https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com"+feedImageUris} alt="FeedImage" /> */}
-
+          <img className="feed-img" src={"https://easy-s3-bucket.s3.ap-northeast-2.amazonaws.com"+feedImageUris} alt="FeedImage" />
             <Textbox section="singleText" context1={content} />
             <Textbox section="singleText" context1={createdDate} />
-          <div onClick={handleEditClick}>
-          <Button name="submitBtn" text="수정"  />
-          </div>
+            {/* {editMode && (
+            <div onClick={handleEditClick}>
+              <Button name="submitBtn" text="수정"  />
+            </div>
+          )} */}
           </>
       )}
     </div>

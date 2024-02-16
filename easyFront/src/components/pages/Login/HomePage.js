@@ -23,16 +23,15 @@ const ChaDiv = styled.div`
 const ProfileImgDiv = styled.img`
   display: flex;
   margin-left: auto;
-  width: 110px;
-  height: 110px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  // border: 1px solid black;
 `;
 
 const AtenDiv = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 20px 40px;
+  padding: 20px 20px;
   align-items: center;
 `;
 
@@ -40,7 +39,7 @@ const LeftDiv = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
-  padding: 20px 40px;
+  padding: 20px 20px;
 `;
 
 const RandomDiv = styled.div`
@@ -53,7 +52,7 @@ const RandomDiv = styled.div`
 const ExpDiv = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 20px 40px 0 20px;
+  padding: 20px 20px 0 20px;
 `;
 
 const InnerDiv = styled.div`
@@ -61,6 +60,11 @@ const InnerDiv = styled.div`
   flex-direction: column;
   align-items: flex-end;
   overflow-wrap: anywhere;
+  width: 100%;
+  
+  & > :first-child {
+    align-self: flex-start;
+  }
 `;
 
 const WordBox = styled.div`
@@ -81,10 +85,10 @@ const WordBoxes = styled.div`
   display: flex;
   gap: 10px;
   justify-content: space-between;
-  margin: 20px 20px 0px;
+  margin: 20px 0px 0px;
 
   @media (max-width: 768px) {
-    margin: 10px 20px 0px;
+    margin: 10px 0px 0px;
     // flex-direction: column;
     align-items: center;
   }
@@ -92,7 +96,7 @@ const WordBoxes = styled.div`
 
 const SenBox = styled.div`
   border-radius: 10px;
-  margin: 10px 20px 20px;
+  margin: 10px 0px 20px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -253,7 +257,7 @@ const HomePage = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            margin: "0 40px",
+            margin: "0 20px",
           }}
         >
           <ChaDiv>
@@ -304,12 +308,11 @@ const HomePage = () => {
         <ExpBar exp={exp} />
         <ExpDiv>
           <InnerDiv>
-            <Textbox section="singleText" context1={`${nickname}님 대단해요 !`} />
+            <Textbox section="singleText" context1={`${nickname}님 대단해요!`} />
             <br />
             <Textbox
               section="singleText"
               context1={`${needExp} 경험치 더 받으면`}
-              context2={`${lv}레벨이 돼요.`}
             />
             <Textbox section="singleText" context1={`${lv + 1}레벨을 달성할 수 있어요.`} />
           </InnerDiv>

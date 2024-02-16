@@ -1,6 +1,7 @@
 import { Link, useMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ListenBox from "../../UI/modules/ListenBox/ListenBox";
 
 const MusicSentencePage = () => {
   const [lyric, setLyric] = useState([]);
@@ -63,23 +64,24 @@ const MusicSentencePage = () => {
               </Link>
             </div>
             <br />
-            {/* <ListenBox
+            <ListenBox
             key={index}
             sentence1={{
-              sentence: item.lyric,
-              sentence_id: item.lyricId,
-              meaning: item.meaning,
-              isBookmarked: false, // 북마크 상태는 임시로 false로 설정
-              audioUrl: item.lyricAudioUri,
+            //   sentence: item.lyric,
+            //   sentence_id: item.lyricId,
+            //   meaning: item.meaning,
+            //   isBookmarked: false, // 북마크 상태는 임시로 false로 설정
+            //   audioUrl: item.lyricAudioUri,
+            // }}
+            // sentence2={{
+            //   sentence: item.lyric, // 두 번째 문장 정보는 적절한 데이터로 변경 필요
+            //   sentence_id: item.lyricId,
+            //   meaning: item.meaning,
+            //   isBookmarked: false,
+              //   audioUrl: item.lyricAudioUri,
+              id: item.lyricId
             }}
-            sentence2={{
-              sentence: item.lyric, // 두 번째 문장 정보는 적절한 데이터로 변경 필요
-              sentence_id: item.lyricId,
-              meaning: item.meaning,
-              isBookmarked: false,
-              audioUrl: item.lyricAudioUri,
-            }}
-          /> */}
+          />
           </div>
         ))}
     </div>
