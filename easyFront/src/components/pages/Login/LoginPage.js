@@ -4,6 +4,9 @@ import HomePage from "./HomePage";
 import axios, { HttpStatusCode } from "axios";
 import { useEffect } from "react";
 
+import yourImage from "../../../assets/kakao_login_medium_wide.png";
+
+
 const CLIENT_ID = process.env.REACT_APP_KAKAO_REST_API_KEY;
 const REDIRECT_URI =
   process.env.REACT_APP_EASYTALK_URL +
@@ -15,9 +18,16 @@ const LoginPage = () => {
   console.log(REDIRECT_URI);
   return (
     <div className="LoginPage">
-      로그인페이지
+      <br />
+      <br />
+      <br />
+      <br />
+      <br/>
+      <br/>
       <a href={KAKAO_AUTH_URL}>
-        <button>카카오 로그인</button>
+        <button style={{ border: 0, backgroundColor: "white" }}>
+          <img src={yourImage} alt="description" />
+        </button>
       </a>
     </div>
   );
