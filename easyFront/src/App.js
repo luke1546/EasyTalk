@@ -31,7 +31,6 @@ import MyGroupPage from "./components/pages/My/MyGroupPage";
 import MyNeighborPage from "./components/pages/My/MyNeighborPage";
 import MyNeighborReceivePage from "./components/pages/My/MyNeighborReceivePage";
 import MyNeighborSendPage from "./components/pages/My/MyNeighborSendPage";
-// import
 import PlaceNeighborPage from "./components/pages/Place/PlaceNeighborPage";
 import PlaceEditPage from "./components/pages/Place/PlaceEditPage";
 import PlaceDetailPage from "./components/pages/Place/PlaceDetailPage";
@@ -55,7 +54,7 @@ const FooterDiv = styled.div`
   position: fixed !important;
   background-color: white;
   width: 100vw;
-  height: 10vh;
+  height: 8vh;
   display: flex;
   justify-content: space-evenly;
 `;
@@ -72,7 +71,7 @@ const StyledDiv = styled.div`
 const AppDiv = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-size: 20px;
-  text-align: center;
+  text-align: left;
 `;
 
 const MainContents = styled.div`
@@ -86,7 +85,7 @@ const PageFooter = () => {
   const location = useLocation(); // 현재 위치 상태를 추적합니다.
 
   // 현재 위치가 "/"일 때는 렌더링하지 않습니다.
-  if (location.pathname === "/" || location.pathname === "/signup") {
+  if (location.pathname === "/" || location.pathname === "/signup" || location.pathname === "/login" ) {
     return null;
   }
 

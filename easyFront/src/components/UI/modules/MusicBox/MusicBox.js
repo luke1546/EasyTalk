@@ -6,16 +6,14 @@ import React, { useState, useEffect } from "react";
 const MusicBoxWrapper = styled.div`
   display: flex;
   padding: 20px;
-  border: 1px solid #9c9cff;
+  border: 2px solid #9c9cff;
   border-radius: 20px;
-  margin: 20px 40px;
-  color: #white;
+  margin: 20px;
   height: 86px;
-  font-weight: bold;
+  // font-weight: bold;
   box-shadow: 0px 5px 6px -4px #9c9cff;
 
   &:hover {
-   
     box-shadow: 0px 5px 6px 0px #9c9cff;
   }
 `;
@@ -38,7 +36,7 @@ const MusicInfo = styled.div`
   display: flex;
   margin: 0;
   padding: 0;
-  gap: 5px;
+  gap: 10px;
 `;
 
 const MusicImage = styled.div`
@@ -60,12 +58,12 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
   const REDIRECT_URI = process.env.REACT_APP_EASYTALK_URL + process.env.REACT_APP_FRONT_PORT;
 
 
-  const trimmedTitle = (window.innerWidth <= 768 && title.length > 20) 
-    ? `${title.substring(0, 20)}...` 
+  const trimmedTitle = (window.innerWidth <= 768 && title.length > 30) 
+    ? `${title.substring(0, 30)}...` 
     : (title.length > 100 ? `${title.substring(0, 100)}...` : title);
 
-  const trimmedArtistName = (window.innerWidth <= 500 && artistName.length > 7) 
-    ? `${artistName.substring(0, 7)}...` 
+  const trimmedArtistName = (window.innerWidth <= 500 && artistName.length > 8) 
+    ? `${artistName.substring(0, 8)}...` 
     : (artistName.length > 30 ? `${artistName.substring(0, 30)}...` : artistName);
 
   return (

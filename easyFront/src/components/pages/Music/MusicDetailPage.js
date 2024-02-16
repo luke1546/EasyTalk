@@ -1,29 +1,51 @@
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Component } from "react";
 import YouTube from "react-youtube";
 import React from "react";
 import Line from "../../UI/atoms/Line/Line";
+import Button from "../../UI/atoms/Button/Button";
 import styled from "styled-components";
 
 const SubDiv = styled.div`
   margin: 20px;
 `;
 
-const StudyDiv = styled.div``;
-
 const StudyBtn = styled.div`
   display: flex;
-  padding: 20px;
-  border: 1px solid #9c9cff;
-  border-radius: 20px;
-  margin: 20px;
+  padding: 10px 50px;
+  border: 2px solid #9c9cff;
+  border-radius: 10px;
+  margin: 20px 10px;
   font-weight: bold;
   box-shadow: 0px 5px 6px -4px #9c9cff;
 
   &:hover {
     box-shadow: 0px 5px 6px 0px #9c9cff;
 }
+`;
+
+const StudyDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BtnDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BBtn = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MusicDetailPage = () => {
@@ -65,9 +87,7 @@ const MusicDetailPage = () => {
 
   // 유튜브 api 관련 변수
   const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
-
   const [title, setTitle] = useState("");
-
   const [hideFont, setHideFont] = useState(false);
 
   const onStateChange = (event) => {
@@ -84,7 +104,9 @@ const MusicDetailPage = () => {
 
   // 글씨가 가지고 있는 색상 상태
   const Letter = ({ letter, active }) => (
-    <span style={{ color: active ? "red" : "black" }}>{letter}</span>
+    <span style={{ color: active ? "black" : "grey", fontWeight: active ? "bold" : "normal" }}>
+      {letter}
+    </span>
   );
 
   const youtubePlay = () => {
@@ -197,7 +219,7 @@ const MusicDetailPage = () => {
   return (
     <div className="MusicDetailPage">
       {/* 제목의 경우 유튜브 api 가져오면서 해당 제목을 파싱 */}
-      <div>{title}</div>
+      {/* <div>{title}</div> */}
       <div>
       <YouTube
       videoId={videoId}
@@ -237,8 +259,38 @@ const MusicDetailPage = () => {
         </Link>
       </StudyDiv>
       <div>
-        {saveChecker ? <span>제거하기</span> : <span onClick={saveMusic}>등록하기</span>}|{" "}
-        <Link to="share">공유하기</Link> | <Link to="test">시험보기</Link>
+        <BBtn>
+          <BtnDiv>
+            <Link to="">
+              <div>
+                <Button name="delBtn" size="60px" color="#9c9cff" />
+              </div>
+              <div>
+                저장취소
+              </div>
+            </Link>
+          </BtnDiv>
+          <BtnDiv>
+            <Link to="share">
+              <div>
+                <Button name="shareBtn" size="60px" color="#9c9cff" />
+              </div>
+              <div>
+                공유하기
+              </div>
+            </Link>
+          </BtnDiv>
+          <BtnDiv>
+            <Link to="test">
+              <div>
+                <Button name="micCircleBtn" size="60px" color="#9c9cff" />
+              </div>
+              <div>
+                시험보기
+              </div>
+            </Link>
+          </BtnDiv>
+        </BBtn>
       </div>
     </div>
   );

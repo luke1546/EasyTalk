@@ -7,7 +7,7 @@ const SearchInput = styled.div`
   border-radius: 50px;
   padding: 0 20px; // 상하 0, 좌우 20px
   height: 35px;
-  width: 50%;
+  width: 100%-40px;
   margin: 0 5px;
 `;
 
@@ -15,9 +15,13 @@ const SingleInput = styled.div`
   border: 2px solid #9c9cff;
   border-radius: 50px;
   padding: 10px 20px; // 상하 0, 좌우 20px
-  height: 40px;
+  height: 30px;
   width: calc(100% - 80px);
   font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
 `;
 
 const StyleInput = styled.input`

@@ -100,7 +100,10 @@ const MusicWordPage = () => {
             );
           })}
       </div>
-      <Btn onClick={handleGoTest}>시험 보기</Btn>
+      <div onClick={handleGoTest} >
+        <Button name="submitBtn" text="시험보기" />
+      </div>
+      
     </div>
   );
 };

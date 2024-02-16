@@ -4,21 +4,32 @@ import Button from "../atoms/Button/Button";
 import Input from "../atoms/Input/Input";
 
 const MicBtn = styled(Button)`
-  color: #8382ff;
+  color: #9c9cff;
+  display: flex;
+  padding: 30px;
+  border: 2px solid #9c9cff;
+  border-radius: 50px;
+  margin: 20px;
+`;
+
+const Micdiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const MicBox = () => {
   return (
     <>
-      <div>
-        <Textbox section="singlePage" context1="마이크를 누르며 말해주세요." />
-      </div>
-      <div>
+      <Micdiv>
+        <Textbox section="singlePage" context1="마이크를 누르면 녹음이 시작돼요." />
+      </Micdiv>
+      <Micdiv>
         <MicBtn name="micCircleBtn" size="40" />
-      </div>
-      <div>
+      </Micdiv>
+      <Micdiv>
         <Input name="singleInput" placeholder="발음을 인식한 문장" />
-      </div>
+      </Micdiv>
     </>
   );
 };

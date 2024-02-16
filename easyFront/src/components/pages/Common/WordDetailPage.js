@@ -2,6 +2,31 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '../../UI/atoms/Button/Button';
 import { useParams } from 'react-router-dom';
+import Line from "../../UI/atoms/Line/Line";
+import styled from "styled-components";
+
+const Worddiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 2px solid #9c9cff;
+  border-radius: 20px;
+  margin: 20px;
+`;
+
+const H = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Btndiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+`;
 
 const WordDetailPage = () => {
   const { wordId } = useParams();
@@ -61,9 +86,19 @@ const WordDetailPage = () => {
   };
 
   return (
-    <div>
-      <h2>{targetWord.word}</h2>
+    <Worddiv>
+      <H>{targetWord.word}</H>
+    <Line />
       <div>{targetWord.pronunciation}</div>
+      <Btndiv className="buttons">
+        {Saved ? (
+          <Button name="fBookMarkBtn" size="25px" color="#8382ff" onClick={handleSaveClick} />
+        ) : (
+          <Button name="bookMarkBtn" size="25px" color="#8382ff" onClick={handleSaveClick} />
+        )}
+        <Button name="listenBtn" size="25px" color="#8382ff" onClick={handlePlayClick} />
+      </Btndiv>
+      <Line />
       {/* wordMeaningDto를 partOfSpeech 기준으로 그룹화하여 사용 */}
       {Object.entries(groupMeaningsByPartOfSpeech(targetWord.wordMeaningDto)).map(([partOfSpeech, meanings], index) => (
         <div key={index}>
@@ -74,15 +109,7 @@ const WordDetailPage = () => {
           ))}
         </div>
       ))}
-      <div className="buttons">
-        {Saved ? (
-          <Button name="fBookMarkBtn" onClick={handleSaveClick} />
-        ) : (
-          <Button name="bookMarkBtn" onClick={handleSaveClick} />
-        )}
-        <Button name="listenBtn" onClick={handlePlayClick} />
-      </div>
-    </div>
+    </Worddiv>
   );
 };
 

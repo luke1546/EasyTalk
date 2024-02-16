@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "../atoms/Button/Button";
 import styled from "styled-components";
-import Textbox from "../atoms/Text/Textbox";
+// import Textbox from "../atoms/Text/Textbox";
 
 const StyledFooter = styled.div`
   display: flex; 
@@ -33,7 +33,7 @@ const Footer = () => {
         <Button name="footerBtn" text="그룹" size="20px"/>
       </Link>{" "}
       <Link to="/home">
-        <Button name="homeBtn" size="40"/>
+        <Button name="homeBtn" size="35"/>
       </Link>{" "}
       <Link to="/place">
         <Button name="footerBtn" text="광장" size="20px"/>

@@ -4,16 +4,22 @@ import Textbox from "../../UI/atoms/Text/Textbox";
 import Modal from 'react-modal';
 import axios from "axios";
 import styled from "styled-components";
+import Line from "../../UI/atoms/Line/Line";
 
 const WordDiv = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 20px;
+  padding: 0px 10px;
+`;
+
+const H2 = styled.p`
+  color: #8382ff;  // 원하는 색상으로 변경 가능
+  margin: 0;
 `;
 
 const Btn = styled.button`
   border: 1px solid #8382ff;
-  border-radius: 50px;
+  border-radius: 10px;
   background-color: white;
   font-size: 20px;
   display: flex;
@@ -30,8 +36,9 @@ const Btn = styled.button`
 `;
 
 const ModalText = styled.p`
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 20px;
+  font-weight: bold;
 `;
 
 const NextButton = styled.button`
@@ -42,10 +49,8 @@ const NextButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #45a049;
-  }
+  font-size: 18px;
+  box-shadow: 0px 5px 6px -4px #121212;
 `;
 
 const SaveButton = styled.button`
@@ -56,10 +61,8 @@ const SaveButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #45a049;
-  }
+  font-size: 18px;
+  box-shadow: 0px 5px 6px -4px #121212;
 `;
 
 const CustomModal = styled(Modal)`
@@ -72,11 +75,20 @@ const CustomModal = styled(Modal)`
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   z-index: 999; // 모달 위에 위치하도록 설정
+  width: 80%;
+  height: 15%;
 `;
 
 const ModalContent = styled.div`
   text-align: center;
   position: relative; // 모달 안의 요소들의 위치를 상대적으로 조정하기 위해 추가
+`;
+
+const ModalDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(0%, 30%);
 `;
 
 const CustomModalOverlay = styled.div`
@@ -89,17 +101,9 @@ const CustomModalOverlay = styled.div`
   z-index: 998; // 모달 위에 위치하도록 설정
 `;
 
-const TestResultContainer = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-`;
-
 const ResultText = styled.p`
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  margin: 20px;
 `;
 
 const WordTestPage = () => {
@@ -198,13 +202,20 @@ const WordTestPage = () => {
     <WordDiv>
       {!showResult ? (
         <>
-          <h2>문제 {currentIndex + 1}</h2>
+          <H2>
+            문제 {currentIndex + 1}
+            <br />
+            다음 단어의 올바른 뜻을 고르세요.
+          </H2>
+          <Line />
           <h3>{currentWord?.word}</h3> {/* Optional chaining 사용 */}
           {choices.map((choice, index) => (
             <Btn key={index} onClick={() => handleAnswerClick(choice)}>
               {choice}
             </Btn>
           ))}
+          <br />
+          <br />
           {/* 모달을 제외한 페이지에 오버레이 추가 */}
           {isOpen && <CustomModalOverlay />}
           <CustomModal
@@ -224,18 +235,13 @@ const WordTestPage = () => {
           </CustomModal>
         </>
       ) : (
-        <CustomModal
-        isOpen={showResult}
-        overlayClassName="custom-overlay"
-        className="custom-modal"
-        shouldCloseOnOverlayClick={false}
-          >
-            <ModalContent>
+      <ModalDiv>
+        <ModalContent>
               <h2>시험 결과</h2>
               <ResultText>맞힌 문제 수: {correctAnswers}/{testWord.length}</ResultText>
-              <Btn onClick={handleFinishTest}>시험 기록 보러가기</Btn>
+              <Btn onClick={handleFinishTest}>학습기록 바로가기</Btn>
             </ModalContent>
-        </CustomModal>
+          </ModalDiv>
       )}
     </WordDiv>
   );

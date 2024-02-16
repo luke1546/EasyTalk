@@ -7,6 +7,8 @@ import Textbox from "../../UI/atoms/Text/Textbox";
 import SNSInputBox from "../../UI/modules/SNSInputBox/SNSInputBox";
 import FeedBox from "../../UI/modules/FeedBox/FeedBox";
 import Profile from "../../UI/modules/Profile/Profile";
+import Line from "../../UI/atoms/Line/Line";
+import styled from "styled-components";
 
 const PlaceDetailPage = () => {
   const [feedData, setFeedData] = useState("");
@@ -39,7 +41,6 @@ const PlaceDetailPage = () => {
 
   return (
     <div className="PlaceDetailPage">
-      광장 게시글 상세 화면
         <>
         {feedData &&
           <FeedBox
@@ -54,9 +55,9 @@ const PlaceDetailPage = () => {
             content={feedData.content}
             createdDate={feedData.registerDate}
             editMode={true}
-            feedImageUris={feedData.feedImageUris}  // 변경된 부분
+            // feedImageUris={feedData.feedImageUris[feedData.feedImageUris.length - 1]}// 변경된 부분
           />}
-       <hr />
+       <Line />
         <SNSInputBox feedId={feedData.feedId} />
         {comments.map((comment) => (
           <div key={comment.id}>

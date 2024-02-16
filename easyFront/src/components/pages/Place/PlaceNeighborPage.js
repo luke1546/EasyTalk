@@ -5,6 +5,15 @@ import axios from "axios";
 import FeedBox from "../../UI/modules/FeedBox/FeedBox";
 import Profile from "../../UI/modules/Profile";
 import Button from "../../UI/atoms/Button/Button";
+import Line from "../../UI/atoms/Line/Line";
+import styled from "styled-components";
+
+const ProfileDiv = styled.div`
+  border: 1px solid #9c9cff;
+  border-radius: 20px;
+  margin: 20px 20px 0;
+  box-shadow: 0px 5px 6px -4px #9c9cff;
+`;
 
 const PlaceNeighborPage = () => {
   const navigate = useNavigate();
@@ -62,13 +71,15 @@ const PlaceNeighborPage = () => {
   }, []);
   return (
     <>
+    <ProfileDiv>
     <Profile
       // userId={user.userId}
       // profileImg={user.profileImg}
-      text1={user.nickName}
+      text1={user.nickname}
       text2={user.info}
       pageType="horizontal-layout"
-      />
+        />
+      </ProfileDiv>
       <div>
         {status === "NEIGHBOR" ? (
           <div onClick={() => handleUnfriend()}>
@@ -86,7 +97,7 @@ const PlaceNeighborPage = () => {
           </div>
         )}
       </div>
-      <hr />
+      <Line />
       <h3>{user.nickname} 님의 게시글</h3>
       {feeds.map(feed => (
         <div onClick={() => handleFeedClick(feed.feedId)}>
@@ -101,9 +112,9 @@ const PlaceNeighborPage = () => {
           commentCount={feed.commentCount}
           content={feed.content}
           createdDate={feed.registerDate}
-          feedImageUris={feed.feedImageUris}
+          feedImageUris={feed.feedImageUris[feed.feedImageUris.length-1]}
           editMode={false}
-        />
+          />
       </div>
       ))}
     </>
@@ -111,3 +122,4 @@ const PlaceNeighborPage = () => {
 };
 
 export default PlaceNeighborPage;
+

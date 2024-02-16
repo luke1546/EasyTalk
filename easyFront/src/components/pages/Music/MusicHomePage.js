@@ -10,7 +10,12 @@ import styled from "styled-components";
 
 const LeftDiv = styled.div`
   text-align: left;
-  padding: 20px 0 20px 40px;
+  padding: 10px 0 0px 20px;
+`;
+
+const LeDiv = styled.div`
+  text-align: left;
+  padding: 20px 0 0px 20px;
 `;
 
 const BoxDiv = styled.div`
@@ -18,7 +23,7 @@ const BoxDiv = styled.div`
 `;
 
 const LineDiv = styled.div`
-  padding: 20px 0 ;
+  padding: 0.1px 0 ;
 `;
 
 
@@ -122,10 +127,10 @@ const MusicHomePage = () => {
 
   return (
     <div className="MusicHomePage">
-      <InputBar variant="searchinputbar" uri="/study/music/search/" />
-      <LeftDiv>
+      <InputBar variant="searchinputbar" />
+      <LeDiv>
         <Textbox section="singleText" context1="지금 인기있는 노래" fontWeight="bold" />
-      </LeftDiv>
+      </LeDiv>
         <div>
           {musicList &&
             musicList.map((item, index) => {
@@ -154,24 +159,20 @@ const MusicHomePage = () => {
       <LineDiv>
         <Line />
       </LineDiv>
-      <LeftDiv>
+      {/* <LeftDiv>
         <Textbox section="singleText" fontWeight="bold" context1="AI가 추천하는 노래" />
       </LeftDiv>
       <LineDiv>
         <Line />
-      </LineDiv>
+      </LineDiv> */}
       <LeftDiv>
-        <Textbox section="singleText" fontWeight="bold" context1={`${nickname}님이 학습한 노래`} />
+        <Textbox section="singleText" fontWeight="bold" context1={`최근 ${nickname}님이 학습한 노래`} />
+      </LeftDiv>  
         <div>
           {myStudyMusic &&
             myStudyMusic.slice(0, 5).map((item, index) => {
               return (
-                <Link
-                  to={{
-                    pathname: `/study/music/${item.musicId}/${item.videoId}`,
-                    state: { videoId: item.videoId },
-                  }}
-                >
+                
                   <BoxDiv key={item.musicId}>
                     <MusicBox
                       musicId={item.musicId}
@@ -182,11 +183,11 @@ const MusicHomePage = () => {
                       videoId={item.videoId}
                     />
                   </BoxDiv>
-                </Link>
+
               );
             })}
         </div>
-      </LeftDiv>
+      
     </div>
   );
 };
