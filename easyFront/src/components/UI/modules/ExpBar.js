@@ -28,7 +28,7 @@ const ExpText = styled.div`
   font-size: 17px;
   background-color: #8382ff;
   border-radius: 50px; 
-  padding: 2px 5px 4px;
+  padding: 2px 10px 4px;
   transform: translateX(-50%);
   margin: 20px 0; 
 
@@ -52,7 +52,7 @@ const ExpBar = ({ exp }) => {
   return (
     <StyledBarBorder>
       <StyledLength width={ratio} />
-      <ExpText width={ratio}>{exp} EXP</ExpText>
+      <ExpText width={ratio}>{exp}EXP</ExpText>
     </StyledBarBorder>
   );
 };
