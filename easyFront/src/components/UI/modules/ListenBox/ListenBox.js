@@ -69,7 +69,7 @@ const ListenBox = ({ id, type }) => {
   return (
     <div className="listen-box" onClick={() => handleListenBoxClick(sentence.sentenceId)}>
       <div className="text-area">
-        <Textbox section="singleText" context1={sentence.sentence} />
+        <Textbox section="singleText" fontWeight="bold" context1={sentence.sentence} />
         <Textbox section="singleText" context1={sentence.meaning} />
       </div>
       <div className="icons-area">
@@ -78,7 +78,6 @@ const ListenBox = ({ id, type }) => {
         ) : (
           <Button name="bookMarkBtn" onClick={handleSaveClick} />
         )}
-        <Button name="listenBtn" onClick={playAudio} />
         <Button name="listenBtn" onClick={playAudio} />
       </div>
     </div>

@@ -14,27 +14,34 @@ import styled from "styled-components";
 
 import ScrollFadeDiv from "./ScrollFadeDiv";
 
+const MicDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  margin: 40px;
+`;
+
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
 const MicBtn = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  margin: 40px;
   color: #8382ff;
   border: 1px solid #8382ff;
   border-radius: 50px;
   background-color: white;
   font-size: 20px;
-  display: flex;
-  flex-direction: column;
   padding: 10px 40px; // 패딩을 조절하여 버튼의 높이를 텍스트에 맞춤
-  justify-content: center;
-  align-items: center;
   box-shadow: 0px 5px 6px -4px #8382ff;
   margin: 20px auto 0; /* 수정된 부분: 상단 마진을 20px로, 좌우 마진을 auto로 설정하여 수평 가운데 정렬 */
-  margin-right: 85px;
+  // margin-right: 85px;
   left: 50%;
-  transform: translateX(-50%); /* 수정된 부분: 가운데 정렬을 위해 transform을 사용하여 좌표 이동 */
+  transform: translateX(0%); /* 수정된 부분: 가운데 정렬을 위해 transform을 사용하여 좌표 이동 */
 
   &:hover {
     box-shadow: 0px 5px 6px 0px #8382ff;
@@ -318,8 +325,7 @@ const IntroPage = ({ isEnd }) => {
     const audioBlob = new Blob(recordedChunks);
     const formData = new FormData();
     formData.append("audio", audioBlob);
-    formData.append("sentence", lyric[currentLyricIndex - 1]?.lyric);
-
+    formData.append("sentence", lyric[0].lyric + lyric[1].lyric + lyric[2].lyric + lyric[3].lyric);
     console.log(audioBlob);
     console.log(formData.get("audio"));
     console.log(formData.get("sentence"));
@@ -424,17 +430,37 @@ const IntroPage = ({ isEnd }) => {
           {" "}
           <div>
             <span>
-              영어, 아직도 어렵게 생각하세요? 좋아하는 노래를 따라부르며 영어를 배워보세요!
+              영어, 아직도 어렵게 생각하세요?
             </span>
-          </div>
-          <div>
-            <span>쉽게말해는 중장년층을 위한 특별한 영어 학습 플랫폼입니다.</span>
-          </div>
-          <div>
+            <br />
             <span>
-              지금 바로 쉽게말해의 무료 노래 학습을 체험하고, 노래와 함께 영어 실력을 키워보세요!
+              좋아하는 노래를 따라부르며 영어를 배워보세요!
             </span>
           </div>
+          <br />
+          <div>
+            <span>쉽게말해는
+            </span>
+            <br />
+            <span>중장년층을 위한
+            </span>
+            <br />
+            <span>특별한 영어 학습 플랫폼입니다.</span>
+          </div>
+          <div>
+          <br />
+            <span>
+              지금 바로
+            </span>
+            <br />
+            <span>쉽게말해의 무료 노래 학습을 체험하고,
+            </span>
+            <br />
+            <span>노래와 함께 영어 실력을 키워보세요!
+            </span>
+          </div>
+          <br />
+          <br />
           <p onClick={handleClick}>
             아래로 스크롤<p>∨</p>
           </p>
@@ -588,7 +614,7 @@ const IntroPage = ({ isEnd }) => {
         {/* {clickIndex === 4 && ( */}
         <ScrollFadeDiv>
           <div>
-            <span>step 4. 따라부르며 나의 실력을 점검해보세요!</span>
+            <span>step 4. <br/>따라부르며 나의 실력을 점검해보세요!</span>
           </div>
           {sentenceLyric &&
             sentenceLyric.slice(0, 3).map((item, index) => (
@@ -598,21 +624,22 @@ const IntroPage = ({ isEnd }) => {
                 <br />
               </div>
             ))}
+          <MicDiv>
           {buttonTF ? (
             <>
               {" "}
               <MicBtn name="micCircleBtn" size="40" onClick={buttonClick} />
-              <div>녹음중</div>
             </>
           ) : (
             <>
               <MicBtn name="micCircleBtn" size="40" onClick={buttonClick} />
-              <div>녹음하기</div>
-            </>
-          )}
 
-          <div>{!isRecordLoading ? "Loading..." : "녹음된 문장:" + recognize}</div>
-          <div>{!isRecordLoading ? "" : "일치율:" + score}</div>
+            </>
+            )}
+          </MicDiv>
+
+          <div>{!isRecording && recordedChunks.length > 0 ? "Loading..." : ""}</div>
+          <div>{!isRecordLoading ? "" : "일치율:" + score +'%'}</div>
           <p onClick={handleClick}>
             아래로 스크롤<p>∨</p>
           </p>

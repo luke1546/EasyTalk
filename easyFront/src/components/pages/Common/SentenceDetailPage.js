@@ -6,21 +6,28 @@ import MicBox from "../../UI/modules/MicBox";
 import Button from "../../UI/atoms/Button/Button";
 import styled from "styled-components";
 
+const CDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const MicBtn = styled(Button)`
   color: #8382ff;
-  border: 1px solid #8382ff;
-  border-radius: 50px;
+  // border: 1px solid #8382ff;
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
   background-color: white;
   font-size: 20px;
   display: flex;
   flex-direction: column;
-  padding: 10px 40px; // 패딩을 조절하여 버튼의 높이를 텍스트에 맞춤
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 5px 6px -4px #8382ff;
+  // box-shadow: 0px 5px 6px -4px #8382ff;
   margin: 20px auto 0; /* 수정된 부분: 상단 마진을 20px로, 좌우 마진을 auto로 설정하여 수평 가운데 정렬 */
   left: 50%;
-  transform: translateX(-50%); /* 수정된 부분: 가운데 정렬을 위해 transform을 사용하여 좌표 이동 */
+  transform: translateX(0%); /* 수정된 부분: 가운데 정렬을 위해 transform을 사용하여 좌표 이동 */
 
   &:hover {
     box-shadow: 0px 5px 6px 0px #8382ff;
@@ -157,9 +164,9 @@ const SentenceDetailPage = () => {
             <div>{score}</div>
           </>
         )}
-      <div>
-        테스트용 녹음 확인 : <button onClick={playAudio}>재생</button>
-      </div>
+      <CDiv>
+          <div onClick={playAudio}><Button name="submitBtn" text="녹음 재생"></Button></div>
+      </CDiv>
       </div>
     </div>
   );

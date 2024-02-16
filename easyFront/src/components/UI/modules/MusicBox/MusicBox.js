@@ -79,12 +79,12 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
           >
             <MusicBoxWrapper>
               <MusicImage>
-                <img src={musicImageUrl} alt="Album Cover" style={{ width: "200px" }} />
+                <img src={musicImageUrl} alt="Album Cover" style={{ width: "86px" }} />
               </MusicImage>
               <MusicDetailsWrapper>
-                <MusicTitle className="music-title">{title}</MusicTitle>
+                <MusicTitle className="music-title">{trimmedTitle}</MusicTitle>
                 <MusicInfo>
-                  <StyledP className="music-artist">{artistName}</StyledP>
+                  <StyledP className="music-artist">{trimmedArtistName}</StyledP>
                   <StyledP className="music-artist">|</StyledP>
                   <StyledP className="music-time"> {time}</StyledP>
                 </MusicInfo>
@@ -95,7 +95,7 @@ const MusicBox = ({ musicId, title, artistName, musicTime, musicImageUrl, videoI
           <Link to={`${REDIRECT_URI}/study/music/${musicId}/${videoId}`} state={musicId}>
             <MusicBoxWrapper>
               <MusicImage>
-                <img src={musicImageUrl} alt="Album Cover" style={{ width: "200px" }} />
+                <img src={musicImageUrl} alt="Album Cover" style={{ width: "86px" }} />
               </MusicImage>
               <MusicDetailsWrapper>
                 <MusicTitle className="music-title">{title}</MusicTitle>
