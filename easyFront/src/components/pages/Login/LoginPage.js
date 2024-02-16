@@ -29,9 +29,6 @@ const LoginPage = () => {
       <br/>
       <br/>
       loading...
-      // <a href={KAKAO_AUTH_URL}>
-      //   <button>카카오 로그인</button>
-      // </a>
     </div>
   );
 };
