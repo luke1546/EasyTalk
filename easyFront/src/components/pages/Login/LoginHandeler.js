@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios, { HttpStatusCode } from "axios";
+import { useRecoilState } from "recoil";
+import { loginState } from "../Common/loginState";
 
 const REDIRECT_URI =
   process.env.REACT_APP_EASYTALK_URL +
@@ -8,6 +10,8 @@ const REDIRECT_URI =
   process.env.REACT_APP_KAKAO_REDIRECT_URL;
 
 const LoginHandeler = (props) => {
+  const [loginToken, setLoginToken] = useRecoilState(loginState);
+
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
 
@@ -31,6 +35,8 @@ const LoginHandeler = (props) => {
         const userChecker = res.data.UserRegistrationStatus;
         const userId = res.data.userId;
 
+        const loginToken = true;
+
         if (userChecker === "UNREGISTERED") {
           // 등록되지 않은 사용자
           navigate("/signup");
@@ -39,6 +45,9 @@ const LoginHandeler = (props) => {
           alert("다른 아이디가 있습니다.");
           navigate("/login");
         } else if (userChecker === "REGISTERED") {
+          setLoginToken(true);
+          localStorage.setItem("loginToken", loginToken);
+
           // 등록된 사용자
           navigate("/home");
           // navigate("/home", { state: { userId: userId } });
