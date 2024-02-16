@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import ListenBox from "../../UI/modules/ListenBox/ListenBox";
 import MicBox from "../../UI/modules/MicBox";
-import Button from '../../UI/atoms/Button/Button';
-import styled from 'styled-components';
+import Button from "../../UI/atoms/Button/Button";
+import styled from "styled-components";
 
 const MicBtn = styled(Button)`
   color: #8382ff;
@@ -29,7 +29,7 @@ const MicBtn = styled(Button)`
 
 const SentenceDetailPage = () => {
   const { id } = useParams();
-  const [sentence, setSentence] = useState('');
+  const [sentence, setSentence] = useState("");
   const [buttonTF, setButtonTF] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
@@ -45,7 +45,7 @@ const SentenceDetailPage = () => {
         setSentence(response.data);
       })
       .catch((error) => {
-        console.error('문장 가져오는 중 에러 발생:', error);
+        console.error("문장 가져오는 중 에러 발생:", error);
       });
   }, [id]);
 

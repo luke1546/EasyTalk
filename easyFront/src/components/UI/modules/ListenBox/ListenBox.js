@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import Textbox from '../../atoms/Text/Textbox';
-import Button from '../../atoms/Button/Button';
-import { useNavigate } from 'react-router-dom';
-import './ListenBox.css'; // 필요한 CSS 파일을 import
+import Textbox from "../../atoms/Text/Textbox";
+import Button from "../../atoms/Button/Button";
+import { useNavigate } from "react-router-dom";
+import "./ListenBox.css"; // 필요한 CSS 파일을 import
 
 const ListenBox = ({ id, type }) => {
   const navigate = useNavigate();
@@ -54,10 +54,11 @@ const ListenBox = ({ id, type }) => {
         setSaved(true);
       } else {
         await axios.delete(`https://i10b307.p.ssafy.io:8080/study/sentence?sentenceId=${id}`);
+        await axios.delete(`https://i10b307.p.ssafy.io:8080/study/sentence?sentenceId=${id}`);
         setSaved(false);
       }
     } catch (error) {
-      console.error('Error saving or deleting:', error);
+      console.error("Error saving or deleting:", error);
     }
   };
 
@@ -77,6 +78,7 @@ const ListenBox = ({ id, type }) => {
         ) : (
           <Button name="bookMarkBtn" onClick={handleSaveClick} />
         )}
+        <Button name="listenBtn" onClick={playAudio} />
         <Button name="listenBtn" onClick={playAudio} />
       </div>
     </div>
