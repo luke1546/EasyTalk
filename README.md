@@ -1,4 +1,4 @@
-# 💬🎤 쉽게말해 (EASYTALK)
+![image](https://github.com/luke1546/EasyTalk/assets/77063001/a80e96e9-b4ff-46d3-960e-29fa9d551aca)# 💬🎤 쉽게말해 (EASYTALK)
 
 ![mokup](./README_image/mokup.jpg)
 
@@ -857,9 +857,9 @@
 
 ![ERD](./README_image/ERD.png)
 
-### 🎨 FIGMA
+### 🎨 FIGMA - (https://www.figma.com/design/p11Q7uIreVpPkqdl8FoMFk/B-307-PJT?node-id=0-1&t=LQ9NTP4DTun8CwoK-0)
 
-![branch_graph](./README_image/figma.png)
+![branch_graph](./README_image/figma.PNG)
 
 <br /><br />
 
